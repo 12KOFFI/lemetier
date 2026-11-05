@@ -41,7 +41,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
     /** Une redirection n'est suivie que vers un chemin du site : ni « //domaine », ni « /\domaine », ni URL complète. */
     public static function isCheminInterne(string $url): bool
     {
-        return (bool) preg_match('#^/(?![/\\])#', $url);
+        return str_starts_with($url, '/') && !str_starts_with($url, '//') && !str_starts_with($url, '/\\');
     }
 
     public function supports(Request $request): bool
