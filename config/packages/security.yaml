@@ -21,10 +21,6 @@ security:
             user_checker: App\Security\UserChecker
             access_denied_handler: App\Security\AccessDeniedHandler
 
-            # 5 essais par compte et par adresse IP, puis blocage 15 minutes
-            login_throttling:
-                max_attempts: 5
-                interval: '15 minutes'
 
             # Authenticator personnalisé
             entry_point: App\Security\AppAuthenticator
