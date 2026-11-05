@@ -1,0 +1,353 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recrutement LEMETIER 2026 - Formation et insertion professionnelle{% endblock %}
+
+{% set mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'] %}
+{% if session and session.dateOuverture and session.dateCloture %}
+    {% set debut = session.dateOuverture %}
+    {% set fin = session.dateCloture %}
+    {% set periode = debut|date('d') ~ (debut|date('n') != fin|date('n') ? ' ' ~ mois[debut|date('n') - 1] : '') ~ ' au ' ~ fin|date('d') ~ ' ' ~ mois[fin|date('n') - 1] ~ ' ' ~ fin|date('Y') %}
+{% else %}
+    {% set periode = null %}
+{% endif %}
+
+{% block meta %}
+{{ parent() }}
+<meta name="keywords" content="recrutement, formation, insertion professionnelle, LEMETIER, DAIP, E2C, CQP, Yamoussoukro, Bouaké, 2026">
+<meta name="description" content="Formation gratuite de {{ stats.places }} jeunes aux métiers des services d’aide à la personne, à Yamoussoukro et Bouaké.{% if periode %} Inscriptions au lycée du {{ periode }}.{% endif %}">
+{% endblock %}
+
+{% block stylesheets %}
+<script>
+    // Animations autorisées : on masque ce que GSAP révélera. Filet de sécurité : tout réapparaît si le script ne se charge pas.
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('motion');
+        setTimeout(function () { if (!window.__homeMotion) document.documentElement.classList.remove('motion'); }, 3000);
+    }
+</script>
+{{ encore_entry_link_tags('home') }}
+{% endblock %}
+
+{% block body %}
+<div class="home text-slate-900">
+
+{# ==================== HÉROS ==================== #}
+{# Pas de pt-20 ici : le gabarit de base décale déjà le contenu sous l'en-tête fixe #}
+<section data-hero class="relative overflow-hidden text-white bg-gradient-to-br from-indigo-700 via-purple-700 to-blue-700">
+    <div aria-hidden="true" data-blob="a" class="absolute -top-40 -right-32 w-[26rem] h-[26rem] rounded-full bg-purple-400 opacity-25 blur-[70px]"></div>
+    <div aria-hidden="true" data-blob="b" class="absolute -bottom-44 -left-36 w-[28rem] h-[28rem] rounded-full bg-indigo-400 opacity-25 blur-[80px]"></div>
+
+    <div class="relative max-w-5xl px-5 pt-12 mx-auto text-center pb-14 sm:pt-20 sm:pb-20">
+        <h1 data-hero-title class="text-[2.35rem] font-extrabold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl text-balance">
+            Formation de {{ stats.places }} jeunes
+            <span class="block text-violet-200">aux métiers des services d’aide à la personne</span>
+        </h1>
+
+        <p data-hero-fade class="max-w-2xl mx-auto mt-6 text-lg text-indigo-100 sm:text-xl">
+            Une formation gratuite de 3 mois au Certificat de Qualification Professionnelle (CQP), puis un placement en entreprise. 
+        </p>
+
+        <div data-hero-fade class="flex flex-wrap justify-center gap-3.5 mt-9">
+            <a href="#ou-sinscrire" class="inline-flex items-center justify-center w-full max-w-[20rem] sm:w-auto sm:max-w-none gap-2.5 min-h-[56px] px-7 text-xl font-bold text-white rounded-2xl bg-gradient-to-r from-orange-300 to-orange-500 shadow-[0_14px_28px_-12px_rgba(194,65,12,0.7)] transition hover:from-orange-400 hover:to-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-300">
+                <i class="fas fa-location-dot" aria-hidden="true"></i>
+                Où m’inscrire ?
+            </a>
+            <a href="{{ asset('documents/COMMUNIQUE DE RECRUTEMENT.pdf') }}" download="communique-recrutement-lemetier-2026.pdf"
+               class="inline-flex items-center justify-center w-full max-w-[20rem] sm:w-auto sm:max-w-none gap-2.5 min-h-[56px] px-6 font-semibold text-white border-[1.5px] border-white/40 rounded-2xl bg-white/10 transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-300">
+                <i class="fas fa-download" aria-hidden="true"></i>
+                Télécharger le communiqué
+            </a>
+        </div>
+
+        <dl data-hero-fade class="grid max-w-xl grid-cols-3 gap-3 mx-auto mt-10 sm:mt-12">
+            {% for compteur in [
+                {'valeur': stats.metiers, 'label': 'Métiers'},
+                {'valeur': stats.etablissements, 'label': 'Établissements'},
+                {'valeur': stats.places, 'label': 'Places'}
+            ] %}
+                <div class="flex flex-col-reverse px-2 py-4 border rounded-2xl bg-white/[0.08] border-white/15">
+                    <dt class="mt-1.5 text-[13px] text-indigo-200">{{ compteur.label }}</dt>
+                    <dd class="text-3xl font-extrabold leading-none tabular-nums sm:text-4xl" data-count="{{ compteur.valeur }}">{{ compteur.valeur }}</dd>
+                </div>
+            {% endfor %}
+        </dl>
+    </div>
+</section>
+
+{# ==================== PRÉSENTATION ==================== #}
+<section id="presentation" class="bg-white overflow-clip" data-loops>
+    <div class="flex flex-wrap items-center max-w-6xl px-6 py-20 mx-auto gap-x-[72px] gap-y-16 sm:py-28">
+        <div class="flex-[1_1_28rem] min-w-0" data-reveal="left">
+            <h2 class="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">Une formation-insertion gratuite, portée par l’État</h2>
+            <p class="max-w-prose mt-5 text-lg text-slate-700">
+                Le Ministère délégué chargé de l’Enseignement Technique, à travers la Direction de l’Apprentissage et de l’Insertion Professionnelle (DAIP) et l’École de la 2ème Chance (E2C), recrute avec le Groupe LEMETIER {{ stats.places }} jeunes pour une formation au CQP dans les métiers des services d’aide à la personne et aux entreprises.
+            </p>
+            <p class="mt-6 mb-3 font-bold">Pour t’inscrire, tu dois :</p>
+            <ul class="grid gap-3" data-reveal-stagger>
+                {% for condition in [
+                    {'icone': 'fa-user', 'ton': 'bg-purple-100 text-purple-700', 'texte': 'Avoir de 18 à 40 ans'},
+                    {'icone': 'fa-book-open', 'ton': 'bg-indigo-100 text-indigo-700', 'texte': 'Savoir lire et écrire'},
+                    {'icone': 'fa-flag', 'ton': 'bg-pink-100 text-pink-700', 'texte': 'Être de nationalité ivoirienne'}
+                ] %}
+                    <li class="flex items-center gap-3.5 req-item">
+                        <span class="flex items-center justify-center flex-shrink-0 w-10 h-10 rounded-xl {{ condition.ton }}" aria-hidden="true"><i class="fas {{ condition.icone }}"></i></span>
+                        <span class="text-lg font-bold">{{ condition.texte }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="relative isolate flex-[1_1_22rem] min-w-0" data-reveal="right">
+            <div aria-hidden="true" class="deco-blob absolute -z-10 top-7 -right-7 -bottom-7 left-7 opacity-90 bg-[linear-gradient(135deg,#4338CA_0%,#7E22CE_60%,#EA580C_130%)]"></div>
+            <div aria-hidden="true" class="deco-dots absolute -z-10 -top-10 -left-10 w-[168px] h-[168px] bg-[radial-gradient(#A5B4FC_2px,transparent_2.5px)] [background-size:18px_18px]"></div>
+            <div aria-hidden="true" class="deco-spin absolute -z-10 -top-12 -right-11 w-[132px] h-[132px] rounded-full border-2 border-dashed border-orange-500"></div>
+            <div aria-hidden="true" class="deco-float-b absolute z-[3] -right-3.5 bottom-12 w-[22px] h-[22px] rounded-full bg-orange-500 shadow-[0_0_0_6px_rgba(249,115,22,0.2)]"></div>
+
+            <div class="relative overflow-hidden img-zoom rounded-3xl shadow-[0_34px_64px_-30px_rgba(30,27,75,0.6)]">
+                <img src="{{ asset('image/image-presentation.webp') }}" width="1280" height="720" loading="lazy" decoding="async"
+                     alt="Jeunes professionnels en tenue de travail"
+                     class="block object-cover w-full aspect-[4/3]">
+            </div>
+
+            <div class="absolute z-[2] -top-5 -left-5" data-reveal="pop">
+                <p class="deco-float-b flex items-center gap-2.5 px-4 py-2.5 bg-white rounded-[14px] shadow-[0_16px_32px_-16px_rgba(15,23,42,0.35)]">
+                    <strong class="text-2xl leading-none text-indigo-700 tabular-nums">{{ stats.places }}</strong>
+                    <span class="text-[13px] font-semibold leading-tight text-slate-600">jeunes<br>à former</span>
+                </p>
+            </div>
+            <div class="absolute z-[2] -left-3 -bottom-[22px]" data-reveal="pop">
+                <div class="deco-float-a flex items-center gap-3 px-[18px] py-3 bg-white rounded-2xl shadow-[0_16px_32px_-16px_rgba(15,23,42,0.35)]">
+                    <span class="flex items-center justify-center w-10 h-10 text-green-700 bg-green-100 rounded-full" aria-hidden="true"><i class="fas fa-check"></i></span>
+                    <span><strong class="block text-lg text-green-700">Gratuit</strong><span class="text-[13px] text-slate-600">inscription et formation</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# ==================== POUR QUI ==================== #}
+<section class="bg-[#faf8f3]">
+    <div class="max-w-6xl px-5 py-16 mx-auto sm:py-24">
+        <div class="text-center">
+            <h2 class="text-3xl font-extrabold leading-tight tracking-tight sm:text-5xl text-slate-900">Des parcours de formation <span class="text-orange-600">pour toi</span></h2>
+            <p class="max-w-xl mx-auto mt-3 text-lg text-slate-600">Tu te reconnais dans l’un de ces profils ? Cette formation est faite pour toi.</p>
+        </div>
+
+        <ul class="grid gap-5 mt-11 md:grid-cols-3" data-reveal-list>
+            {% for profil in [
+                {'icone': 'fa-star', 'ton': 'bg-orange-100 text-orange-700', 'texte': 'Tu as un talent'},
+                {'icone': 'fa-heart', 'ton': 'bg-pink-100 text-pink-700', 'texte': 'Tu as une passion'},
+                {'icone': 'fa-briefcase', 'ton': 'bg-indigo-100 text-indigo-700', 'texte': 'Tu veux te former et travailler dans les services d’aide à la personne'}
+            ] %}
+                <li data-reveal-item class="flex flex-col gap-[18px] p-7 bg-white border rounded-[20px] border-[#F1E7D8] shadow-[0_14px_30px_-24px_rgba(15,23,42,0.35)]">
+                    <span class="flex items-center justify-center w-14 h-14 text-2xl rounded-2xl {{ profil.ton }}" aria-hidden="true"><i class="fas {{ profil.icone }}"></i></span>
+                    <span class="text-[22px] font-extrabold leading-snug">{{ profil.texte }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <div class="flex flex-wrap items-center justify-between gap-x-10 gap-y-6 p-6 mt-7 text-white rounded-3xl sm:p-9 bg-gradient-to-br from-indigo-700 to-purple-700" data-reveal="up">
+            <div class="flex-[1_1_26rem] min-w-0">
+                <p class="text-xl font-bold leading-snug sm:text-2xl"><strong class="font-extrabold">Le Groupe LEMETIER</strong> t’aide à te former, à décrocher un contrat et à construire ton avenir professionnel.</p>
+                <ul class="flex flex-wrap gap-2 mt-[18px]" aria-label="Types de contrat">
+                    {% for contrat in ['Stage', 'Intérim', 'CDI'] %}
+                        <li class="px-3.5 py-1.5 text-[15px] font-bold rounded-full bg-white/[0.16]">{{ contrat }}</li>
+                    {% endfor %}
+                    <li class="px-3.5 py-1.5 text-[15px] font-bold rounded-full bg-white/[0.16]"><span aria-hidden="true">…</span><span class="sr-only">et d’autres contrats</span></li>
+                </ul>
+            </div>
+            <p class="flex items-center flex-shrink-0 gap-3 px-5 py-3.5 bg-white rounded-2xl text-slate-900">
+                <span class="flex items-center justify-center w-10 h-10 text-green-700 bg-green-100 rounded-full" aria-hidden="true"><i class="fas fa-check"></i></span>
+                <span><strong class="block text-lg text-green-700">100 % gratuit</strong><span class="text-sm text-slate-600">inscription et formation</span></span>
+            </p>
+        </div>
+    </div>
+</section>
+
+{# ==================== OÙ M'INSCRIRE ==================== #}
+<section id="ou-sinscrire" class="border-y border-indigo-100 bg-gradient-to-br from-indigo-50 to-purple-50 scroll-mt-24">
+    <div class="max-w-6xl px-5 py-16 mx-auto sm:py-24">
+        <div class="text-center">
+            <h2 class="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">Présente-toi dans le lycée de ton métier</h2>
+        </div>
+
+        <div class="grid gap-6 mt-10 md:grid-cols-2 md:items-start" data-reveal-list>
+            {% for lycee in lycees %}
+                <article data-reveal-item class="flex flex-col overflow-hidden bg-white border border-indigo-100 rounded-[20px] shadow-[0_14px_32px_-22px_rgba(67,56,202,0.45)]">
+                    <div class="flex items-center justify-between gap-3.5 md:min-h-[112px] px-[22px] py-[18px] text-white {{ loop.index is odd ? 'bg-gradient-to-br from-indigo-700 to-violet-700' : 'bg-gradient-to-br from-purple-700 to-blue-700' }}">
+                        <div class="min-w-0">
+                            <h3 class="flex items-center gap-2 text-3xl font-extrabold leading-none tracking-tight">
+                                <i class="flex-shrink-0 text-xl fas fa-location-dot" aria-hidden="true"></i>{{ lycee.ville }}
+                            </h3>
+                            <p class="mt-1.5 text-sm font-semibold leading-snug text-white/90">{{ lycee.nom }} ({{ lycee.code }})</p>
+                        </div>
+                        <p class="flex-shrink-0 px-3 py-2 text-center bg-white rounded-[14px]">
+                            <strong class="block text-2xl leading-none text-indigo-700 tabular-nums">{{ lycee.places }}</strong>
+                            <span class="text-xs font-bold text-slate-600">places</span>
+                        </p>
+                    </div>
+                    <ul class="flex flex-wrap gap-2 px-[22px] pt-4 pb-5">
+                        {% for m in lycee.metiers %}
+                            <li class="inline-flex items-center gap-2 py-1.5 pl-3 pr-1.5 text-[15px] font-bold rounded-full bg-indigo-50 text-indigo-950">
+                                {{ m.nom }}
+                                <span class="px-2.5 text-sm bg-white rounded-full text-indigo-700 tabular-nums">{{ m.places }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{# ==================== MÉTIERS ==================== #}
+<section id="metiers" data-metiers class="text-white bg-gradient-to-br from-indigo-700 via-purple-700 to-blue-700">
+    <div class="max-w-6xl px-5 py-16 mx-auto sm:py-24">
+        <div class="text-center">
+            <h2 class="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">Métiers et places disponibles</h2>
+            {% set textes = {'tous': stats.places ~ ' places dans ' ~ stats.metiers ~ ' métiers, réparties entre Yamoussoukro et Bouaké.'} %}
+            {% for lycee in lycees %}
+                {% set textes = textes|merge({(lycee.code): lycee.nom ~ ' (' ~ lycee.code ~ ') : ' ~ lycee.places ~ ' places dans ' ~ lycee.metiers|length ~ ' métiers.'}) %}
+            {% endfor %}
+            <p class="mt-3 text-indigo-100" data-filtre-label data-textes="{{ textes|json_encode }}" aria-live="polite">{{ textes.tous }}</p>
+        </div>
+
+        {# Téléphone : trois segments égaux sur une ligne, nombre de places dessous ; ordinateur : pastilles en ligne #}
+        {% set filtre_class = 'flex flex-col items-center justify-center min-h-[52px] px-2 sm:px-4 sm:flex-row sm:gap-1.5 sm:min-h-[44px] rounded-xl text-sm sm:text-[15px] font-bold leading-tight transition-colors duration-200 text-white aria-pressed:bg-white aria-pressed:text-indigo-700 hover:bg-white/10 aria-pressed:hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-300' %}
+        <div data-filtre-group hidden role="group" aria-label="Filtrer les métiers par lycée"
+             class="grid grid-cols-3 sm:flex sm:flex-wrap sm:justify-center w-full sm:w-fit max-w-md sm:max-w-full gap-1.5 sm:gap-2 p-1.5 mx-auto mt-7 rounded-2xl bg-slate-900/20">
+            <button type="button" data-filtre="tous" aria-pressed="true" class="{{ filtre_class }}">
+                <span><span class="sm:hidden">Tous</span><span class="hidden sm:inline">Tous les lycées</span></span>
+                <span class="text-xs font-semibold opacity-75 sm:text-[15px] tabular-nums">{{ stats.places }}</span>
+            </button>
+            {% for lycee in lycees %}
+                <button type="button" data-filtre="{{ lycee.code }}" aria-pressed="false" class="{{ filtre_class }}">
+                    <span>{{ lycee.ville }}</span>
+                    <span class="text-xs font-semibold opacity-75 sm:text-[15px] tabular-nums">{{ lycee.places }}</span>
+                </button>
+            {% endfor %}
+        </div>
+
+        {% include 'partials/_offres_metiers_cards.html.twig' with {offresMetiers: offresMetiers} %}
+
+        <p class="mt-8 text-xl font-extrabold text-center">Total : {{ stats.places }} places</p>
+    </div>
+</section>
+
+{# ==================== PARCOURS ==================== #}
+{% set etapes = [
+    {'titre': 'Inscription au lycée', 'texte': periode ? 'Du ' ~ periode ~ ', au LPH ou au LPMMS.' : 'Au LPH ou au LPMMS, avec ton dossier complet.'},
+    {'titre': 'Analyse des dossiers', 'texte': 'Vérification des pièces et des conditions.'},
+    {'titre': 'Entretien de sélection', 'texte': 'Convocation dans ton espace candidat.'},
+    {'titre': 'Visite médicale', 'texte': 'Convocation dans ton espace candidat.'},
+    {'titre': 'Résultats', 'texte': 'Publiés sur ce site, dans ton espace candidat.'}
+] %}
+{% set progression = parcours.en_cours
+    ? ((parcours.en_cours - 1) + 0.5) / (etapes|length - 1)
+    : (parcours.terminees - 1) / (etapes|length - 1) %}
+<section class="border-y border-green-200 bg-gradient-to-br from-green-50 to-emerald-50">
+    <div class="max-w-6xl px-5 py-16 mx-auto sm:py-24">
+        <div class="text-center">
+            <h2 class="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">Ton parcours, étape par étape</h2>
+            <p class="max-w-2xl mx-auto mt-3 text-slate-600">Après l’inscription, la sélection se fait en trois étapes. Tes convocations et tes résultats apparaissent dans ton espace candidat.</p>
+        </div>
+
+        <div class="relative mt-12" data-parcours data-progress="{{ progression }}" style="--progress: {{ progression }}">
+            <div class="parcours-track" aria-hidden="true"></div>
+            <div class="parcours-fill" data-parcours-fill aria-hidden="true"></div>
+            <ol class="relative grid gap-8 md:grid-cols-5 md:gap-4">
+                {% for etape in etapes %}
+                    {% set courante = loop.index == parcours.en_cours %}
+                    {% set terminee = loop.index <= parcours.terminees %}
+                    <li class="flex gap-4 md:flex-col md:gap-2.5">
+                        <span data-parcours-dot {% if terminee or courante %}data-current{% endif %}
+                              class="parcours-dot flex items-center justify-center flex-shrink-0 w-[52px] h-[52px] text-lg font-extrabold bg-white border-2 border-green-100 rounded-full text-slate-600">{{ loop.index }}</span>
+                        <div class="md:mt-1">
+                            <h3 class="text-lg font-extrabold">{{ etape.titre }}</h3>
+                            <p class="mt-1 text-[15px] text-slate-600">{{ etape.texte }}</p>
+                            {% if courante %}
+                                <p class="inline-flex items-center gap-1.5 px-2.5 py-0.5 mt-2.5 text-[13px] font-bold text-green-800 bg-green-100 rounded-full">
+                                    <span class="block w-[7px] h-[7px] bg-green-500 rounded-full pulse-dot" aria-hidden="true"></span>En cours
+                                </p>
+                            {% elseif terminee %}
+                                <p class="inline-flex px-2.5 py-0.5 mt-2.5 text-[13px] font-bold rounded-full text-slate-600 bg-slate-100">Terminée</p>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+</section>
+
+{# ==================== PIÈCES À FOURNIR ==================== #}
+<section class="bg-white">
+    <div class="max-w-5xl px-5 py-16 mx-auto sm:py-24">
+        <div class="text-center">
+            <h2 class="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">Les 4 pièces à apporter au lycée</h2>
+            <p class="max-w-2xl mx-auto mt-3 text-slate-600">L’agent du lycée les numérise et les joint à ta candidature.</p>
+        </div>
+        <ol class="grid gap-4 mx-auto mt-10 max-w-[902px] md:grid-cols-2" data-reveal-list>
+            {% for piece in [
+                {'icone': 'fa-file-lines', 'ton': 'bg-indigo-100 text-indigo-700', 'texte': 'L’extrait d’acte de naissance ou le jugement supplétif'},
+                {'icone': 'fa-id-card', 'ton': 'bg-purple-100 text-purple-700', 'texte': 'La photocopie de la CNI ou de l’attestation d’identité'},
+                {'icone': 'fa-camera', 'ton': 'bg-pink-100 text-pink-700', 'texte': 'Une photo d’identité en couleur'},
+                {'icone': 'fa-notes-medical', 'ton': 'bg-green-100 text-green-700', 'texte': 'Une copie de la carte CMU (Couverture Maladie Universelle)'}
+            ] %}
+                <li data-reveal-item class="flex items-center gap-4 p-5 border rounded-[18px] bg-slate-50 border-slate-200">
+                    <span class="flex items-center justify-center flex-shrink-0 w-12 h-12 text-xl rounded-2xl {{ piece.ton }}" aria-hidden="true"><i class="fas {{ piece.icone }}"></i></span>
+                    <span class="text-[17px] font-bold leading-snug">{{ piece.texte }}</span>
+                </li>
+            {% endfor %}
+        </ol>
+    </div>
+</section>
+
+{# ==================== PARTENAIRES ==================== #}
+{% if partenaires is not empty %}
+<section class="border-t bg-slate-50 border-slate-200">
+    <div class="max-w-5xl px-5 py-14 mx-auto text-center">
+        <h2 class="text-2xl font-extrabold sm:text-3xl">Nos partenaires institutionnels et techniques</h2>
+        <p class="max-w-2xl mx-auto mt-2.5 text-slate-600">Ils accompagnent le projet pendant toute la formation et l’insertion des jeunes.</p>
+        <ul class="flex flex-wrap justify-center gap-5 mt-7">
+            {% for partenaire in partenaires %}
+                <li>
+                    <a href="{{ partenaire.lien }}" target="_blank" rel="noopener noreferrer"
+                       class="flex flex-col items-center gap-2.5 px-8 py-5 bg-white border rounded-[18px] border-slate-200 card-lift shadow-[0_10px_24px_-18px_rgba(15,23,42,0.4)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-500">
+                        <img src="{{ asset(partenaire.image) }}" alt="" width="120" height="120" loading="lazy" class="object-contain w-28 h-28">
+                        <span class="font-bold text-slate-900">{{ partenaire.nom }}</span>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+{% endif %}
+
+{# ==================== INFOLINE ==================== #}
+<section class="text-white bg-gradient-to-r from-indigo-600 to-purple-600">
+    <div class="max-w-5xl px-5 py-14 mx-auto text-center">
+        <h2 class="text-2xl font-extrabold sm:text-3xl">Une question sur le recrutement ?</h2>
+        <p class="mt-2.5 text-indigo-100">Infoline de la DAIP. L’inscription est gratuite : personne ne doit te demander d’argent.</p>
+        <div class="flex flex-wrap justify-center gap-3 mt-6">
+            {% for lien in [
+                {'href': 'tel:+2250708114259', 'icone': 'fa-phone', 'texte': '07 08 11 42 59'},
+                {'href': 'tel:+2250708417779', 'icone': 'fa-phone', 'texte': '07 08 41 77 79'},
+                {'href': 'https://www.daip.ci', 'icone': 'fa-globe', 'texte': 'www.daip.ci'}
+            ] %}
+                <a href="{{ lien.href }}" {% if lien.href starts with 'http' %}target="_blank" rel="noopener noreferrer"{% endif %}
+                   class="inline-flex items-center gap-2.5 min-h-[52px] px-5 text-lg font-bold border rounded-2xl bg-white/[0.12] border-white/30 tabular-nums transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-300">
+                    <i class="fas {{ lien.icone }}" aria-hidden="true"></i>{{ lien.texte }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{{ encore_entry_script_tags('home') }}
+{% endblock %}

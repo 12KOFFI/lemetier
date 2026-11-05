@@ -1,0 +1,40 @@
+# Secrets : ne jamais envoyer
+/.env
+/.env.*
+/config/secrets/prod/prod.decrypt.private.php
+
+# Propre au serveur ou au poste
+/php.ini
+/php.ini.bak
+/.user.ini
+/.claude/
+/.impeccable/
+/.vscode/
+/DESIGN.md
+/PRODUCT.md
+/node_modules/
+/npm-debug.log
+/yarn-error.log
+/.php-cs-fixer.cache
+
+# Tests : contiennent des mots de passe de test, ne vont pas en production
+/tests/
+
+# Documents des candidats : jamais dans le dépôt
+/storage/*
+!/storage/.htaccess
+!/storage/media/
+/storage/media/*
+!/storage/media/.gitkeep
+/public/media/
+/public/uploads/contrats/
+/public/uploads/livrets/
+/public/bundles/
+
+# var/ : seul le cache de production est envoyé (hébergement sans terminal)
+/var/*
+!/var/cache/
+/var/cache/*
+!/var/cache/prod/
+/var/cache/prod/profiler/
+/var/cache/prod/*Debug*

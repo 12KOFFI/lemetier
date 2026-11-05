@@ -1,0 +1,21 @@
+parameters:
+    dir_image: '%kernel.project_dir%/public/image/'
+    # Documents des candidats : hors du dossier public, servis uniquement par MediaController.
+    env(STORAGE_DIR): '%kernel.project_dir%/storage/'
+    dir_storage: '%env(resolve:STORAGE_DIR)%'
+    dir_media: '%env(resolve:STORAGE_DIR)%media/'
+    timezone: 'Africa/Abidjan'
+    metiers_directory: '%kernel.project_dir%/public/uploads/metiers'
+    # false : les candidats ne s'inscrivent plus seuls, la candidature est saisie par le lycée (compte ENT).
+    env(CANDIDATURE_PUBLIQUE): 'false'
+    candidature_publique: '%env(bool:CANDIDATURE_PUBLIQUE)%'
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'

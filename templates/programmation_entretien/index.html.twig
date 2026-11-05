@@ -1,0 +1,531 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Programmation des entretiens | GROUPE LEMETIER{% endblock %}
+
+{% block body %}
+
+{% include 'partials/_flash_messages.html.twig' %}
+
+{# ===== En-tête ===== #}
+<div class="relative p-8 mb-8 overflow-hidden text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl">
+    <div class="absolute w-56 h-56 rounded-full -right-10 -top-10 bg-white/10"></div>
+    <div class="absolute rounded-full -right-24 -bottom-24 w-72 h-72 bg-white/5"></div>
+    <div class="relative flex flex-col gap-4 md:flex-row md:items-center md:gap-6">
+        <div class="flex items-center justify-center shadow-inner w-14 h-14 shrink-0 bg-white/20 rounded-2xl">
+            <i class="text-2xl fas fa-calendar-check"></i>
+        </div>
+        <div class="flex-1">
+            <h1 class="text-2xl font-bold">Programmation des entretiens</h1>
+            <p class="max-w-2xl mt-1 text-white/80">Importez un seul fichier contenant les candidats de tous les établissements et métiers. Vérifiez l’aperçu avant d’enregistrer le planning.</p>
+        </div>
+        <div class="items-center hidden gap-2 text-xs font-medium md:flex text-white/90">
+            <span class="flex items-center gap-1.5 bg-white/15 rounded-full px-3 py-1.5">
+                <span class="w-5 h-5 rounded-full bg-white/25 flex items-center justify-center text-[0.65rem]">1</span> Importer
+            </span>
+            <i class="fas fa-chevron-right text-white/50 text-[0.6rem]"></i>
+            <span class="flex items-center gap-1.5 bg-white/15 rounded-full px-3 py-1.5">
+                <span class="w-5 h-5 rounded-full bg-white/25 flex items-center justify-center text-[0.65rem]">2</span> Paramétrer
+            </span>
+            <i class="fas fa-chevron-right text-white/50 text-[0.6rem]"></i>
+            <span class="flex items-center gap-1.5 bg-white/15 rounded-full px-3 py-1.5">
+                <span class="w-5 h-5 rounded-full bg-white/25 flex items-center justify-center text-[0.65rem]">3</span> Répartir
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-5xl px-4 pb-16 mx-auto space-y-8">
+
+    {# ===== Formulaire d'import ===== #}
+    <div class="overflow-hidden bg-white border shadow-xl rounded-2xl border-slate-200">
+        <div class="p-6 md:p-8">
+            <h3 class="flex items-center pb-4 mb-6 text-lg font-semibold text-indigo-800 border-b border-slate-100">
+                <div class="flex items-center justify-center w-8 h-8 mr-3 bg-indigo-100 rounded-lg">
+                    <i class="text-indigo-600 fas fa-file-excel"></i>
+                </div>
+                Import et paramètres de répartition
+            </h3>
+
+            <form method="post" action="{{ path('app_programmation_entretien') }}" enctype="multipart/form-data" class="space-y-8">
+                <input type="hidden" name="_token" value="{{ csrf_token('programmation_entretiens') }}">
+
+                {# --- Fichier --- #}
+                <div>
+                    <p class="mb-3 text-xs font-semibold tracking-wide uppercase text-slate-400">Fichier source</p>
+                    <p class="mb-3 text-sm text-slate-600">
+                        Une ligne par candidat. Le numéro de candidature est obligatoire; l’établissement et le métier du fichier, s’ils sont renseignés, sont vérifiés avec le dossier.
+                        <a href="{{ path('app_programmation_entretien_modele') }}" class="ml-1 font-semibold text-indigo-600 hover:text-indigo-800">
+                            Télécharger le modèle Excel
+                        </a>
+                    </p>
+                    <label for="fichier_excel" id="drop-zone"
+                           class="flex items-center gap-4 p-5 transition border-2 border-dashed cursor-pointer group rounded-xl border-slate-300 hover:border-indigo-400 bg-slate-50 hover:bg-indigo-50/50">
+                        <div id="file-icon-container" class="flex items-center justify-center bg-white border rounded-full w-11 h-11 shrink-0 border-slate-200 group-hover:border-indigo-300">
+                            <i id="file-icon" class="transition fas fa-file-arrow-up text-slate-400 group-hover:text-indigo-500"></i>
+                        </div>
+                        <div class="flex-1">
+                            <span id="file-name" class="block text-sm font-medium text-slate-700">
+                                Fichier Excel des candidats éligibles <span class="text-red-500">*</span>
+                            </span>
+                            <span id="file-status" class="block text-xs text-slate-400 mt-0.5">Formats acceptés : .xlsx, .xls, .csv</span>
+                        </div>
+                        <span id="file-btn-text" class="hidden sm:inline-flex items-center px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-xs font-semibold text-slate-600 group-hover:border-indigo-300 group-hover:text-indigo-600 transition">
+                            Parcourir
+                        </span>
+                    </label>
+                    <input id="fichier_excel" type="file" name="fichier_excel" accept=".xlsx,.xls,.csv" required class="sr-only">
+                </div>
+
+                {# --- Portée de l'import --- #}
+                <div>
+                    <p class="mb-3 text-xs font-semibold tracking-wide uppercase text-slate-400">Portée de l’importation</p>
+                    <div class="p-4 text-sm text-indigo-800 border border-indigo-100 rounded-xl bg-indigo-50">
+                        <i class="mr-2 fas fa-layer-group"></i>
+                        Le système retrouve l’établissement et le métier à partir de chaque candidature. Les groupes sont présentés séparément et les jurys sont répartis dans un planning commun sans créneau simultané.
+                        {% if is_granted('ROLE_ENT') %}
+                            L’import est limité à votre établissement : <strong>{{ etablissementConnecte ? etablissementConnecte.nom : 'aucun établissement rattaché' }}</strong>.
+                        {% endif %}
+                    </div>
+                </div>
+
+                {# --- Effectifs & Jurys --- #}
+                <div>
+                    <p class="mb-3 text-xs font-semibold tracking-wide uppercase text-slate-400">Répartition des jurys</p>
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                        <div>
+                            <label class="block mb-1 text-sm font-medium text-slate-700">
+                                Nombre de jurys <span class="text-red-500">*</span>
+                            </label>
+                            <div class="flex items-center gap-2.5 w-full border border-slate-300 rounded-lg px-3.5 py-2.5 bg-white focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition">
+                                <i class="fas fa-users text-slate-400"></i>
+                                <input type="number" name="nb_jury" min="1" required placeholder="Ex: 3"
+                                       class="w-full p-0 bg-transparent border-0 focus:ring-0 focus:outline-none">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block mb-1 text-sm font-medium text-slate-700">
+                                Capacité par jury et par jour <span class="text-red-500">*</span>
+                            </label>
+                            <div class="flex items-center gap-2.5 w-full border border-slate-300 rounded-lg px-3.5 py-2.5 bg-white focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition">
+                                <i class="fas fa-gauge-high text-slate-400"></i>
+                                <input type="number" name="capacite_jury_jour" min="1" required placeholder="Ex: 40"
+                                       class="w-full p-0 bg-transparent border-0 focus:ring-0 focus:outline-none">
+                            </div>
+                        </div>
+                    </div>
+                    {#
+                    <div class="p-3 mt-3 text-xs text-indigo-700 border border-indigo-100 rounded-lg bg-indigo-50">
+                        <i class="mr-1 fas fa-info-circle"></i>
+                        La capacité saisie est répartie automatiquement entre Vague 1 (matin) et Vague 2 (après-midi)
+                        selon un ratio fixé par défaut (62,5% pour le mation et 37,5% pour l'après-midi — ex: 40 → 25 le matin, 15 l'après-midi).
+                    </div>
+                    #}
+                </div>
+
+                {# --- Période --- #}
+                <div>
+                    <p class="mb-3 text-xs font-semibold tracking-wide uppercase text-slate-400">Période des entretiens</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block mb-1 text-sm font-medium text-slate-700">
+                                Date de début <span class="text-red-500">*</span>
+                            </label>
+                            <div class="flex items-center gap-2.5 w-full border border-slate-300 rounded-lg px-3.5 py-2.5 bg-white focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition">
+                                <i class="fas fa-calendar-day text-slate-400"></i>
+                                <input type="date" name="date_debut" required
+                                       class="w-full p-0 bg-transparent border-0 focus:ring-0 focus:outline-none">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block mb-1 text-sm font-medium text-slate-700">
+                                Date de fin <span class="text-red-500">*</span>
+                            </label>
+                            <div class="flex items-center gap-2.5 w-full border border-slate-300 rounded-lg px-3.5 py-2.5 bg-white focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition">
+                                <i class="fas fa-calendar-check text-slate-400"></i>
+                                <input type="date" name="date_fin" required
+                                       class="w-full p-0 bg-transparent border-0 focus:ring-0 focus:outline-none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end pt-2 border-t border-slate-100">
+                    <button type="submit"
+                            class="inline-flex items-center gap-2 px-8 py-2.5 bg-indigo-600 text-white font-semibold rounded-lg shadow-sm hover:bg-indigo-700 hover:shadow-md active:scale-[0.98] transition">
+                        <i class="fas fa-shuffle"></i>
+                        Lancer la répartition
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if previsualisation is defined and previsualisation %}
+    <div class="space-y-6">
+        <div class="p-5 border rounded-2xl border-amber-200 bg-amber-50 text-amber-900">
+            <h2 class="text-lg font-bold"><i class="mr-2 fas fa-eye"></i>Aperçu — rien n’a encore été enregistré</h2>
+            <p class="mt-1 text-sm">Vérifiez la répartition par établissement et métier. Les candidats déjà programmés ne seront pas modifiés; les lignes en erreur et les candidats sans créneau resteront non traités.</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 md:grid-cols-5">
+            <div class="p-4 text-center bg-white border rounded-xl"><strong class="block text-2xl">{{ previsualisation.total_excel }}</strong><span class="text-xs text-slate-500">Lignes analysées</span></div>
+            <div class="p-4 text-center bg-white border rounded-xl"><strong class="block text-2xl">{{ previsualisation.planifies|length }}</strong><span class="text-xs text-slate-500">À programmer</span></div>
+            <div class="p-4 text-center bg-white border rounded-xl"><strong class="block text-2xl text-red-600">{{ previsualisation.erreurs|length }}</strong><span class="text-xs text-slate-500">Lignes en erreur</span></div>
+            <div class="p-4 text-center bg-white border rounded-xl"><strong class="block text-2xl text-blue-600">{{ previsualisation.deja_programmes|length }}</strong><span class="text-xs text-slate-500">Déjà programmés</span></div>
+            <div class="p-4 text-center bg-white border rounded-xl"><strong class="block text-2xl text-amber-600">{{ previsualisation.sans_creneau|length }}</strong><span class="text-xs text-slate-500">Sans créneau</span></div>
+        </div>
+
+        <div class="overflow-hidden bg-white border shadow-sm rounded-2xl border-slate-200">
+            <div class="px-5 py-4 border-b border-slate-100">
+                <h3 class="font-semibold text-slate-800">Effectifs par établissement et métier</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead class="text-xs text-left uppercase bg-slate-50 text-slate-500">
+                        <tr><th class="px-4 py-3">Établissement</th><th class="px-4 py-3">Métier</th><th class="px-4 py-3 text-right">Candidats</th></tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        {% for groupe in previsualisation.groupes %}
+                        <tr><td class="px-4 py-3">{{ groupe.etablissement }}</td><td class="px-4 py-3">{{ groupe.metier }}</td><td class="px-4 py-3 font-semibold text-right">{{ groupe.effectif }}</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {% if previsualisation.erreurs|length > 0 %}
+        <div class="p-4 border border-red-200 rounded-xl bg-red-50">
+            <h3 class="mb-2 font-semibold text-red-800">Lignes à corriger ou vérifier</h3>
+            <ul class="space-y-1 overflow-y-auto text-sm text-red-700 list-disc list-inside max-h-40">
+                {% for erreur in previsualisation.erreurs %}<li>{{ erreur }}</li>{% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if previsualisation.deja_programmes|length > 0 or previsualisation.sans_creneau|length > 0 %}
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {% if previsualisation.deja_programmes|length > 0 %}
+            <div class="p-4 border border-blue-200 rounded-xl bg-blue-50">
+                <h3 class="mb-2 font-semibold text-blue-800">Déjà programmés — conservés sans modification</h3>
+                <ul class="space-y-1 overflow-y-auto text-sm text-blue-700 list-disc list-inside max-h-32">
+                    {% for numero in previsualisation.deja_programmes %}<li>{{ numero }}</li>{% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% if previsualisation.sans_creneau|length > 0 %}
+            <div class="p-4 border rounded-xl border-amber-200 bg-amber-50">
+                <h3 class="mb-2 font-semibold text-amber-800">Sans créneau disponible</h3>
+                <ul class="space-y-1 overflow-y-auto text-sm list-disc list-inside max-h-32 text-amber-700">
+                    {% for numero in previsualisation.sans_creneau %}<li>{{ numero }}</li>{% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if previsualisation.planifies|length > 0 %}
+        <div class="overflow-hidden bg-white border shadow-sm rounded-2xl border-slate-200">
+            <div class="px-5 py-4 border-b border-slate-100">
+                <h3 class="font-semibold text-slate-800">Créneaux proposés</h3>
+            </div>
+            <div class="overflow-auto max-h-96">
+                <table class="w-full text-sm">
+                    <thead class="sticky top-0 text-xs text-left uppercase bg-slate-50 text-slate-500">
+                        <tr><th class="px-4 py-3">Candidature</th><th class="px-4 py-3">Établissement / métier</th><th class="px-4 py-3">Date et vague</th><th class="px-4 py-3">Jury</th></tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        {% for item in previsualisation.planifies %}
+                        <tr>
+                            <td class="px-4 py-3 font-medium">{{ item.candidature.numero }} — {{ item.candidature.user ? (item.candidature.user.nom ~ ' ' ~ item.candidature.user.prenoms)|trim : '-' }}</td>
+                            <td class="px-4 py-3">{{ item.etablissement }}<br><span class="text-xs text-slate-500">{{ item.metier }}</span></td>
+                            <td class="px-4 py-3">{{ item.date|date('d/m/Y') }} · Vague {{ item.vague }} à {{ '%02d'|format(item.heure) }}h00</td>
+                            <td class="px-4 py-3">Jury {{ item.jury }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <form method="post" action="{{ path('app_programmation_entretien') }}" class="flex flex-wrap justify-end gap-3">
+            <input type="hidden" name="_token" value="{{ csrf_token('programmation_entretiens_' ~ previsualisation.id) }}">
+            <input type="hidden" name="action" value="confirm">
+            <input type="hidden" name="preview_id" value="{{ previsualisation.id }}">
+            <a href="{{ path('app_programmation_entretien') }}" class="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-2.5 font-semibold text-slate-700 hover:bg-slate-50">Annuler</a>
+            <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-green-600 px-6 py-2.5 font-semibold text-white hover:bg-green-700">
+                <i class="fas fa-check"></i>Confirmer et enregistrer
+            </button>
+        </form>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {# ===== Résultats de la programmation ===== #}
+    {% if resultats is defined and resultats is not null %}
+    <div class="space-y-6">
+
+        <div class="flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3 flex-1 min-w-[200px]">
+                <div class="flex-1 h-px bg-slate-200"></div>
+                <span class="text-xs font-semibold tracking-wide uppercase text-slate-400 whitespace-nowrap">Résultat de la répartition</span>
+                <div class="flex-1 h-px bg-slate-200"></div>
+            </div>
+            <a href="{{ path('app_programmation_entretien_export', {
+                    date_debut: resultats.date_debut,
+                    date_fin: resultats.date_fin
+                }) }}"
+               class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 text-white text-sm font-semibold shadow-sm hover:bg-green-700 hover:shadow-md active:scale-[0.98] transition">
+                <i class="fas fa-file-excel"></i>
+                Exporter le planning par jury (Excel)
+            </a>
+        </div>
+
+        {# Récapitulatif de la capacité calculée automatiquement #}
+        <div class="flex flex-wrap p-4 text-sm text-indigo-800 border border-indigo-100 rounded-xl bg-indigo-50 gap-x-8 gap-y-2">
+            <span><i class="fas fa-calendar-days mr-1.5"></i> <strong>{{ resultats.nb_jours }}</strong> jour(s) programmé(s)</span>
+            <span><i class="fas fa-gauge-high mr-1.5"></i> <strong>{{ resultats.capacite_jury_jour }}</strong> candidats / jury / jour</span>
+            <span><i class="fas fa-sun mr-1.5"></i> Vague 1 (08h-12h) : <strong>{{ resultats.capacite_vague1 }}</strong></span>
+            <span><i class="fas fa-cloud-sun mr-1.5"></i> Vague 2 (13h-15h) : <strong>{{ resultats.capacite_vague2 }}</strong></span>
+        </div>
+
+        {# Cartes de statistiques #}
+        <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+            <div class="p-4 text-center transition bg-white border shadow-sm rounded-xl border-slate-200 hover:shadow-md">
+                <div class="flex items-center justify-center mx-auto mb-2 rounded-full w-9 h-9 bg-slate-100">
+                    <i class="text-sm fas fa-file-import text-slate-500"></i>
+                </div>
+                <p class="text-2xl font-bold text-slate-800">{{ resultats.total_excel }}</p>
+                <p class="mt-1 text-xs text-slate-500">Dans le fichier</p>
+            </div>
+            <div class="p-4 text-center transition bg-white border border-green-200 shadow-sm rounded-xl hover:shadow-md">
+                <div class="flex items-center justify-center mx-auto mb-2 bg-green-100 rounded-full w-9 h-9">
+                    <i class="text-sm text-green-600 fas fa-user-plus"></i>
+                </div>
+                <p class="text-2xl font-bold text-green-700">{{ resultats.nb_nouveaux }}</p>
+                <p class="mt-1 text-xs text-green-700">Nouveaux</p>
+            </div>
+            <div class="p-4 text-center transition bg-white border border-blue-200 shadow-sm rounded-xl hover:shadow-md">
+                <div class="flex items-center justify-center mx-auto mb-2 bg-blue-100 rounded-full w-9 h-9">
+                    <i class="text-sm text-blue-600 fas fa-rotate"></i>
+                </div>
+                <p class="text-2xl font-bold text-blue-700">{{ resultats.deja_programmes|length }}</p>
+                <p class="mt-1 text-xs text-blue-700">Déjà programmés</p>
+            </div>
+            <div class="p-4 text-center transition bg-white border border-red-200 shadow-sm rounded-xl hover:shadow-md">
+                <div class="flex items-center justify-center mx-auto mb-2 bg-red-100 rounded-full w-9 h-9">
+                    <i class="text-sm text-red-600 fas fa-circle-question"></i>
+                </div>
+                <p class="text-2xl font-bold text-red-700">{{ resultats.introuvables|length }}</p>
+                <p class="mt-1 text-xs text-red-700">Lignes à vérifier</p>
+            </div>
+            <div class="p-4 text-center transition bg-white border shadow-sm rounded-xl border-slate-200 hover:shadow-md">
+                <div class="flex items-center justify-center mx-auto mb-2 rounded-full w-9 h-9 bg-slate-100">
+                    <i class="text-sm fas fa-hourglass-half text-slate-500"></i>
+                </div>
+                <p class="text-2xl font-bold text-slate-700">{{ resultats.sans_creneau|length }}</p>
+                <p class="mt-1 text-xs text-slate-600">Sans créneau</p>
+            </div>
+        </div>
+
+        {% if resultats.sans_creneau|length > 0 %}
+        <div class="flex items-start gap-3 p-4 text-sm text-red-700 border border-red-200 rounded-xl bg-red-50">
+            <div class="flex items-center justify-center w-8 h-8 bg-red-100 rounded-full shrink-0">
+                <i class="text-red-600 fas fa-exclamation-triangle"></i>
+            </div>
+            <p class="pt-1">
+                {{ resultats.sans_creneau|length }} candidat(s) n'ont pas pu être programmés faute de créneaux disponibles
+                ({{ resultats.creneaux_disponibles }} créneaux générés pour cette période). Élargissez la période, augmentez le nombre de jurys
+                ou la capacité par jour, puis relancez l'import avec les numéros restants.
+            </p>
+        </div>
+        {% endif %}
+
+        {# Tableau des candidats programmés #}
+        {% if resultats.planifies|length > 0 %}
+        <div class="overflow-hidden bg-white border shadow-xl rounded-2xl border-slate-200">
+            <div class="p-6 md:p-8">
+                <h3 class="flex items-center pb-4 mb-5 text-lg font-semibold border-b text-slate-800 border-slate-100">
+                    <div class="flex items-center justify-center w-8 h-8 mr-3 bg-green-100 rounded-lg">
+                        <i class="text-green-600 fas fa-check"></i>
+                    </div>
+                    Candidats programmés
+                    <span class="ml-auto text-sm font-normal text-slate-400">
+                        <i class="mr-1 fas fa-location-dot"></i>{{ resultats.lieu }}
+                    </span>
+                </h3>
+                <div class="-mx-2 overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="text-xs text-left uppercase border-b text-slate-400 border-slate-100">
+                                <th class="py-2.5 px-2">N° Candidature</th>
+                                <th class="py-2.5 px-2">Candidat</th>
+                                <th class="py-2.5 px-2">Établissement / métier</th>
+                                <th class="py-2.5 px-2">Date</th>
+                                <th class="py-2.5 px-2">Vague</th>
+                                <th class="py-2.5 px-2">Jury</th>
+                                <th class="py-2.5 px-2 text-right">Convocation</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            {% for item in resultats.planifies %}
+                            <tr class="transition hover:bg-slate-50">
+                                <td class="py-2.5 px-2 font-medium text-slate-700 whitespace-nowrap">
+                                    {{ item.candidature.numero }}
+                                    {% if item.reprogramme %}
+                                    <span class="ml-1 inline-flex items-center px-1.5 py-0.5 rounded text-[0.65rem] font-semibold bg-blue-100 text-blue-700">Reprogrammé</span>
+                                    {% endif %}
+                                </td>
+                                <td class="py-2.5 px-2">
+                                    <div class="flex items-center gap-2.5">
+                                        <div class="w-7 h-7 shrink-0 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-[0.65rem] font-bold uppercase">
+                                            {{ item.candidature.user ? item.candidature.user.nom|slice(0, 1) ~ item.candidature.user.prenoms|slice(0, 1) : '?' }}
+                                        </div>
+                                        <span class="text-slate-700">
+                                            {{ item.candidature.user ? (item.candidature.user.nom ~ ' ' ~ item.candidature.user.prenoms)|trim : '-' }}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="py-2.5 px-2 text-slate-600">
+                                    {{ item.candidature.etablissement ? item.candidature.etablissement.nom : '-' }}<br>
+                                    <span class="text-xs text-slate-400">{{ item.candidature.metier ? item.candidature.metier.nom : '-' }}</span>
+                                </td>
+                                <td class="py-2.5 px-2 text-slate-600 whitespace-nowrap">{{ item.date|date('d/m/Y') }}</td>
+                                <td class="py-2.5 px-2 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2 py-1 text-xs font-semibold text-purple-700 border border-purple-100 rounded-full bg-purple-50">
+                                        Vague {{ item.vague }} · {{ item.vague == 1 ? '08h-12h' : '13h-15h' }}
+                                    </span>
+                                </td>
+                                <td class="py-2.5 px-2 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full bg-slate-100 text-slate-600">
+                                        Jury {{ item.jury }}
+                                    </span>
+                                </td>
+                                <td class="py-2.5 px-2 text-right">
+                                    <a href="{{ path('app_candidature_imprimer_convocation', {'id': item.candidature.id}) }}" target="_blank"
+                                       class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700 transition">
+                                        <i class="fas fa-print mr-1.5"></i> Imprimer
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {# Détail des candidats non traités #}
+        {% if resultats.introuvables|length > 0 or resultats.non_admissibles|length > 0 or resultats.sans_creneau|length > 0 %}
+        <div class="overflow-hidden bg-white border shadow-xl rounded-2xl border-slate-200">
+            <div class="p-6 md:p-8">
+                <h3 class="mb-5 text-sm font-semibold tracking-wide uppercase text-slate-400">Rapport des candidats non traités</h3>
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+                    {% if resultats.introuvables|length > 0 %}
+                    <div class="p-4 border border-red-100 rounded-xl bg-red-50/50">
+                        <p class="flex items-center justify-between mb-3 text-sm font-semibold text-red-700">
+                            <span><i class="fas fa-times-circle mr-1.5"></i> Erreurs / lignes non traitées</span>
+                            <span class="text-xs font-bold bg-red-100 text-red-700 rounded-full px-2 py-0.5">{{ resultats.introuvables|length }}</span>
+                        </p>
+                        <ul class="text-xs text-slate-600 space-y-1.5 max-h-40 overflow-y-auto pr-1">
+                            {% for numero in resultats.introuvables %}
+                            <li class="px-2 py-1 font-mono border border-red-100 rounded bg-white/70">{{ numero }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    {% if resultats.non_admissibles|length > 0 %}
+                    <div class="p-4 border rounded-xl border-amber-100 bg-amber-50/50">
+                        <p class="flex items-center justify-between mb-3 text-sm font-semibold text-amber-700">
+                            <span><i class="fas fa-ban mr-1.5"></i> Non admissibles</span>
+                            <span class="text-xs font-bold bg-amber-100 text-amber-700 rounded-full px-2 py-0.5">{{ resultats.non_admissibles|length }}</span>
+                        </p>
+                        <ul class="text-xs text-slate-600 space-y-1.5 max-h-40 overflow-y-auto pr-1">
+                            {% for numero in resultats.non_admissibles %}
+                            <li class="px-2 py-1 font-mono border rounded bg-white/70 border-amber-100">{{ numero }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    {% if resultats.sans_creneau|length > 0 %}
+                    <div class="p-4 border rounded-xl border-slate-200 bg-slate-50">
+                        <p class="flex items-center justify-between mb-3 text-sm font-semibold text-slate-700">
+                            <span><i class="fas fa-hourglass-half mr-1.5"></i> Sans créneau</span>
+                            <span class="text-xs font-bold bg-slate-200 text-slate-700 rounded-full px-2 py-0.5">{{ resultats.sans_creneau|length }}</span>
+                        </p>
+                        <ul class="text-xs text-slate-600 space-y-1.5 max-h-40 overflow-y-auto pr-1">
+                            {% for numero in resultats.sans_creneau %}
+                            <li class="px-2 py-1 font-mono bg-white border rounded border-slate-200">{{ numero }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Dynamisme du champ de fichier Excel ---
+            const fileInput = document.getElementById('fichier_excel');
+            const fileNameSpan = document.getElementById('file-name');
+            const fileStatusSpan = document.getElementById('file-status');
+            const fileIconContainer = document.getElementById('file-icon-container');
+            const fileIcon = document.getElementById('file-icon');
+            const dropZone = document.getElementById('drop-zone');
+            const fileBtnText = document.getElementById('file-btn-text');
+
+            if (fileInput) {
+                fileInput.addEventListener('change', function (e) {
+                    const file = e.target.files[0];
+
+                    if (file) {
+                        const fileSize = (file.size / (1024 * 1024)).toFixed(2);
+                        fileNameSpan.textContent = file.name;
+                        fileNameSpan.classList.add('text-indigo-700', 'font-semibold');
+
+                        fileStatusSpan.textContent = `Fichier sélectionné (${fileSize} Mo)`;
+                        fileStatusSpan.classList.remove('text-slate-400');
+                        fileStatusSpan.classList.add('text-green-600', 'font-medium');
+
+                        fileIcon.className = 'fas fa-file-excel text-green-600 text-xl';
+                        fileIconContainer.className = 'w-11 h-11 shrink-0 rounded-full bg-green-50 border border-green-200 flex items-center justify-center';
+                        dropZone.className = 'group flex items-center gap-4 rounded-xl border-2 border-solid border-green-400 bg-green-50/30 transition cursor-pointer p-5';
+                        
+                        if (fileBtnText) {
+                            fileBtnText.textContent = 'Changer';
+                            fileBtnText.className = 'hidden sm:inline-flex items-center px-3 py-1.5 rounded-lg bg-green-100 border border-green-300 text-xs font-semibold text-green-700 transition';
+                        }
+                    } else {
+                        fileNameSpan.innerHTML = 'Fichier Excel des candidats éligibles <span class="text-red-500">*</span>';
+                        fileNameSpan.classList.remove('text-indigo-700', 'font-semibold');
+
+                        fileStatusSpan.textContent = 'Formats acceptés : .xlsx, .xls, .csv';
+                        fileStatusSpan.classList.remove('text-green-600', 'font-medium');
+                        fileStatusSpan.classList.add('text-slate-400');
+
+                        fileIcon.className = 'fas fa-file-arrow-up text-slate-400 group-hover:text-indigo-500 transition';
+                        fileIconContainer.className = 'w-11 h-11 shrink-0 rounded-full bg-white border border-slate-200 group-hover:border-indigo-300 flex items-center justify-center';
+                        dropZone.className = 'group flex items-center gap-4 rounded-xl border-2 border-dashed border-slate-300 hover:border-indigo-400 bg-slate-50 hover:bg-indigo-50/50 transition cursor-pointer p-5';
+
+                        if (fileBtnText) {
+                            fileBtnText.textContent = 'Parcourir';
+                            fileBtnText.className = 'hidden sm:inline-flex items-center px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-xs font-semibold text-slate-600 group-hover:border-indigo-300 group-hover:text-indigo-600 transition';
+                        }
+                    }
+                });
+            }
+
+        });
+    </script>
+{% endblock %}

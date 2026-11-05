@@ -1,0 +1,77 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Candidature enregistrée | {{ parent() }}{% endblock %}
+
+{% block body %}
+{% set candidat = candidature.user %}
+<div class="max-w-3xl mx-auto">
+    <div class="p-8 mb-6 text-white bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl">
+        <div class="flex items-center gap-4">
+            <span class="flex items-center justify-center w-12 h-12 text-2xl rounded-full shrink-0 bg-white/20" aria-hidden="true">
+                <i class="fas fa-check"></i>
+            </span>
+            <div class="min-w-0">
+                <h1 class="text-2xl font-bold">Candidature enregistrée</h1>
+                <p class="mt-1 text-white/90">{{ candidat.nom }} {{ candidat.prenoms }}</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="p-6 mb-6 bg-white border shadow-sm md:p-8 rounded-2xl border-slate-200">
+        <p class="text-sm font-semibold text-slate-500">Numéro d'inscription</p>
+        <p class="mt-1 text-3xl font-bold tracking-wide text-indigo-800">{{ candidature.numero }}</p>
+        <dl class="grid grid-cols-1 gap-4 pt-5 mt-5 border-t sm:grid-cols-2 border-slate-200">
+            <div>
+                <dt class="text-sm text-slate-500">Métier</dt>
+                <dd class="font-semibold text-slate-800">{{ candidature.metier ? candidature.metier.nom : '—' }}</dd>
+            </div>
+            <div>
+                <dt class="text-sm text-slate-500">Établissement</dt>
+                <dd class="font-semibold text-slate-800">{{ candidature.etablissement ?? '—' }}</dd>
+            </div>
+        </dl>
+    </section>
+
+    <section class="p-6 mb-6 border md:p-8 rounded-2xl border-amber-200 bg-amber-50">
+        <h2 class="flex items-center gap-2 text-lg font-semibold text-amber-900">
+            <i class="fas fa-key" aria-hidden="true"></i> À remettre au candidat
+        </h2>
+        <p class="mt-1 text-sm text-amber-900">Il se connecte avec son téléphone ou son e-mail, et le mot de passe choisi lors de la saisie.</p>
+        <dl class="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2">
+            <div class="min-w-0">
+                <dt class="text-sm text-amber-800">Téléphone</dt>
+                <dd class="text-lg font-bold text-slate-900">{{ candidat.contact ? candidat.contact|split('', 2)|join(' ') : '—' }}</dd>
+            </div>
+            <div class="min-w-0">
+                <dt class="text-sm text-amber-800">E-mail</dt>
+                <dd class="text-lg font-bold break-words text-slate-900">{{ candidat.email ?: '—' }}</dd>
+            </div>
+        </dl>
+        <p class="mt-4 text-sm text-amber-900">Le mot de passe n'est pas affiché ici. En cas d'oubli, réinitialisez-le depuis le dossier du candidat.</p>
+    </section>
+
+    <section class="p-6 mb-6 bg-white border shadow-sm md:p-8 rounded-2xl border-slate-200">
+        <h2 class="text-lg font-semibold text-indigo-800">À dire au candidat</h2>
+        <ul class="mt-3 space-y-2 text-slate-700">
+            <li class="flex gap-3"><i class="mt-1 text-indigo-500 fas fa-circle-check" aria-hidden="true"></i> Son dossier sera examiné par nos équipes.</li>
+            <li class="flex gap-3"><i class="mt-1 text-indigo-500 fas fa-circle-check" aria-hidden="true"></i> Il sera informé de la date de son entretien.</li>
+            <li class="flex gap-3"><i class="mt-1 text-indigo-500 fas fa-circle-check" aria-hidden="true"></i> Il doit préparer ses documents originaux pour l'entretien.</li>
+        </ul>
+    </section>
+
+    <div class="flex flex-wrap justify-end gap-3">
+        <a href="{{ path('app_candidature_imprimer', {'id': candidature.id}) }}" target="_blank" rel="noopener"
+           class="inline-flex items-center px-6 py-2.5 border rounded-lg border-slate-300 bg-white text-slate-700 hover:bg-slate-50">
+            <i class="mr-2 fas fa-print" aria-hidden="true"></i> Imprimer la fiche
+        </a>
+        <a href="{{ path('app_candidature_voir', {'id': candidature.id}) }}"
+           class="inline-flex items-center px-6 py-2.5 border rounded-lg border-slate-300 bg-white text-slate-700 hover:bg-slate-50">
+            <i class="mr-2 fas fa-folder-open" aria-hidden="true"></i> Voir le dossier
+        </a>
+        <a href="{{ path('app_candidature_saisie') }}"
+           class="inline-flex items-center px-6 py-2.5 font-semibold text-white bg-indigo-600 rounded-lg shadow hover:bg-indigo-700">
+            <i class="mr-2 fas fa-plus" aria-hidden="true"></i> Nouvelle candidature
+        </a>
+    </div>
+</div>
+{% endblock %}

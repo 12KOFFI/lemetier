@@ -1,0 +1,28 @@
+when@dev:
+    web_profiler:
+        toolbar: true
+        intercept_redirects: false
+
+    framework:
+        profiler: { only_exceptions: false }
+
+# En production, la barre n'existe que si APP_DEBUG=true dans .env.
+# Elle affiche la configuration et les données envoyées à tout visiteur : à ne laisser active que le temps d'un diagnostic.
+when@prod:
+    web_profiler:
+        toolbar: '%kernel.debug%'
+        intercept_redirects: false
+
+    framework:
+        profiler:
+            enabled: '%kernel.debug%'
+            collect: '%kernel.debug%'
+            only_exceptions: false
+
+when@test:
+    web_profiler:
+        toolbar: false
+        intercept_redirects: false
+
+    framework:
+        profiler: { collect: false }

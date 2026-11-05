@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription au lycée — Recrutement E2C LEMETIER 2026{% endblock %}
+
+{% block stylesheets %}
+    {% include 'partials/_communique_head.html.twig' %}
+{% endblock %}
+
+{% block body %}
+<div class="communique bg-white text-ci-encre">
+    <div aria-hidden="true" class="flex h-1.5">
+        <div class="flex-1 bg-ci-orange"></div>
+        <div class="flex-1 bg-white"></div>
+        <div class="flex-1 bg-ci-vert"></div>
+    </div>
+
+    <section class="max-w-3xl px-6 py-16 mx-auto sm:py-20">
+        <h1 class="text-4xl font-extrabold leading-tight font-document sm:text-5xl">Les inscriptions se font au lycée</h1>
+        <p class="mt-6 text-lg leading-relaxed text-ci-ardoise">
+            Pour ce recrutement, tu ne crées pas ton compte toi-même. Présente-toi avec ton dossier complet
+            au lycée qui forme au métier que tu veux : l'agent du lycée enregistre ta candidature en ligne
+            et te remet tes identifiants pour suivre ton dossier.
+        </p>
+
+        <div class="grid gap-0 mt-10 border-t-[3px] border-b border-ci-encre sm:grid-cols-2">
+            <div class="py-5 pr-6 border-b sm:border-b-0 sm:border-r border-ci-filet">
+                <p class="text-xs font-bold tracking-wider uppercase text-ci-gris">Yamoussoukro</p>
+                <p class="mt-1 text-xl font-bold font-document">Lycée Professionnel Hôtelier (LPH)</p>
+            </div>
+            <div class="py-5 sm:pl-6">
+                <p class="text-xs font-bold tracking-wider uppercase text-ci-gris">Bouaké</p>
+                <p class="mt-1 text-xl font-bold font-document">Lycée Professionnel des Métiers de la Mode et du Social (LPMMS)</p>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-x-7 gap-y-4 mt-10">
+            <a href="{{ path('app_home') }}#ou-sinscrire"
+               class="inline-flex items-center gap-2.5 min-h-[52px] px-7 rounded-md bg-ci-orange text-ci-encre text-lg font-bold no-underline shadow-[0_6px_16px_-6px_rgba(247,127,0,0.55)] hover:brightness-95">
+                <i class="fas fa-location-dot" aria-hidden="true"></i>
+                Où m'inscrire ?
+            </a>
+            <a href="{{ path('app_login') }}" class="font-semibold underline text-ci-foret underline-offset-4 hover:text-ci-foret-fonce">
+                Mon lycée m'a déjà inscrit : me connecter
+            </a>
+        </div>
+
+        <p class="pt-6 mt-12 text-base border-t text-ci-ardoise border-ci-filet">
+            Une question ? Infoline DAIP :
+            <a href="tel:+2250708114259" class="font-semibold num text-ci-encre">07 08 11 42 59</a> ·
+            <a href="tel:+2250708417779" class="font-semibold num text-ci-encre">07 08 41 77 79</a>.
+            L'inscription est gratuite : personne ne doit te demander d'argent.
+        </p>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,3 @@
+<?php //App%255CController%255CSessionRecrutementController%2523accessDeniedResponse
+
+return [PHP_INT_MAX, []];

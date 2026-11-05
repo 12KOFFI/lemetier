@@ -1,0 +1,3 @@
+<?php //App%255CController%255CSessionRecrutementController%2523deactivateOtherSessions
+
+return [PHP_INT_MAX, []];

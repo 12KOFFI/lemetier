@@ -1,0 +1,4 @@
+# Dossier de fichiers : aucun script ne doit y être exécuté.
+<FilesMatch "\.(php|php[0-9]|phtml|phar|cgi|pl|py|sh|html?|svg)$">
+    Require all denied
+</FilesMatch>

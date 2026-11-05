@@ -1,0 +1,186 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion | {{ parent() }}{% endblock %}
+
+{% block body %}
+<!-- ==================== MESSAGES ==================== -->
+<div class="container max-w-md px-4 mx-auto mb-6">
+    {% include 'partials/_flash_messages.html.twig' %}
+</div>
+
+<!-- ==================== FORMULAIRE DE CONNEXION ==================== -->
+<div class="container px-4 pb-16 mx-auto">
+    <div class="max-w-md mx-auto">
+        <div class="overflow-hidden bg-white border shadow-xl rounded-2xl border-slate-200">
+            
+            <!-- Titre sans fond coloré -->
+            <div class="px-6 pt-8 pb-2 text-center">
+                <h2 class="mb-1 text-2xl font-bold text-slate-800">
+                    Connexion
+                </h2>
+                <p class="text-sm text-slate-500">Accédez à votre espace personnel</p>
+            </div>
+
+            <div class="p-6 pt-2 md:p-8">
+                <form method="post" class="space-y-6">
+                    <!-- Champ caché pour la redirection - VÉRIFIER QUE C'EST BIEN PRÉSENT -->
+                    {% if app.request.query.get('redirect') %}
+                        <input type="hidden" name="_target_path" value="{{ app.request.query.get('redirect') }}">
+                    {% endif %}
+
+                    <!-- Champ email/téléphone -->
+                    <div>
+                        <label for="inputEmail" class="block mb-2 text-sm font-medium text-slate-700">
+                            E-mail ou numéro de téléphone
+                        </label>
+                        <input type="text" 
+                               value="{{ last_username }}" 
+                               name="email" 
+                               id="inputEmail" 
+                               class="w-full px-4 py-3 transition border rounded-lg border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                               placeholder="exemple@email.com ou 0123456789"
+                               autocomplete="email" 
+                               required 
+                               autofocus>
+                    </div>
+
+                    <!-- Champ mot de passe -->
+                    <div>
+                        <label for="inputPassword" class="block mb-2 text-sm font-medium text-slate-700">
+                            Mot de passe
+                        </label>
+                        <div class="relative">
+                            <input type="password" 
+                                   name="password" 
+                                   id="inputPassword" 
+                                   class="w-full px-4 py-3 transition border rounded-lg border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                   placeholder="••••••••"
+                                   autocomplete="current-password" 
+                                   required>
+                            <button type="button" 
+                                    onclick="togglePassword()" 
+                                    class="absolute inset-y-0 right-0 flex items-center pr-4">
+                                <i class="transition fas fa-eye text-slate-400 hover:text-indigo-600" id="toggleIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Options supplémentaires -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="remember" name="_remember_me" class="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500 border-slate-300">
+                            <label for="remember" class="block ml-2 text-sm text-slate-600">
+                                Se souvenir de moi
+                            </label>
+                        </div>
+                        <a href="{{ path('app_forgot_password') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-800">
+                            Mot de passe oublié ?
+                        </a>
+                    </div>
+
+                    <!-- Token CSRF -->
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                    <!-- Bouton de connexion -->
+                    <button type="submit" 
+                            class="w-full py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-lg hover:from-indigo-700 hover:to-purple-700 transition transform hover:scale-[1.02] shadow-lg flex items-center justify-center group">
+                        <span class="hidden mr-2 spinner-border spinner-border-sm" id="spinner"></span>
+                        <i class="mr-2 transition fas fa-sign-in-alt group-hover:translate-x-1"></i>
+                        Se connecter
+                    </button>
+                </form>
+
+                <!-- Lien d'inscription avec paramètre de redirection -->
+                <div class="pt-6 mt-8 border-t border-slate-200">
+                    <p class="text-center text-slate-600">
+                        {% if candidature_publique %}
+                        Pas encore de compte ?
+                        <a href="{{ path('app_register', {'redirect': app.request.query.get('redirect')}) }}" class="inline-flex items-center font-semibold text-indigo-600 hover:text-indigo-800">
+                            Créer un compte
+                            <i class="ml-1 text-sm fas fa-arrow-right"></i>
+                        </a>
+                        {% else %}
+                        Pas encore de compte ? Votre compte est créé par le lycée (LPH ou LPMMS) lors de votre inscription.
+                        <a href="{{ path('app_home') }}#ou-sinscrire" class="font-semibold text-indigo-600 hover:text-indigo-800">Où m'inscrire ?</a>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lien retour accueil et retour page précédente -->
+    <div class="mt-4 space-y-2 text-center">
+        {% if app.request.query.get('redirect') %}
+            <a href="{{ app.request.query.get('redirect') }}" class="inline-flex items-center mr-4 text-sm transition text-slate-500 hover:text-indigo-600">
+                <i class="mr-1 fas fa-arrow-left"></i>
+                Retour à la page précédente
+            </a>
+        {% endif %}
+        <a href="{{ path('app_home') }}" class="inline-flex items-center text-sm transition text-slate-500 hover:text-indigo-600">
+            <i class="mr-1 fas fa-home"></i>
+            Retour à l'accueil
+        </a>
+    </div>
+</div>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animation du spinner au submit
+        const form = document.querySelector('form');
+        const spinner = document.getElementById('spinner');
+        const submitBtn = document.querySelector('button[type="submit"]');
+    
+        form.addEventListener('submit', function() {
+            spinner.classList.remove('hidden');
+            submitBtn.disabled = true;
+        });
+
+        // Animation des champs au focus
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.classList.add('ring-2', 'ring-indigo-300');
+            });
+            input.addEventListener('blur', function() {
+                this.classList.remove('ring-2', 'ring-indigo-300');
+            });
+        });
+    });
+
+    // Fonction pour afficher/masquer le mot de passe
+    function togglePassword() {
+        const passwordInput = document.getElementById('inputPassword');
+        const toggleIcon = document.getElementById('toggleIcon');
+    
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+        }
+    }
+</script>
+
+<style>
+    /* Animation de pulsation pour le bouton */
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+
+    button[type="submit"]:disabled {
+        animation: pulse 1.5s infinite;
+        cursor: not-allowed;
+    }
+
+    /* Style pour les icônes */
+    .fa-eye, .fa-eye-slash {
+        transition: all 0.2s ease;
+    }
+</style>
+{% endblock %}

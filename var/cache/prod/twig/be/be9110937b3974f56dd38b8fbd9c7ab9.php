@@ -1,0 +1,216 @@
+<?php
+
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Extension\CoreExtension;
+use Twig\Extension\SandboxExtension;
+use Twig\MacroNamespace;
+use Twig\Markup;
+use Twig\Sandbox\SecurityError;
+use Twig\Sandbox\SecurityNotAllowedTagError;
+use Twig\Sandbox\SecurityNotAllowedFilterError;
+use Twig\Sandbox\SecurityNotAllowedFunctionError;
+use Twig\Sandbox\SecurityNotAllowedTestError;
+use Twig\Source;
+use Twig\Template;
+use Twig\TemplateWrapper;
+
+/* footer.html.twig */
+class __TwigTemplate_9377041917ee1819a34bc51f5d2ff119 extends Template
+{
+    private Source $source;
+    /**
+     * @var array<string, MacroNamespace>
+     */
+    private array $macros = [];
+    private \Twig\Runtime\EscaperRuntime $escaper;
+
+    public function __construct(Environment $env)
+    {
+        parent::__construct($env);
+
+        $this->source = $this->getSourceContext();
+
+        $this->escaper = $env->getRuntime('Twig\Runtime\EscaperRuntime');
+
+        $this->parent = false;
+
+        $this->blocks = [
+        ];
+    }
+
+    protected function doDisplay(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2 = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2->enter($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "footer.html.twig"));
+
+        // line 1
+        yield "<footer id=\"contact\" class=\"relative overflow-hidden text-white bg-slate-900\">
+    <!-- Vague décorative -->
+    <div class=\"absolute top-0 left-0 right-0\">
+        <svg viewBox=\"0 0 1440 120\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" class=\"w-full h-auto\">
+            <path d=\"M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z\" fill=\"#0f172a\"/>
+        </svg>
+    </div>
+    
+    <!-- Particules décoratives -->
+    <div class=\"absolute inset-0 overflow-hidden opacity-10\">
+        <div class=\"absolute w-32 h-32 bg-indigo-400 rounded-full top-20 left-10 blur-3xl\"></div>
+        <div class=\"absolute w-32 h-32 bg-purple-400 rounded-full bottom-20 right-10 blur-3xl\"></div>
+    </div>
+    
+    <div class=\"container relative z-10 px-4 pt-20 pb-12 mx-auto\">
+        <div class=\"grid grid-cols-2 gap-x-8 gap-y-12 lg:grid-cols-4 lg:gap-12\">
+            <!-- À propos -->
+            <div class=\"col-span-2 space-y-4 lg:col-span-1 sm:pb-5 lg:mb-5 mb-5\">
+                <div class=\"flex items-center space-x-3\">
+                    <div class=\"p-2 bg-white/10 rounded-xl\">
+                        <img src=\"";
+        // line 21
+        yield (string) $this->escaper->escape($this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("/image/logo-lemetier.jpeg"), "html", null, true);
+        yield "\" class=\"w-auto h-8\" alt=\"Groupe LEMETIER\">
+                    </div>
+                    <div class=\"p-2 bg-white rounded-xl\">
+                        <img src=\"";
+        // line 24
+        yield (string) $this->escaper->escape($this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("/image/logo.png"), "html", null, true);
+        yield "\" class=\"w-auto h-8\" width=\"150\" height=\"43\" alt=\"DAIP\">
+                    </div>
+                </div>
+                <p class=\"leading-relaxed text-slate-400\">
+                    Recrutement de 200 jeunes pour une formation de trois mois dans les métiers des services d\x27aide à la personne, suivie d’un placement en entreprise.
+                </p>
+            </div>
+            
+            <!-- Liens rapides -->
+            <div class=\"pr-2 mb-5\">
+                <h4 class=\"mb-4 text-lg font-semibold text-white/90\">Liens rapides</h4>
+                <ul class=\"space-y-4\">
+                    <li>
+                        <a href=\"";
+        // line 37
+        yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_home");
+        yield "\" class=\"flex items-center transition text-slate-400 hover:text-white group\">
+                            <i class=\"mr-2 text-xs transition fas fa-chevron-right group-hover:translate-x-1\"></i>
+                            Accueil
+                        </a>
+                    </li>
+                    <li>
+                        <a href=\"";
+        // line 43
+        yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_candidature_index");
+        yield "\" class=\"flex items-center transition text-slate-400 hover:text-white group\">
+                            <i class=\"mr-2 text-xs transition fas fa-chevron-right group-hover:translate-x-1\"></i>
+                            Candidatures
+                        </a>
+                    </li>
+                    <li>
+                        <a href=\"#contact\" class=\"flex items-center transition text-slate-400 hover:text-white group\">
+                            <i class=\"mr-2 text-xs transition fas fa-chevron-right group-hover:translate-x-1\"></i>
+                            Contact
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Contact -->
+            <div class=\"pl-4 border-l border-slate-700 sm:pl-6 mb-5\">
+                <h4 class=\"mb-4 text-lg font-semibold text-white/90\">Contact</h4>
+                <ul class=\"space-y-5\">
+                    <li class=\"flex items-start space-x-3 group\">
+                        <i class=\"mt-1 text-indigo-400 transition fas fa-map-marker-alt group-hover:scale-110\"></i>
+                        <span class=\"transition text-slate-400 group-hover:text-white\">Yamoussoukro et Bouaké, Côte d’Ivoire</span>
+                    </li>
+                    <li class=\"flex items-start space-x-3 group\">
+                        <i class=\"mt-1 text-indigo-400 transition fas fa-phone-alt group-hover:scale-110\"></i>
+                        <a href=\"tel:+2250708114259\" class=\"transition text-slate-400 group-hover:text-white\">07 08 11 42 59</a>
+                    </li>
+                    <li class=\"flex items-start space-x-3 group\">
+                        <i class=\"mt-1 text-indigo-400 transition fas fa-envelope group-hover:scale-110\"></i>
+                        <a href=\"https://www.daip.ci\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"transition text-slate-400 group-hover:text-white\">www.daip.ci</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Newsletter -->
+            <div class=\"col-span-2 pt-8 text-center border-t border-slate-700 lg:col-span-1 lg:border-0 lg:pt-0\">
+                <h4 class=\"mb-2 text-lg font-semibold text-white/90\">Réseaux sociaux</h4>
+                <p class=\"mb-4 text-slate-400\">Suivez nos dernières actualités</p>
+                
+                <div class=\"flex justify-center space-x-3\">
+                    <a href=\"https://x.com/daipci?s=11\" target=\"_blank\" class=\"flex items-center justify-center w-10 h-10 transition transform rounded-lg bg-slate-800 hover:bg-black-600 hover:scale-110 hover:rotate-6\">
+                        <i class=\"fab fa-x\"></i>
+                    </a>
+                     <a href=\"https://www.facebook.com/daip.net\" target=\"_blank\" class=\"flex items-center justify-center w-10 h-10 transition transform rounded-lg bg-slate-800 hover:bg-indigo-600 hover:scale-110 hover:rotate-6\">
+                        <i class=\"fab fa-facebook\"></i>
+                    </a>
+                    <a href=\"https://www.youtube.com/channel/UCpzL2618RoQtoMTuywLz_aA\" target=\"_blank\" class=\"flex items-center justify-center w-10 h-10 transition transform rounded-lg bg-slate-800 hover:bg-red-600 hover:scale-110 hover:rotate-6\">
+                        <i class=\"fab fa-youtube\"></i>
+                    </a>
+                    <a href=\"https://www.tiktok.com/@daipci\" target=\"_blank\" class=\"flex items-center justify-center w-10 h-10 transition transform rounded-lg bg-slate-800 hover:bg-pink-600 hover:scale-110 hover:rotate-6\">
+                        <i class=\"fab fa-tiktok\"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Séparateur -->
+        <div class=\"my-8 border-t border-slate-800\"></div>
+        
+        <!-- Copyright et liens légaux -->
+        <div class=\"flex justify-center text-center\">
+            <a href=\"https://www.daip.ci/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"text-xs transition sm:text-sm text-slate-400 hover:text-white\">
+                © ";
+        // line 104
+        yield (string) $this->escaper->escape($this->extensions['Twig\Extension\CoreExtension']->formatDate("now", "Y"), "html", null, true);
+        yield " DAIP — Recrutement en partenariat avec le Groupe LEMETIER.
+            </a>
+        </div>
+    </div>
+</footer>
+";
+        
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2->leave($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof);
+
+        return; yield;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function getTemplateName(): string
+    {
+        return "footer.html.twig";
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function isTraitable(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function getDefaultEscapeStrategy(): string|false
+    {
+        return "html";
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function getDebugInfo(): array
+    {
+        return array (  167 => 104,  103 => 43,  94 => 37,  78 => 24,  72 => 21,  50 => 1,);
+    }
+
+    public function getSourceContext(): Source
+    {
+        return new Source("", "footer.html.twig", "C:\\Users\\slim3\\Downloads\\lemetier\\templates\\footer.html.twig");
+    }
+}
