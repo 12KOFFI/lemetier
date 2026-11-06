@@ -76,7 +76,7 @@ class Constant
                 'image/pjpeg',
                 'image/png',
             ],
-            'required'  => true,
+            'required'  => false,
         ],
         'fpiece' => [
             'icon'      => 'id-card',
@@ -102,7 +102,7 @@ class Constant
                 'image/pjpeg',
                 'image/png',
             ],
-            'required'  => true,
+            'required'  => false,
         ],
         'fautre' => [
             'icon'      => 'file-alt',
@@ -115,7 +115,7 @@ class Constant
                 'image/pjpeg',
                 'image/png',
             ],
-            'required'  => true,
+            'required'  => false,
         ],
     ];
 }

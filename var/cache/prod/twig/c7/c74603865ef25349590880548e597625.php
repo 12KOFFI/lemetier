@@ -97,6 +97,11 @@ class __TwigTemplate_f8edd371319e5ab5585dba773651b859 extends Template
         yield from $this->yieldParentBlock("stylesheets", $context, $blocks);
         yield "
     <style>
+        .notification-erreurs { transform: translateX(-50%); animation: notification-entree .3s ease-out; }
+        @keyframes notification-entree {
+            from { transform: translate(-50%, -1rem); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
         .fichier-case { transition: border-color .2s ease, background-color .2s ease; }
         .fichier-nom { display: flex; align-items: center; gap: .4rem; }
         .fichier-coche { display: none; flex-shrink: 0; font-size: 1.05rem; }
@@ -116,7 +121,7 @@ class __TwigTemplate_f8edd371319e5ab5585dba773651b859 extends Template
             to { transform: scale(1) rotate(0); opacity: 1; }
         }
         @media (prefers-reduced-motion: reduce) {
-            .fichier-case, .fichier-case.is-anime, .fichier-case.is-anime .fichier-coche { animation: none; transition: none; }
+            .notification-erreurs, .fichier-case, .fichier-case.is-anime, .fichier-case.is-anime .fichier-coche { animation: none; transition: none; }
         }
     </style>
 ";
@@ -126,7 +131,7 @@ class __TwigTemplate_f8edd371319e5ab5585dba773651b859 extends Template
         return; yield;
     }
 
-    // line 87
+    // line 92
     /**
      * @return iterable<null|scalar|\Stringable>
      */
@@ -136,31 +141,85 @@ class __TwigTemplate_f8edd371319e5ab5585dba773651b859 extends Template
         $__internal_5a27a8ba21ca79b61932376b2fa922d2 = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
         $__internal_5a27a8ba21ca79b61932376b2fa922d2->enter($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "body"));
 
-        // line 88
+        // line 93
         $macros["ui"] = $this->getMacroNamespace();
-        // line 89
+        // line 94
+        if ((($tmp = ($context["erreurs_saisie"] ?? null)) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            // line 95
+            yield "    ";
+            // line 96
+            yield "    <div id=\"notification-erreurs\" role=\"alert\" class=\"notification-erreurs fixed top-4 left-1/2 w-[calc(100%-2rem)] max-w-xl overflow-hidden bg-white border border-red-300 shadow-2xl rounded-xl\" style=\"z-index: 70\">
+        <div class=\"flex items-start gap-3 p-4 border-b border-red-200 bg-red-50\">
+            <i class=\"mt-0.5 text-xl text-red-600 fas fa-circle-exclamation\" aria-hidden=\"true\"></i>
+            <div class=\"flex-1 min-w-0\">
+                <p class=\"font-bold text-red-800\">Candidature non enregistrée</p>
+                <p class=\"text-sm text-red-700\">";
+            // line 101
+            yield (string) $this->escaper->escape(Twig\Extension\CoreExtension::length($this->env->getCharset(), ($context["erreurs_saisie"] ?? null)), "html", null, true);
+            yield " ";
+            yield (string) (((Twig\Extension\CoreExtension::length($this->env->getCharset(), ($context["erreurs_saisie"] ?? null)) > 1)) ? ("champs à corriger") : ("champ à corriger"));
+            yield " : cliquez pour y aller.</p>
+            </div>
+            <button type=\"button\" data-fermer-notification class=\"p-1 text-red-500 rounded hover:text-red-800\" aria-label=\"Fermer la notification\">
+                <i class=\"fas fa-times\" aria-hidden=\"true\"></i>
+            </button>
+        </div>
+        <ul class=\"overflow-y-auto divide-y max-h-64 divide-slate-100\">
+            ";
+            // line 108
+            $context['_parent'] = $context;
+            $context['_seq'] = CoreExtension::ensureTraversable(($context["erreurs_saisie"] ?? null));
+            foreach ($context['_seq'] as $context["_key"] => $context["erreur"]) {
+                // line 109
+                yield "                <li>
+                    <button type=\"button\" data-aller-champ=\"";
+                // line 110
+                yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, $context["erreur"], "id", [], "any", false, false, false, 110), "html", null, true);
+                yield "\" class=\"w-full px-4 py-2.5 text-sm text-left hover:bg-red-50\">
+                        <span class=\"font-semibold text-slate-800\">";
+                // line 111
+                yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, $context["erreur"], "champ", [], "any", false, false, false, 111), "html", null, true);
+                yield "</span>
+                        <span class=\"block text-red-700\">";
+                // line 112
+                yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, $context["erreur"], "message", [], "any", false, false, false, 112), "html", null, true);
+                yield "</span>
+                    </button>
+                </li>
+            ";
+            }
+            $_parent = $context['_parent'];
+            unset($context['_seq'], $context['_key'], $context['erreur'], $context['_parent']);
+            $context = array_intersect_key($context, $_parent);
+            $context += $_parent;
+            // line 116
+            yield "        </ul>
+    </div>
+";
+        }
+        // line 119
         yield "<div class=\"max-w-5xl mx-auto\">
     <div class=\"p-8 mb-8 text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl\">
         <h1 class=\"text-2xl font-bold\">Nouvelle candidature</h1>
         <p class=\"mt-1 text-white/85\">
             ";
-        // line 93
+        // line 123
         if ((($tmp = ($context["etablissement_impose"] ?? null)) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
-            // line 94
+            // line 124
             yield "                ";
             yield (string) $this->escaper->escape(($context["etablissement_impose"] ?? null), "html", null, true);
             yield " · ";
-            yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "nom", [], "any", false, false, false, 94), "html", null, true);
+            yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "nom", [], "any", false, false, false, 124), "html", null, true);
             yield "
             ";
         } else {
-            // line 96
+            // line 126
             yield "                Saisie administrateur · ";
-            yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "nom", [], "any", false, false, false, 96), "html", null, true);
+            yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "nom", [], "any", false, false, false, 126), "html", null, true);
             yield "
             ";
         }
-        // line 98
+        // line 128
         yield "        </p>
         <p class=\"mt-3 text-sm text-white/80\">Remplissez la fiche avec le candidat présent et ses pièces originales. Son compte de connexion est créé en même temps que la candidature.</p>
     </div>
@@ -168,124 +227,124 @@ class __TwigTemplate_f8edd371319e5ab5585dba773651b859 extends Template
     <p class=\"mb-4 text-sm text-slate-600\">Les champs marqués d\x27un <span class=\"font-semibold text-red-600\">*</span> sont obligatoires.</p>
 
     ";
-        // line 104
-        yield from $this->load("partials/_flash_messages.html.twig", 104)->unwrap()->yield($context);
-        // line 105
+        // line 134
+        yield from $this->load("partials/_flash_messages.html.twig", 134)->unwrap()->yield($context);
+        // line 135
         yield "
     ";
-        // line 106
+        // line 136
         yield (string)         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock(($context["form"] ?? null), 'form_start', ["attr" => ["class" => "space-y-8", "novalidate" => "novalidate"]]);
         yield "
 
     ";
-        // line 108
+        // line 138
         if ((($tmp = $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(($context["form"] ?? null), 'errors')) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
-            // line 109
+            // line 139
             yield "        <div class=\"px-5 py-4 text-sm text-red-700 border border-red-300 rounded-xl bg-red-50\">";
             yield (string) $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(($context["form"] ?? null), 'errors');
             yield "</div>
     ";
         }
-        // line 111
+        // line 141
         yield "
     <section class=\"p-6 bg-white border shadow-sm md:p-8 rounded-2xl border-slate-200\">
         ";
-        // line 113
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(113))->call("carte", ["school", "Formation"], $context, 113, $this->source);
+        // line 143
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(143))->call("carte", ["school", "Formation"], $context, 143, $this->source);
         yield "
         <div class=\"grid grid-cols-1 gap-5 md:grid-cols-2\">
             ";
-        // line 115
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "etablissement", [], "any", true, true, false, 115)) {
-            // line 116
+        // line 145
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "etablissement", [], "any", true, true, false, 145)) {
+            // line 146
             yield "                ";
-            yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(116))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "etablissement", [], "any", false, false, false, 116), ($context["input_class"] ?? null)], $context, 116, $this->source);
+            yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(146))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "etablissement", [], "any", false, false, false, 146), ($context["input_class"] ?? null)], $context, 146, $this->source);
             yield "
             ";
         } else {
-            // line 118
+            // line 148
             yield "                <div>
                     <p class=\"block mb-1.5 text-sm font-semibold text-slate-700\">Établissement</p>
                     <p class=\"px-4 py-2.5 rounded-lg bg-slate-100 text-slate-800\">";
-            // line 120
+            // line 150
             yield (string) $this->escaper->escape(($context["etablissement_impose"] ?? null), "html", null, true);
             yield "</p>
                 </div>
             ";
         }
-        // line 123
+        // line 153
         yield "            ";
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(123))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "metier", [], "any", false, false, false, 123), ($context["input_class"] ?? null)], $context, 123, $this->source);
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(153))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "metier", [], "any", false, false, false, 153), ($context["input_class"] ?? null)], $context, 153, $this->source);
         yield "
         </div>
     </section>
 
     <section class=\"p-6 bg-white border shadow-sm md:p-8 rounded-2xl border-slate-200\">
         ";
-        // line 128
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(128))->call("carte", ["user", "Identité du candidat"], $context, 128, $this->source);
+        // line 158
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(158))->call("carte", ["user", "Identité du candidat"], $context, 158, $this->source);
         yield "
         <div class=\"grid grid-cols-1 gap-5 md:grid-cols-2\">
             ";
-        // line 130
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(130))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 130), "nom", [], "any", false, false, false, 130), ($context["input_class"] ?? null), ["autocomplete" => "off"]], $context, 130, $this->source);
+        // line 160
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(160))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 160), "nom", [], "any", false, false, false, 160), ($context["input_class"] ?? null), ["autocomplete" => "off"]], $context, 160, $this->source);
         yield "
             ";
-        // line 131
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(131))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 131), "prenoms", [], "any", false, false, false, 131), ($context["input_class"] ?? null), ["autocomplete" => "off"]], $context, 131, $this->source);
+        // line 161
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(161))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 161), "prenoms", [], "any", false, false, false, 161), ($context["input_class"] ?? null), ["autocomplete" => "off"]], $context, 161, $this->source);
         yield "
             ";
-        // line 132
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(132))->call("choix", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 132), "sexe", [], "any", false, false, false, 132)], $context, 132, $this->source);
+        // line 162
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(162))->call("choix", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 162), "sexe", [], "any", false, false, false, 162)], $context, 162, $this->source);
         yield "
             ";
-        // line 133
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(133))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 133), "datenaissance", [], "any", false, false, false, 133), ($context["input_class"] ?? null)], $context, 133, $this->source);
+        // line 163
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(163))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 163), "datenaissance", [], "any", false, false, false, 163), ($context["input_class"] ?? null)], $context, 163, $this->source);
         yield "
             ";
-        // line 134
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(134))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 134), "lieunaissance", [], "any", false, false, false, 134), ($context["input_class"] ?? null)], $context, 134, $this->source);
+        // line 164
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(164))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 164), "lieunaissance", [], "any", false, false, false, 164), ($context["input_class"] ?? null)], $context, 164, $this->source);
         yield "
             ";
-        // line 135
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(135))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 135), "nationalite", [], "any", false, false, false, 135), ($context["input_class"] ?? null)], $context, 135, $this->source);
+        // line 165
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(165))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 165), "nationalite", [], "any", false, false, false, 165), ($context["input_class"] ?? null)], $context, 165, $this->source);
         yield "
             ";
-        // line 136
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(136))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 136), "situationmat", [], "any", false, false, false, 136), ($context["input_class"] ?? null)], $context, 136, $this->source);
+        // line 166
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(166))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 166), "situationmat", [], "any", false, false, false, 166), ($context["input_class"] ?? null)], $context, 166, $this->source);
         yield "
             ";
-        // line 137
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(137))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 137), "numextrait", [], "any", false, false, false, 137), ($context["input_class"] ?? null)], $context, 137, $this->source);
+        // line 167
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(167))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 167), "numextrait", [], "any", false, false, false, 167), ($context["input_class"] ?? null)], $context, 167, $this->source);
         yield "
             ";
-        // line 138
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(138))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 138), "nompere", [], "any", false, false, false, 138), ($context["input_class"] ?? null)], $context, 138, $this->source);
+        // line 168
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(168))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 168), "nompere", [], "any", false, false, false, 168), ($context["input_class"] ?? null)], $context, 168, $this->source);
         yield "
             ";
-        // line 139
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(139))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 139), "nommere", [], "any", false, false, false, 139), ($context["input_class"] ?? null)], $context, 139, $this->source);
+        // line 169
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(169))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 169), "nommere", [], "any", false, false, false, 169), ($context["input_class"] ?? null)], $context, 169, $this->source);
         yield "
         </div>
         <div class=\"mt-1 text-sm text-red-600\">";
-        // line 141
-        yield (string) $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 141), 'errors');
+        // line 171
+        yield (string) $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 171), 'errors');
         yield "</div>
     </section>
 
     <section class=\"p-6 bg-white border shadow-sm md:p-8 rounded-2xl border-slate-200\">
         ";
-        // line 145
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(145))->call("carte", ["id-card", "Pièce d\x27identité"], $context, 145, $this->source);
+        // line 175
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(175))->call("carte", ["id-card", "Pièce d\x27identité"], $context, 175, $this->source);
         yield "
         <div class=\"grid grid-cols-1 gap-5 md:grid-cols-2\">
             ";
-        // line 147
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(147))->call("choix", [CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "piece", [], "any", false, false, false, 147)], $context, 147, $this->source);
+        // line 177
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(177))->call("choix", [CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "piece", [], "any", false, false, false, 177)], $context, 177, $this->source);
         yield "
             ";
-        // line 148
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(148))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "numpiece", [], "any", false, false, false, 148), ($context["input_class"] ?? null)], $context, 148, $this->source);
+        // line 178
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(178))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "numpiece", [], "any", false, false, false, 178), ($context["input_class"] ?? null)], $context, 178, $this->source);
         yield "
         </div>
         <p class=\"mt-4 text-xs text-slate-500\">Le numéro est vérifié sur toutes les candidatures de la session, dans tous les établissements : un candidat ne peut s\x27inscrire qu\x27une fois.</p>
@@ -293,8 +352,8 @@ class __TwigTemplate_f8edd371319e5ab5585dba773651b859 extends Template
 
     <section class=\"p-6 bg-white border shadow-sm md:p-8 rounded-2xl border-slate-200\">
         ";
-        // line 154
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(154))->call("carte", ["key", "Compte de connexion du candidat"], $context, 154, $this->source);
+        // line 184
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(184))->call("carte", ["key", "Compte de connexion du candidat"], $context, 184, $this->source);
         yield "
         <div class=\"px-4 py-3 mb-5 text-sm border rounded-lg border-amber-200 bg-amber-50 text-amber-900\">
             Le candidat se connectera avec son <strong>numéro de téléphone</strong> ou son <strong>e-mail</strong> et le mot de passe choisi ici.
@@ -302,99 +361,99 @@ class __TwigTemplate_f8edd371319e5ab5585dba773651b859 extends Template
         </div>
         <div class=\"grid grid-cols-1 gap-5 md:grid-cols-2\">
             ";
-        // line 160
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(160))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 160), "contact", [], "any", false, false, false, 160), ($context["input_class"] ?? null)], $context, 160, $this->source);
+        // line 190
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(190))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 190), "contact", [], "any", false, false, false, 190), ($context["input_class"] ?? null)], $context, 190, $this->source);
         yield "
             ";
-        // line 161
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(161))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 161), "email", [], "any", false, false, false, 161), ($context["input_class"] ?? null)], $context, 161, $this->source);
+        // line 191
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(191))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "candidat", [], "any", false, false, false, 191), "email", [], "any", false, false, false, 191), ($context["input_class"] ?? null)], $context, 191, $this->source);
         yield "
             ";
-        // line 162
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(162))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "plainPassword", [], "any", false, false, false, 162), "first", [], "any", false, false, false, 162), ($context["input_class"] ?? null)], $context, 162, $this->source);
+        // line 192
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(192))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "plainPassword", [], "any", false, false, false, 192), "first", [], "any", false, false, false, 192), ($context["input_class"] ?? null)], $context, 192, $this->source);
         yield "
             ";
-        // line 163
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(163))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "plainPassword", [], "any", false, false, false, 163), "second", [], "any", false, false, false, 163), ($context["input_class"] ?? null)], $context, 163, $this->source);
+        // line 193
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(193))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "plainPassword", [], "any", false, false, false, 193), "second", [], "any", false, false, false, 193), ($context["input_class"] ?? null)], $context, 193, $this->source);
         yield "
         </div>
         <div class=\"mt-1 text-sm text-red-600\">";
-        // line 165
-        yield (string) $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "plainPassword", [], "any", false, false, false, 165), 'errors');
+        // line 195
+        yield (string) $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "plainPassword", [], "any", false, false, false, 195), 'errors');
         yield "</div>
     </section>
 
     <section class=\"p-6 bg-white border shadow-sm md:p-8 rounded-2xl border-slate-200\">
         ";
-        // line 169
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(169))->call("carte", ["house", "Résidence et situation"], $context, 169, $this->source);
+        // line 199
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(199))->call("carte", ["house", "Résidence et situation"], $context, 199, $this->source);
         yield "
         <div class=\"grid grid-cols-1 gap-5 md:grid-cols-3\">
             ";
-        // line 171
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(171))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "villeResidence", [], "any", false, false, false, 171), ($context["input_class"] ?? null)], $context, 171, $this->source);
+        // line 201
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(201))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "villeResidence", [], "any", false, false, false, 201), ($context["input_class"] ?? null)], $context, 201, $this->source);
         yield "
             ";
-        // line 172
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(172))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "quartierAdresse", [], "any", false, false, false, 172), ($context["input_class"] ?? null)], $context, 172, $this->source);
+        // line 202
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(202))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "quartierAdresse", [], "any", false, false, false, 202), ($context["input_class"] ?? null)], $context, 202, $this->source);
         yield "
             ";
-        // line 173
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(173))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "etucom", [], "any", false, false, false, 173), ($context["input_class"] ?? null)], $context, 173, $this->source);
+        // line 203
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(203))->call("champ", [CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "etucom", [], "any", false, false, false, 203), ($context["input_class"] ?? null)], $context, 203, $this->source);
         yield "
         </div>
     </section>
 
     <section class=\"p-6 bg-white border shadow-sm md:p-8 rounded-2xl border-slate-200\">
         ";
-        // line 178
-        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(178))->call("carte", ["paperclip", "Pièces du dossier"], $context, 178, $this->source);
+        // line 208
+        yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(208))->call("carte", ["paperclip", "Pièces du dossier"], $context, 208, $this->source);
         yield "
         <div class=\"grid grid-cols-1 gap-5 md:grid-cols-2\">
             ";
-        // line 180
+        // line 210
         $context['_parent'] = $context;
         $context['_seq'] = CoreExtension::ensureTraversable(["fextrait", "fpiece", "fphoto", "fautre"]);
         foreach ($context['_seq'] as $context["_key"] => $context["champ"]) {
-            // line 181
+            // line 211
             yield "                ";
-            if (CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), $context["champ"], [], "any", true, true, false, 181)) {
-                // line 182
+            if (CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), $context["champ"], [], "any", true, true, false, 211)) {
+                // line 212
                 yield "                    ";
-                yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(182))->call("fichier", [CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), $context["champ"], [], "any", false, false, false, 182), (((CoreExtension::getAttribute($this->env, $this->source, ($context["deja_recus"] ?? null), $context["champ"], [], "array", true, true, false, 182) &&  !(null === (($_v0 = ($context["deja_recus"] ?? null)) && is_array($_v0) || $_v0 instanceof ArrayAccess ? ($_v0[(($_v1 = $context["champ"]) instanceof \Stringable && (is_array($_v0) || $_v0 instanceof \ArrayObject || $_v0 instanceof \ArrayIterator) ? (string) $_v1 : $_v1)] ?? null) : null)))) ? ((($_v2 = ($context["deja_recus"] ?? null)) && is_array($_v2) || $_v2 instanceof ArrayAccess ? ($_v2[(($_v3 = $context["champ"]) instanceof \Stringable && (is_array($_v2) || $_v2 instanceof \ArrayObject || $_v2 instanceof \ArrayIterator) ? (string) $_v3 : $_v3)] ?? null) : null)) : (null))], $context, 182, $this->source);
+                yield (string) ($macros["ui"] ?? $this->throwUninitializedMacroNamespace(212))->call("fichier", [CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), $context["champ"], [], "any", false, false, false, 212), (((CoreExtension::getAttribute($this->env, $this->source, ($context["deja_recus"] ?? null), $context["champ"], [], "array", true, true, false, 212) &&  !(null === (($_v0 = ($context["deja_recus"] ?? null)) && is_array($_v0) || $_v0 instanceof ArrayAccess ? ($_v0[(($_v1 = $context["champ"]) instanceof \Stringable && (is_array($_v0) || $_v0 instanceof \ArrayObject || $_v0 instanceof \ArrayIterator) ? (string) $_v1 : $_v1)] ?? null) : null)))) ? ((($_v2 = ($context["deja_recus"] ?? null)) && is_array($_v2) || $_v2 instanceof ArrayAccess ? ($_v2[(($_v3 = $context["champ"]) instanceof \Stringable && (is_array($_v2) || $_v2 instanceof \ArrayObject || $_v2 instanceof \ArrayIterator) ? (string) $_v3 : $_v3)] ?? null) : null)) : (null))], $context, 212, $this->source);
                 yield "
                 ";
             }
-            // line 184
+            // line 214
             yield "            ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_key'], $context['champ'], $context['_parent']);
         $context = array_intersect_key($context, $_parent);
         $context += $_parent;
-        // line 185
+        // line 215
         yield "        </div>
     </section>
 
     <section class=\"p-6 bg-white border shadow-sm md:p-8 rounded-2xl border-slate-200\">
         <label class=\"flex items-start gap-3 cursor-pointer\">
             ";
-        // line 190
-        yield (string) $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "declarationHonneur", [], "any", false, false, false, 190), 'widget', ["attr" => ["class" => "mt-1 w-4 h-4 text-indigo-600 border-slate-300 rounded focus:ring-indigo-500"]]);
+        // line 220
+        yield (string) $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "declarationHonneur", [], "any", false, false, false, 220), 'widget', ["attr" => ["class" => "mt-1 w-4 h-4 text-indigo-600 border-slate-300 rounded focus:ring-indigo-500"]]);
         yield "
             <span class=\"text-sm text-slate-800\">";
-        // line 191
-        yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "declarationHonneur", [], "any", false, false, false, 191), "vars", [], "any", false, false, false, 191), "label", [], "any", false, false, false, 191), "html", null, true);
+        // line 221
+        yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "declarationHonneur", [], "any", false, false, false, 221), "vars", [], "any", false, false, false, 221), "label", [], "any", false, false, false, 221), "html", null, true);
         yield "<span class=\"ml-0.5 text-red-600\" aria-hidden=\"true\">*</span></span>
         </label>
         <div class=\"mt-1 text-sm text-red-600\">";
-        // line 193
-        yield (string) $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "declarationHonneur", [], "any", false, false, false, 193), 'errors');
+        // line 223
+        yield (string) $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "declarationHonneur", [], "any", false, false, false, 223), 'errors');
         yield "</div>
 
         <div class=\"flex flex-wrap justify-end gap-3 pt-6 mt-6 border-t border-slate-200\">
             <a href=\"";
-        // line 196
+        // line 226
         yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_candidature_index");
         yield "\" class=\"inline-flex items-center px-6 py-2.5 border rounded-lg border-slate-300 text-slate-700 hover:bg-slate-50\">Annuler</a>
             <button type=\"submit\" class=\"inline-flex items-center px-6 py-2.5 font-semibold text-white bg-indigo-600 rounded-lg shadow hover:bg-indigo-700\">
@@ -404,15 +463,15 @@ class __TwigTemplate_f8edd371319e5ab5585dba773651b859 extends Template
     </section>
 
     ";
-        // line 203
-        yield (string) $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "_token", [], "any", false, false, false, 203), 'widget');
+        // line 233
+        yield (string) $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock(CoreExtension::getAttribute($this->env, $this->source, ($context["form"] ?? null), "_token", [], "any", false, false, false, 233), 'widget');
         yield "
     <input type=\"hidden\" name=\"_depot\" value=\"";
-        // line 204
+        // line 234
         yield (string) $this->escaper->escape(($context["depot"] ?? null), "html", null, true);
         yield "\">
     ";
-        // line 205
+        // line 235
         yield (string)         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock(($context["form"] ?? null), 'form_end', ["render_rest" => false]);
         yield "
 </div>
@@ -423,7 +482,7 @@ class __TwigTemplate_f8edd371319e5ab5585dba773651b859 extends Template
         return; yield;
     }
 
-    // line 209
+    // line 239
     /**
      * @return iterable<null|scalar|\Stringable>
      */
@@ -433,11 +492,26 @@ class __TwigTemplate_f8edd371319e5ab5585dba773651b859 extends Template
         $__internal_5a27a8ba21ca79b61932376b2fa922d2 = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
         $__internal_5a27a8ba21ca79b61932376b2fa922d2->enter($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "javascripts"));
 
-        // line 210
+        // line 240
         yield "    ";
         yield from $this->yieldParentBlock("javascripts", $context, $blocks);
         yield "
     <script>
+        // Notification d\x27erreurs : fermeture, et accès direct au champ concerné.
+        document.querySelector(\x27[data-fermer-notification]\x27)?.addEventListener(\x27click\x27, function () {
+            document.getElementById(\x27notification-erreurs\x27).remove();
+        });
+        document.querySelectorAll(\x27[data-aller-champ]\x27).forEach(function (bouton) {
+            bouton.addEventListener(\x27click\x27, function () {
+                var id = bouton.dataset.allerChamp;
+                var champ = document.getElementById(id) || document.querySelector(\x27[id^=\"\x27 + id + \x27_\"]\x27);
+                if (champ) {
+                    (champ.closest(\x27div, fieldset\x27) || champ).scrollIntoView({ block: \x27center\x27 });
+                    champ.focus({ preventScroll: true });
+                }
+            });
+        });
+
         // Téléphone : uniquement des chiffres, 10 au maximum. Un numéro collé avec espaces ou +225 est nettoyé.
         document.querySelectorAll(\x27[data-telephone]\x27).forEach(function (input) {
             input.addEventListener(\x27input\x27, function () {
@@ -453,7 +527,7 @@ class __TwigTemplate_f8edd371319e5ab5585dba773651b859 extends Template
         });
 
         // Fichier récupéré : la case passe au vert avec une coche animée. Trop lourd : en rouge, le fichier est retiré.
-        var TAILLE_MAX = 5 * 1024 * 1024;
+        var TAILLE_MAX = 2 * 1024 * 1024;
         document.querySelectorAll(\x27[data-fichier]\x27).forEach(function (input) {
             var cadre = input.closest(\x27[data-fichier-case]\x27);
             var nom = cadre.querySelector(\x27[data-fichier-nom]\x27);
@@ -469,7 +543,7 @@ class __TwigTemplate_f8edd371319e5ab5585dba773651b859 extends Template
                 var dejaRecu = nom.dataset.dejaRecu;
 
                 texte.textContent = tropLourd
-                    ? \x27Fichier trop lourd : 5 Mo maximum\x27
+                    ? \x27Fichier trop lourd : 2 Mo maximum\x27
                     : (recu ? fichier.name : (dejaRecu || \x27Aucun fichier choisi\x27));
 
                 cadre.classList.remove(\x27is-recu\x27, \x27is-refuse\x27, \x27is-anime\x27);
@@ -742,7 +816,7 @@ class __TwigTemplate_f8edd371319e5ab5585dba773651b859 extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  703 => 56,  699 => 55,  696 => 54,  682 => 53,  670 => 49,  666 => 48,  660 => 45,  651 => 43,  645 => 40,  641 => 39,  636 => 38,  627 => 35,  624 => 34,  622 => 32,  608 => 31,  596 => 27,  593 => 26,  583 => 23,  579 => 22,  576 => 21,  572 => 20,  564 => 18,  561 => 17,  548 => 16,  536 => 12,  532 => 11,  528 => 10,  519 => 9,  516 => 8,  501 => 7,  437 => 210,  427 => 209,  416 => 205,  412 => 204,  408 => 203,  398 => 196,  392 => 193,  387 => 191,  383 => 190,  376 => 185,  369 => 184,  363 => 182,  360 => 181,  356 => 180,  351 => 178,  343 => 173,  339 => 172,  335 => 171,  330 => 169,  323 => 165,  318 => 163,  314 => 162,  310 => 161,  306 => 160,  297 => 154,  288 => 148,  284 => 147,  279 => 145,  272 => 141,  267 => 139,  263 => 138,  259 => 137,  255 => 136,  251 => 135,  247 => 134,  243 => 133,  239 => 132,  235 => 131,  231 => 130,  226 => 128,  217 => 123,  211 => 120,  207 => 118,  201 => 116,  199 => 115,  194 => 113,  190 => 111,  184 => 109,  182 => 108,  177 => 106,  174 => 105,  172 => 104,  164 => 98,  158 => 96,  150 => 94,  148 => 93,  142 => 89,  140 => 88,  130 => 87,  96 => 61,  86 => 60,  68 => 3,  60 => 1,  58 => 5,  48 => 1,);
+        return array (  777 => 56,  773 => 55,  770 => 54,  756 => 53,  744 => 49,  740 => 48,  734 => 45,  725 => 43,  719 => 40,  715 => 39,  710 => 38,  701 => 35,  698 => 34,  696 => 32,  682 => 31,  670 => 27,  667 => 26,  657 => 23,  653 => 22,  650 => 21,  646 => 20,  638 => 18,  635 => 17,  622 => 16,  610 => 12,  606 => 11,  602 => 10,  593 => 9,  590 => 8,  575 => 7,  496 => 240,  486 => 239,  475 => 235,  471 => 234,  467 => 233,  457 => 226,  451 => 223,  446 => 221,  442 => 220,  435 => 215,  428 => 214,  422 => 212,  419 => 211,  415 => 210,  410 => 208,  402 => 203,  398 => 202,  394 => 201,  389 => 199,  382 => 195,  377 => 193,  373 => 192,  369 => 191,  365 => 190,  356 => 184,  347 => 178,  343 => 177,  338 => 175,  331 => 171,  326 => 169,  322 => 168,  318 => 167,  314 => 166,  310 => 165,  306 => 164,  302 => 163,  298 => 162,  294 => 161,  290 => 160,  285 => 158,  276 => 153,  270 => 150,  266 => 148,  260 => 146,  258 => 145,  253 => 143,  249 => 141,  243 => 139,  241 => 138,  236 => 136,  233 => 135,  231 => 134,  223 => 128,  217 => 126,  209 => 124,  207 => 123,  201 => 119,  196 => 116,  185 => 112,  181 => 111,  177 => 110,  174 => 109,  170 => 108,  158 => 101,  151 => 96,  149 => 95,  147 => 94,  145 => 93,  135 => 92,  96 => 61,  86 => 60,  68 => 3,  60 => 1,  58 => 5,  48 => 1,);
     }
 
     public function getSourceContext(): Source

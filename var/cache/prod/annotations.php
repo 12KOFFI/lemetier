@@ -67,6 +67,8 @@ return [[
 'App%5CController%5CCandidatureController%23index' => 0,
 'App%5CController%5CCandidatureController%23new' => 0,
 'App%5CController%5CCandidatureController%23saisie' => 0,
+'App%5CController%5CCandidatureController%23signalerPiecesManquantes' => 0,
+'App%5CController%5CCandidatureController%23listerErreurs' => 0,
 'App%5CController%5CCandidatureController%23ouvrirDepotSaisie' => 0,
 'App%5CController%5CCandidatureController%23deposerFichiers' => 0,
 'App%5CController%5CCandidatureController%23joindreFichiersDuDepot' => 0,

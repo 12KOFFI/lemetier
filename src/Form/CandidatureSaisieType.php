@@ -205,10 +205,11 @@ class CandidatureSaisieType extends AbstractType
                 'mapped' => false,
                 'required' => $config['required'] ?? false,
                 'attr' => ['accept' => $config['accept']],
-                'help' => 'Formats : ' . $config['formats'] . ' — 5 Mo maximum.',
+                'help' => 'Formats : ' . $config['formats'] . ' — 2 Mo maximum.',
                 'constraints' => [
                     new File([
-                        'maxSize' => '5M',
+                        'maxSize' => '2M',
+                        'maxSizeMessage' => 'Fichier trop lourd : 2 Mo maximum.',
                         'mimeTypes' => $config['mimeTypes'],
                         'mimeTypesMessage' => 'Format ' . $config['formats'] . ' requis.',
                     ]),

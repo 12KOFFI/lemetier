@@ -25,7 +25,7 @@ class FileUploader
         'image/pjpeg' => 'jpg',
         'image/png' => 'png',
     ];
-    public const TAILLE_MAX_PIECE = 5 * 1024 * 1024;
+    public const TAILLE_MAX_PIECE = 2 * 1024 * 1024;
 
     /**
      * Enregistre une pièce de dossier après contrôle du contenu réel et de la taille.
@@ -35,7 +35,7 @@ class FileUploader
     public function uploadPiece(UploadedFile $file, string $targetDirectory, ?string $previous = null): string
     {
         if (!$file->isValid() || $file->getSize() > self::TAILLE_MAX_PIECE) {
-            throw new \InvalidArgumentException('Fichier refusé : 5 Mo maximum.');
+            throw new \InvalidArgumentException('Fichier refusé : 2 Mo maximum.');
         }
 
         $extension = self::PIECES_AUTORISEES[$file->getMimeType()] ?? null;

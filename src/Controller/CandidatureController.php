@@ -315,6 +315,7 @@ class CandidatureController extends AbstractController
         $depot = $this->ouvrirDepotSaisie($request);
         if ($form->isSubmitted()) {
             $this->deposerFichiers($depot, $form);
+            $this->signalerPiecesManquantes($depot, $form);
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -376,7 +377,52 @@ class CandidatureController extends AbstractController
             'session' => $sessionActive,
             'depot' => $depot['id'],
             'deja_recus' => $depot['noms'],
+            'erreurs_saisie' => $form->isSubmitted() ? $this->listerErreurs($form) : [],
         ]);
+    }
+
+    /** Une pièce obligatoire absente devient une erreur du formulaire : tout est signalé en une seule fois. */
+    private function signalerPiecesManquantes(array $depot, FormInterface $form): void
+    {
+        foreach ($this->constant->document_labels as $champ => $config) {
+            if (!($config['required'] ?? false) || !$form->has($champ) || !$form->get($champ)->isValid()) {
+                continue;
+            }
+            if (!glob($depot['dir'] . '/' . $champ . '.*')) {
+                $form->get($champ)->addError(new FormError('Cette pièce est obligatoire.'));
+            }
+        }
+    }
+
+    /**
+     * Erreurs du formulaire pour la notification en haut de page.
+     *
+     * @return list<array{champ: string, message: string, id: string}>
+     */
+    private function listerErreurs(FormInterface $form): array
+    {
+        $erreurs = [];
+        foreach ($form->getErrors(true) as $erreur) {
+            $origine = $erreur->getOrigin();
+            $noms = [];
+            for ($f = $origine; $f !== null; $f = $f->getParent()) {
+                array_unshift($noms, $f->getName());
+            }
+            $label = $origine?->getConfig()->getOption('label');
+            if ($origine?->getName() === 'plainPassword') {
+                $label = 'Mot de passe du candidat';
+                $noms[] = 'first';
+            }
+
+            $id = implode('_', $noms);
+            $erreurs[$id . $erreur->getMessage()] = [
+                'champ' => is_string($label) ? $label : 'Formulaire',
+                'message' => $erreur->getMessage(),
+                'id' => $id,
+            ];
+        }
+
+        return array_values($erreurs);
     }
 
     /**

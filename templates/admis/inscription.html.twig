@@ -412,9 +412,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const file = this.files[0];
             if (!file) return;
 
-            // Vérifier taille max (5 Mo)
-            if (file.size > 5 * 1024 * 1024) {
-                alert('Le fichier est trop volumineux (max 5 Mo).');
+            // Vérifier taille max (2 Mo)
+            if (file.size > 2 * 1024 * 1024) {
+                alert('Le fichier est trop volumineux (max 2 Mo).');
                 this.value = '';
                 return;
             }

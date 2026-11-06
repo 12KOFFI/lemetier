@@ -75,7 +75,8 @@ class AdmisType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new File([
-                        'maxSize' => '5M',
+                        'maxSize' => '2M',
+                        'maxSizeMessage' => 'Fichier trop lourd : 2 Mo maximum.',
                         'mimeTypes' => [
                             'application/pdf',
                             'application/x-pdf',
@@ -92,7 +93,15 @@ class AdmisType extends AbstractType
                 'attr' => [
                     'accept' => '.pdf,.jpg,.jpeg,.png',
                     'class' => 'form-control'
-                ]
+                ],
+                'constraints' => [
+                    new File([
+                        'maxSize' => '2M',
+                        'maxSizeMessage' => 'Fichier trop lourd : 2 Mo maximum.',
+                        'mimeTypes' => ['application/pdf', 'image/jpeg', 'image/png'],
+                        'mimeTypesMessage' => 'Formats acceptés : PDF, JPG, PNG.',
+                    ]),
+                ],
             ]);
     }
 

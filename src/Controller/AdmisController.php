@@ -482,11 +482,11 @@ class AdmisController extends AbstractController
 
         // Si c'est le dernier chunk, finaliser le fichier
         if ($chunkIndex === $totalChunks - 1) {
-            // Vérifier la taille finale (max 5 Mo)
+            // Vérifier la taille finale (max 2 Mo)
             $fileSize = filesize($tempFile);
             if ($fileSize > FileUploader::TAILLE_MAX_PIECE) {
                 unlink($tempFile);
-                return $this->json(['error' => 'Fichier trop volumineux (max 5 Mo)'], 413);
+                return $this->json(['error' => 'Fichier trop volumineux (max 2 Mo)'], 413);
             }
 
             // L'extension vient du contenu réel du fichier, pas du nom envoyé par le navigateur.

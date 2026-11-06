@@ -694,9 +694,9 @@ document.addEventListener(\x27DOMContentLoaded\x27, function () {
             const file = this.files[0];
             if (!file) return;
 
-            // Vérifier taille max (5 Mo)
-            if (file.size > 5 * 1024 * 1024) {
-                alert(\x27Le fichier est trop volumineux (max 5 Mo).\x27);
+            // Vérifier taille max (2 Mo)
+            if (file.size > 2 * 1024 * 1024) {
+                alert(\x27Le fichier est trop volumineux (max 2 Mo).\x27);
                 this.value = \x27\x27;
                 return;
             }

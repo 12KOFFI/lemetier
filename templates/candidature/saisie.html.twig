@@ -60,6 +60,11 @@
 {% block stylesheets %}
     {{ parent() }}
     <style>
+        .notification-erreurs { transform: translateX(-50%); animation: notification-entree .3s ease-out; }
+        @keyframes notification-entree {
+            from { transform: translate(-50%, -1rem); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
         .fichier-case { transition: border-color .2s ease, background-color .2s ease; }
         .fichier-nom { display: flex; align-items: center; gap: .4rem; }
         .fichier-coche { display: none; flex-shrink: 0; font-size: 1.05rem; }
@@ -79,13 +84,38 @@
             to { transform: scale(1) rotate(0); opacity: 1; }
         }
         @media (prefers-reduced-motion: reduce) {
-            .fichier-case, .fichier-case.is-anime, .fichier-case.is-anime .fichier-coche { animation: none; transition: none; }
+            .notification-erreurs, .fichier-case, .fichier-case.is-anime, .fichier-case.is-anime .fichier-coche { animation: none; transition: none; }
         }
     </style>
 {% endblock %}
 
 {% block body %}
 {% import _self as ui %}
+{% if erreurs_saisie %}
+    {# Notification en haut de page : reste visible jusqu'à sa fermeture #}
+    <div id="notification-erreurs" role="alert" class="notification-erreurs fixed top-4 left-1/2 w-[calc(100%-2rem)] max-w-xl overflow-hidden bg-white border border-red-300 shadow-2xl rounded-xl" style="z-index: 70">
+        <div class="flex items-start gap-3 p-4 border-b border-red-200 bg-red-50">
+            <i class="mt-0.5 text-xl text-red-600 fas fa-circle-exclamation" aria-hidden="true"></i>
+            <div class="flex-1 min-w-0">
+                <p class="font-bold text-red-800">Candidature non enregistrée</p>
+                <p class="text-sm text-red-700">{{ erreurs_saisie|length }} {{ erreurs_saisie|length > 1 ? 'champs à corriger' : 'champ à corriger' }} : cliquez pour y aller.</p>
+            </div>
+            <button type="button" data-fermer-notification class="p-1 text-red-500 rounded hover:text-red-800" aria-label="Fermer la notification">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+        <ul class="overflow-y-auto divide-y max-h-64 divide-slate-100">
+            {% for erreur in erreurs_saisie %}
+                <li>
+                    <button type="button" data-aller-champ="{{ erreur.id }}" class="w-full px-4 py-2.5 text-sm text-left hover:bg-red-50">
+                        <span class="font-semibold text-slate-800">{{ erreur.champ }}</span>
+                        <span class="block text-red-700">{{ erreur.message }}</span>
+                    </button>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
 <div class="max-w-5xl mx-auto">
     <div class="p-8 mb-8 text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl">
         <h1 class="text-2xl font-bold">Nouvelle candidature</h1>
@@ -209,6 +239,21 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
+        // Notification d'erreurs : fermeture, et accès direct au champ concerné.
+        document.querySelector('[data-fermer-notification]')?.addEventListener('click', function () {
+            document.getElementById('notification-erreurs').remove();
+        });
+        document.querySelectorAll('[data-aller-champ]').forEach(function (bouton) {
+            bouton.addEventListener('click', function () {
+                var id = bouton.dataset.allerChamp;
+                var champ = document.getElementById(id) || document.querySelector('[id^="' + id + '_"]');
+                if (champ) {
+                    (champ.closest('div, fieldset') || champ).scrollIntoView({ block: 'center' });
+                    champ.focus({ preventScroll: true });
+                }
+            });
+        });
+
         // Téléphone : uniquement des chiffres, 10 au maximum. Un numéro collé avec espaces ou +225 est nettoyé.
         document.querySelectorAll('[data-telephone]').forEach(function (input) {
             input.addEventListener('input', function () {
@@ -224,7 +269,7 @@
         });
 
         // Fichier récupéré : la case passe au vert avec une coche animée. Trop lourd : en rouge, le fichier est retiré.
-        var TAILLE_MAX = 5 * 1024 * 1024;
+        var TAILLE_MAX = 2 * 1024 * 1024;
         document.querySelectorAll('[data-fichier]').forEach(function (input) {
             var cadre = input.closest('[data-fichier-case]');
             var nom = cadre.querySelector('[data-fichier-nom]');
@@ -240,7 +285,7 @@
                 var dejaRecu = nom.dataset.dejaRecu;
 
                 texte.textContent = tropLourd
-                    ? 'Fichier trop lourd : 5 Mo maximum'
+                    ? 'Fichier trop lourd : 2 Mo maximum'
                     : (recu ? fichier.name : (dejaRecu || 'Aucun fichier choisi'));
 
                 cadre.classList.remove('is-recu', 'is-refuse', 'is-anime');

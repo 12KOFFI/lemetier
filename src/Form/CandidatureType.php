@@ -225,7 +225,8 @@ class CandidatureType extends AbstractType
                     ],
                     'constraints' => [
                         new File([
-                            'maxSize' => '5M',
+                            'maxSize' => '2M',
+                            'maxSizeMessage' => 'Fichier trop lourd : 2 Mo maximum.',
                             'mimeTypes' => $mimeTypes,
                             'mimeTypesMessage' => 'Format ' . $config['formats'] . ' requis'
                         ])
