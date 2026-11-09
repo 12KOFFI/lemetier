@@ -221,7 +221,7 @@ class __TwigTemplate_75f1b355772cc6044e254683c19a5971 extends Template
         yield "
 ";
         // line 67
-        if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+        if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
             // line 68
             yield "<div class=\"p-4 mb-6 bg-white border shadow-sm rounded-xl border-slate-200\">
     <form method=\"get\" action=\"";

@@ -93,7 +93,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         if ($this->authorization->isGranted('ROLE_AGENT')) {
-            return new RedirectResponse($this->router->generate('app_session_recrutement_index'));
+            return new RedirectResponse($this->router->generate('app_dashboard'));
         }
 
         // ROLE_COM : redirigé vers les statistiques de candidature

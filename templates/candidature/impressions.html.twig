@@ -85,7 +85,7 @@
             </div>
         </div>
 
-        {% if is_granted('ROLE_ENT') or is_granted('ROLE_ADMIN') %}
+        {% if is_granted('ROLE_ENT') or is_granted('ROLE_AGENT') %}
 <!-- Statistiques -->
 <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden hover:shadow-2xl transition-all duration-300">
     <div class="border-b border-slate-200 bg-gradient-to-r from-blue-50 to-cyan-50 px-6 py-4">
@@ -142,7 +142,7 @@
 </div>
 {% endif %}
 
-        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
+        {% if is_granted('ROLE_AGENT') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
         {% set selectedEtablissement = app.request.request.get('etablissement_liste') %}
         {% set selectedMetier = app.request.request.get('metier_liste') %}
         <div
@@ -160,7 +160,7 @@
                     <input type="hidden" name="action" value="export_liste_candidats_inscrits">
 
                     <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
-                        {% if is_granted('ROLE_ADMIN') %}
+                        {% if is_granted('ROLE_AGENT') %}
                         <div>
                             <select id="export-liste-etablissement" name="etablissement_liste" required
                                 class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition bg-white">
@@ -188,11 +188,11 @@
                         <div>
                             <select id="export-liste-metier" name="metier_liste"
                                 class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition bg-white"
-                                {% if is_granted('ROLE_ADMIN') %}disabled{% endif %}>
+                                {% if is_granted('ROLE_AGENT') %}disabled{% endif %}>
                                 <option value="TOUS"
                                     {% if selectedMetier is empty or selectedMetier == 'TOUS' %}selected{% endif %}>Tous
                                     les métiers</option>
-                                {% if not is_granted('ROLE_ADMIN') %}
+                                {% if not is_granted('ROLE_AGENT') %}
                                 {% for metier in metiers %}
                                 <option value="{{ metier.id }}"
                                     {% if selectedMetier == (metier.id ~ '') %}selected{% endif %}>{{ metier.nom }}
@@ -230,7 +230,7 @@
 
 
         <!-- Exportation des candidats en attente (etustatut IS NULL) -->
-        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
+        {% if is_granted('ROLE_AGENT') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
         {% set selectedEtablissementAttente = app.request.request.get('etablissement_attente') %}
         {% set selectedMetierAttente = app.request.request.get('metier_attente') %}
         <div
@@ -248,7 +248,7 @@
                     <input type="hidden" name="action" value="export_liste_attente">
 
                     <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
-                        {% if is_granted('ROLE_ADMIN') %}
+                        {% if is_granted('ROLE_AGENT') %}
                         <div>
                             <select id="export-attente-etablissement" name="etablissement_attente" required
                                 class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition bg-white">
@@ -276,11 +276,11 @@
                         <div>
                             <select id="export-attente-metier" name="metier_attente"
                                 class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition bg-white"
-                                {% if is_granted('ROLE_ADMIN') %}disabled{% endif %}>
+                                {% if is_granted('ROLE_AGENT') %}disabled{% endif %}>
                                 <option value="TOUS"
                                     {% if selectedMetierAttente is empty or selectedMetierAttente == 'TOUS' %}selected{% endif %}>Tous
                                     les métiers</option>
-                                {% if not is_granted('ROLE_ADMIN') %}
+                                {% if not is_granted('ROLE_AGENT') %}
                                 {% for metier in metiers %}
                                 <option value="{{ metier.id }}"
                                     {% if selectedMetierAttente == (metier.id ~ '') %}selected{% endif %}>{{ metier.nom }}
@@ -318,7 +318,7 @@
 
 
         <!-- Exportation des candidats éligibles aux entretiens (etustatut = 2) -->
-{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
+{% if is_granted('ROLE_AGENT') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
 {% set selectedEtablissementEligible = app.request.request.get('etablissement_eligible') %}
 {% set selectedMetierEligible = app.request.request.get('metier_eligible') %}
 <div class="overflow-hidden transition-all duration-300 bg-white border shadow-xl rounded-2xl border-slate-200 hover:shadow-2xl">
@@ -335,7 +335,7 @@
             <input type="hidden" name="action" value="export_liste_eligibles">
 
             <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_AGENT') %}
                 <div>
                     <select id="export-eligible-etablissement" name="etablissement_eligible" required
                         class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition bg-white">
@@ -363,11 +363,11 @@
                 <div>
                     <select id="export-eligible-metier" name="metier_eligible"
                         class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition bg-white"
-                        {% if is_granted('ROLE_ADMIN') %}disabled{% endif %}>
+                        {% if is_granted('ROLE_AGENT') %}disabled{% endif %}>
                         <option value="TOUS"
                             {% if selectedMetierEligible is empty or selectedMetierEligible == 'TOUS' %}selected{% endif %}>Tous
                             les métiers</option>
-                        {% if not is_granted('ROLE_ADMIN') %}
+                        {% if not is_granted('ROLE_AGENT') %}
                         {% for metier in metiers %}
                         <option value="{{ metier.id }}"
                             {% if selectedMetierEligible == (metier.id ~ '') %}selected{% endif %}>{{ metier.nom }}
@@ -404,7 +404,7 @@
 {% endif %}
 
 <!-- Exportation des candidats évalués (etustatut = 2 et au moins une note saisie) -->
-{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
+{% if is_granted('ROLE_AGENT') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
 {% set selectedEtablissementEvalue = app.request.request.get('etablissement_evalue') %}
 {% set selectedMetierEvalue = app.request.request.get('metier_evalue') %}
 <div class="overflow-hidden transition-all duration-300 bg-white border shadow-xl rounded-2xl border-slate-200 hover:shadow-2xl">
@@ -421,7 +421,7 @@
             <input type="hidden" name="action" value="export_liste_evalues">
 
             <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_AGENT') %}
                 <div>
                     <select id="export-evalue-etablissement" name="etablissement_evalue" required
                         class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition bg-white">
@@ -449,11 +449,11 @@
                 <div>
                     <select id="export-evalue-metier" name="metier_evalue"
                         class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition bg-white"
-                        {% if is_granted('ROLE_ADMIN') %}disabled{% endif %}>
+                        {% if is_granted('ROLE_AGENT') %}disabled{% endif %}>
                         <option value="TOUS"
                             {% if selectedMetierEvalue is empty or selectedMetierEvalue == 'TOUS' %}selected{% endif %}>Tous
                             les métiers</option>
-                        {% if not is_granted('ROLE_ADMIN') %}
+                        {% if not is_granted('ROLE_AGENT') %}
                         {% for metier in metiers %}
                         <option value="{{ metier.id }}"
                             {% if selectedMetierEvalue == (metier.id ~ '') %}selected{% endif %}>{{ metier.nom }}
@@ -490,7 +490,7 @@
 {% endif %}
 
 <!-- Exportation des candidats admissibles pour la visite médicale (entstatut = 2) -->
-{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
+{% if is_granted('ROLE_AGENT') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
 {% set selectedEtablissementAdmissibleVisite = app.request.request.get('etablissement_admissible_visite') %}
 {% set selectedMetierAdmissibleVisite = app.request.request.get('metier_admissible_visite') %}
 <div class="overflow-hidden transition-all duration-300 bg-white border shadow-xl rounded-2xl border-slate-200 hover:shadow-2xl">
@@ -507,7 +507,7 @@
             <input type="hidden" name="action" value="export_liste_admissibles_visite">
 
             <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_AGENT') %}
                 <div>
                     <select id="export-admissible-visite-etablissement" name="etablissement_admissible_visite" required
                         class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition bg-white">
@@ -535,11 +535,11 @@
                 <div>
                     <select id="export-admissible-visite-metier" name="metier_admissible_visite"
                         class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition bg-white"
-                        {% if is_granted('ROLE_ADMIN') %}disabled{% endif %}>
+                        {% if is_granted('ROLE_AGENT') %}disabled{% endif %}>
                         <option value="TOUS"
                             {% if selectedMetierAdmissibleVisite is empty or selectedMetierAdmissibleVisite == 'TOUS' %}selected{% endif %}>
                             Tous les métiers</option>
-                        {% if not is_granted('ROLE_ADMIN') %}
+                        {% if not is_granted('ROLE_AGENT') %}
                         {% for metier in metiers %}
                         <option value="{{ metier.id }}"
                             {% if selectedMetierAdmissibleVisite == (metier.id ~ '') %}selected{% endif %}>{{ metier.nom }}
@@ -576,7 +576,7 @@
 {% endif %}
 
         <!-- Exportation des candidats admis -->
-        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
+        {% if is_granted('ROLE_AGENT') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
         {% set selectedEtablissementAdmis = app.request.request.get('etablissement_admis') %}
         {% set selectedMetierAdmis = app.request.request.get('metier_admis') %}
         <div
@@ -594,7 +594,7 @@
                     <input type="hidden" name="action" value="export_liste_admis">
 
                     <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
-                        {% if is_granted('ROLE_ADMIN') %}
+                        {% if is_granted('ROLE_AGENT') %}
                         <div>
                             <select id="export-admis-etablissement" name="etablissement_admis" required
                                 class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition bg-white">
@@ -622,11 +622,11 @@
                         <div>
                             <select id="export-admis-metier" name="metier_admis"
                                 class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition bg-white"
-                                {% if is_granted('ROLE_ADMIN') %}disabled{% endif %}>
+                                {% if is_granted('ROLE_AGENT') %}disabled{% endif %}>
                                 <option value="TOUS"
                                     {% if selectedMetierAdmis is empty or selectedMetierAdmis == 'TOUS' %}selected{% endif %}>
                                     Tous les métiers</option>
-                                {% if not is_granted('ROLE_ADMIN') %}
+                                {% if not is_granted('ROLE_AGENT') %}
                                 {% for metier in metiers %}
                                 <option value="{{ metier.id }}"
                                     {% if selectedMetierAdmis == (metier.id ~ '') %}selected{% endif %}>{{ metier.nom }}
@@ -663,7 +663,7 @@
         {% endif %}
 
         <!-- Exportation des candidats admis définitifs -->
-        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
+        {% if is_granted('ROLE_AGENT') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
         {% set selectedEtablissementAdmisDef = app.request.request.get('etablissement_admis_def') %}
         {% set selectedMetierAdmisDef = app.request.request.get('metier_admis_def') %}
         <div
@@ -681,7 +681,7 @@
                     <input type="hidden" name="action" value="export_liste_admis_definitifs">
 
                     <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
-                        {% if is_granted('ROLE_ADMIN') %}
+                        {% if is_granted('ROLE_AGENT') %}
                         <div>
                             <select id="export-admis-def-etablissement" name="etablissement_admis_def" required
                                 class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-white">
@@ -712,11 +712,11 @@
                         <div>
                             <select id="export-admis-def-metier" name="metier_admis_def"
                                 class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-white"
-                                {% if is_granted('ROLE_ADMIN') %}disabled{% endif %}>
+                                {% if is_granted('ROLE_AGENT') %}disabled{% endif %}>
                                 <option value="TOUS"
                                     {% if selectedMetierAdmisDef is empty or selectedMetierAdmisDef == 'TOUS' %}selected{% endif %}>
                                     Tous les métiers</option>
-                                {% if not is_granted('ROLE_ADMIN') %}
+                                {% if not is_granted('ROLE_AGENT') %}
                                 {% for metier in metiers %}
                                 <option value="{{ metier.id }}"
                                     {% if selectedMetierAdmisDef == (metier.id ~ '') %}selected{% endif %}>
@@ -754,7 +754,7 @@
 
         <!-- Exportation ZIP Contrats -->
         {#
-        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
+        {% if is_granted('ROLE_AGENT') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
         {% set selectedEtablissementZipContrats = app.request.request.get('etablissement_zip_contrats') %}
         <div
             class="overflow-hidden transition-all duration-300 bg-white border shadow-xl rounded-2xl border-slate-200 hover:shadow-2xl">
@@ -771,7 +771,7 @@
                     <input type="hidden" name="action" value="export_zip_contrats">
 
                     <div class="grid items-center grid-cols-1 gap-3 md:grid-cols-2">
-                        {% if is_granted('ROLE_ADMIN') %}
+                        {% if is_granted('ROLE_AGENT') %}
                         <div>
                             <select id="export-zip-contrats-etablissement" name="etablissement_zip_contrats" required
                                 class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition bg-white">
@@ -817,7 +817,7 @@
 
 {% block javascripts %}
       {{ parent() }}
-      {% if is_granted('ROLE_ADMIN') %}
+      {% if is_granted('ROLE_AGENT') %}
   <script>
          document.addEventListener('DOMContentLoaded', function() {
              const metiersUrlTemplate = "{{ path('app_candidature_etablissement_metiers', {'id': '__ID__'}) }}";

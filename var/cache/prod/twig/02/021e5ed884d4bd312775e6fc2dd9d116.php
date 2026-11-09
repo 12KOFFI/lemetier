@@ -105,7 +105,7 @@ class __TwigTemplate_57f4f1c75e9481e8ca3ea17bc4cab51a extends Template
                 <h1 class=\"text-xl md:text-2xl font-bold tracking-tight\">Candidats Admis Provisoires</h1>
                 ";
         // line 20
-        if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+        if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
             // line 21
             yield "                    <p class=\"text-white/60 text-sm mt-0.5\">Tous les établissements</p>
                 ";
@@ -299,7 +299,7 @@ class __TwigTemplate_57f4f1c75e9481e8ca3ea17bc4cab51a extends Template
                             <th class=\"px-5 py-3 text-left text-[0.7rem] font-semibold uppercase tracking-widest text-slate-400\">Métier</th>
                             ";
             // line 125
-            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 // line 126
                 yield "                            <th class=\"px-5 py-3 text-left text-[0.7rem] font-semibold uppercase tracking-widest text-slate-400\">Établissement</th>
                             ";
@@ -423,7 +423,7 @@ class __TwigTemplate_57f4f1c75e9481e8ca3ea17bc4cab51a extends Template
                             </td>
                             ";
                 // line 171
-                if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+                if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                     // line 172
                     yield "                            <td class=\"px-5 py-4\">
                                 <span class=\"inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[0.68rem] font-semibold bg-purple-50 text-purple-700 border border-purple-400\">
@@ -464,7 +464,7 @@ class __TwigTemplate_57f4f1c75e9481e8ca3ea17bc4cab51a extends Template
                                         <i class=\"fas fa-user-plus text-[10px]\"></i> Inscrire définitivement
                                     </a>
                                 ";
-                    } elseif ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+                    } elseif ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                         // line 191
                         yield "                                    <span class=\"inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 text-amber-600 border border-amber-500 text-xs font-bold\">
                                         <i class=\"fas fa-clock text-[10px]\"></i> Pas encore inscrit

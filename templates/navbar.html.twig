@@ -72,6 +72,7 @@
           {% elseif is_granted('ROLE_JURY') %}bg-blue-100 text-blue-700
           {% else %}bg-emerald-100 text-emerald-700{% endif %}">
           {% if is_granted('ROLE_ADMIN') %}Admin
+          {% elseif is_granted('ROLE_AGENT') %}Agent
           {% elseif is_granted('ROLE_ENT') %}ENT
           {% elseif is_granted('ROLE_JURY') %}Jury
           {% else %}Candidat{% endif %}
@@ -106,6 +107,7 @@
                 {% elseif is_granted('ROLE_JURY') %}bg-blue-100 text-blue-700
                 {% else %}bg-emerald-100 text-emerald-700{% endif %}">
                 {% if is_granted('ROLE_ADMIN') %}Administrateur
+                {% elseif is_granted('ROLE_AGENT') %}Agent DAIP
                 {% elseif is_granted('ROLE_ENT') %}Établissement
                 {% elseif is_granted('ROLE_JURY') %}Jury
                 {% else %}Candidat{% endif %}

@@ -156,7 +156,7 @@ class CandidatureSaisieType extends AbstractType
             ->add('datenaissance', BirthdayType::class, [
                 'label' => 'Date de naissance',
                 'widget' => 'single_text',
-                'help' => 'Le candidat doit avoir de 18 à 40 ans.',
+                'help' => 'Le candidat doit avoir de 18 à 45 ans.',
             ])
             ->add('lieunaissance', TextType::class, [
                 'label' => 'Lieu de naissance',

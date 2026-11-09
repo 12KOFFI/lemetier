@@ -101,7 +101,9 @@ class __TwigTemplate_b71629f963e3e697d88092c0c1d5bd94 extends Template
         // line 16
         if ((($tmp = ($context["is_admin"] ?? null)) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
             // line 17
-            yield "                        Administration générale
+            yield "                        ";
+            yield (string) (((($tmp = ($context["is_agent"] ?? null)) && $tmp instanceof Markup ? (string) $tmp : $tmp)) ? ("Accompagnement des établissements") : ("Administration générale"));
+            yield "
                     ";
         } elseif ((($tmp =         // line 18
 ($context["is_candidat"] ?? null)) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
@@ -751,20 +753,25 @@ $context["candidature"], "etustatut", [], "any", false, false, false, 240) == 1)
                                  <i class=\"mb-1 text-xl text-purple-600 fas fa-chart-bar\"></i>
                                  <span class=\"text-xs text-purple-700\">Statistiques</span>
                             </a>
-                            <a href=\"";
+                            ";
             // line 365
-            yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_metier_new");
-            yield "\" class=\"flex flex-col items-center p-3 transition rounded-lg bg-amber-50 hover:bg-amber-100\">
+            if ( !(($tmp = ($context["is_agent"] ?? null)) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+                // line 366
+                yield "                            <a href=\"";
+                yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_metier_new");
+                yield "\" class=\"flex flex-col items-center p-3 transition rounded-lg bg-amber-50 hover:bg-amber-100\">
                                 <i class=\"mb-1 text-xl fas fa-briefcase text-amber-600\"></i>
                                 <span class=\"text-xs text-amber-700\">Nouveau métier</span>
                             </a>
                             ";
-        } elseif (((($tmp =         // line 369
-($context["is_ent"] ?? null)) && $tmp instanceof Markup ? (string) $tmp : $tmp) &&  !(($tmp = ($context["is_admin"] ?? null)) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
-            // line 370
+            }
+            // line 371
+            yield "                            ";
+        } elseif (((($tmp = ($context["is_ent"] ?? null)) && $tmp instanceof Markup ? (string) $tmp : $tmp) &&  !(($tmp = ($context["is_admin"] ?? null)) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
+            // line 372
             yield "                            ";
             if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("CANDIDATURE_CREATE")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
-                // line 371
+                // line 373
                 yield "                            <a href=\"";
                 yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_candidature_saisie");
                 yield "\" class=\"flex flex-col items-center p-3 transition rounded-lg bg-indigo-50 hover:bg-indigo-100\">
@@ -773,7 +780,7 @@ $context["candidature"], "etustatut", [], "any", false, false, false, 240) == 1)
                             </a>
                             ";
             }
-            // line 376
+            // line 378
             yield "                            <a href=\"";
             yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_candidature_index");
             yield "\" class=\"flex flex-col items-center p-3 transition rounded-lg bg-indigo-50 hover:bg-indigo-100\">
@@ -781,14 +788,14 @@ $context["candidature"], "etustatut", [], "any", false, false, false, 240) == 1)
                                 <span class=\"text-xs text-indigo-700\">Gérer les candidatures</span>
                             </a>
                             <a href=\"";
-            // line 380
+            // line 382
             yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_admis_liste");
             yield "\" class=\"flex flex-col items-center p-3 transition rounded-lg bg-green-50 hover:bg-green-100\">
                                 <i class=\"mb-1 text-xl text-green-600 fas fa-user-graduate\"></i>
                                 <span class=\"text-xs text-green-700\">Liste des admis</span>
                             </a>
                             ";
-            // line 390
+            // line 392
             yield "                            <a href=\"";
             yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_admis_etablissement");
             yield "\" class=\"flex flex-col items-center p-3 transition rounded-lg bg-emerald-50 hover:bg-emerald-100\">
@@ -796,34 +803,34 @@ $context["candidature"], "etustatut", [], "any", false, false, false, 240) == 1)
                                 <span class=\"text-xs text-emerald-700\">Liste des admis définitifs</span>
                             </a>
                             <a href=\"";
-            // line 394
+            // line 396
             yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_candidature_impressions");
             yield "\" class=\"flex flex-col items-center p-3 transition rounded-lg bg-purple-50 hover:bg-purple-100\">
                                 <i class=\"mb-1 text-xl text-purple-600 fas fa-print\"></i>
                                 <span class=\"text-xs text-purple-700\">Impressions</span>
                             </a>
                             <a href=\"";
-            // line 398
-            yield (string) $this->escaper->escape($this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_candidature_stat", ["etablissement" => CoreExtension::getAttribute($this->env, $this->source, ($context["etablissement"] ?? null), "id", [], "any", false, false, false, 398)]), "html", null, true);
+            // line 400
+            yield (string) $this->escaper->escape($this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_candidature_stat", ["etablissement" => CoreExtension::getAttribute($this->env, $this->source, ($context["etablissement"] ?? null), "id", [], "any", false, false, false, 400)]), "html", null, true);
             yield "\" class=\"flex flex-col items-center p-3 transition rounded-lg bg-blue-50 hover:bg-blue-100\">
                                  <i class=\"mb-1 text-xl text-blue-600 fas fa-chart-bar\"></i>
                                  <span class=\"text-xs text-blue-700\">Statistiques</span>
                              </a>
                             <a href=\"";
-            // line 402
-            yield (string) $this->escaper->escape($this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_etablissement_show", ["id" => CoreExtension::getAttribute($this->env, $this->source, ($context["etablissement"] ?? null), "id", [], "any", false, false, false, 402)]), "html", null, true);
+            // line 404
+            yield (string) $this->escaper->escape($this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_etablissement_show", ["id" => CoreExtension::getAttribute($this->env, $this->source, ($context["etablissement"] ?? null), "id", [], "any", false, false, false, 404)]), "html", null, true);
             yield "\" class=\"flex flex-col items-center p-3 transition rounded-lg bg-amber-50 hover:bg-amber-100\">
                                 <i class=\"mb-1 text-xl fas fa-building text-amber-600\"></i>
                                 <span class=\"text-xs text-amber-700\">Mon établissement</span>
                             </a>
                         </div>
                         ";
-        } elseif ((($tmp =         // line 407
+        } elseif ((($tmp =         // line 409
 ($context["is_candidat"] ?? null)) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
-            // line 408
+            // line 410
             yield "                            ";
             if ((($tmp = ($context["candidature_publique"] ?? null)) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
-                // line 409
+                // line 411
                 yield "                            <a href=\"";
                 yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_candidature_new");
                 yield "\" class=\"flex flex-col items-center p-3 transition rounded-lg bg-indigo-50 hover:bg-indigo-100\">
@@ -832,15 +839,15 @@ $context["candidature"], "etustatut", [], "any", false, false, false, 240) == 1)
                             </a>
                             ";
             }
-            // line 414
+            // line 416
             yield "                            <a href=\"";
-            yield (string) $this->escaper->escape($this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_user_edit", ["id" => CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "user", [], "any", false, false, false, 414), "id", [], "any", false, false, false, 414)]), "html", null, true);
+            yield (string) $this->escaper->escape($this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_user_edit", ["id" => CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "user", [], "any", false, false, false, 416), "id", [], "any", false, false, false, 416)]), "html", null, true);
             yield "\" class=\"flex flex-col items-center p-3 transition rounded-lg bg-amber-50 hover:bg-amber-100\">
                                 <i class=\"mb-1 text-xl fas fa-user-edit text-amber-600\"></i>
                                 <span class=\"text-xs text-amber-700\">Mon profil</span>
                             </a>
                             <a href=\"";
-            // line 418
+            // line 420
             yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_candidature_impressions");
             yield "\" class=\"flex flex-col items-center p-3 transition rounded-lg bg-purple-50 hover:bg-purple-100\">
                                 <i class=\"mb-1 text-xl text-purple-600 fas fa-print\"></i>
@@ -848,7 +855,7 @@ $context["candidature"], "etustatut", [], "any", false, false, false, 240) == 1)
                             </a>
                         ";
         }
-        // line 423
+        // line 425
         yield "                    </div>
                 </div>
             </div>
@@ -856,118 +863,6 @@ $context["candidature"], "etustatut", [], "any", false, false, false, 240) == 1)
     </div>
 </div>
 ";
-        // line 429
-        if (((($tmp = ($context["is_ent"] ?? null)) && $tmp instanceof Markup ? (string) $tmp : $tmp) &&  !(($tmp = ($context["is_admin"] ?? null)) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
-            // line 430
-            yield "
-<!-- Modal Nouvelles Fonctionnalités -->
-<div id=\"featureModal\" class=\"fixed inset-0 z-50 flex items-end justify-center hidden pb-4 sm:items-center sm:pb-0\" aria-labelledby=\"modal-title\" role=\"dialog\" aria-modal=\"true\">
-    <!-- Backdrop -->
-    <div class=\"fixed inset-0 transition-opacity duration-300 opacity-0 bg-slate-900/60 backdrop-blur-sm\" id=\"featureModalBackdrop\"></div>
-
-    <!-- Modal Panel -->
-    <div class=\"relative bg-white rounded-3xl shadow-2xl w-full max-w-md mx-4 sm:mx-auto overflow-hidden transform opacity-0 translate-y-10 sm:translate-y-0 sm:scale-95 transition-all duration-300 flex flex-col max-h-[90vh]\" id=\"featureModalPanel\">
-        
-        <!-- Decoration Header -->
-        <div class=\"h-1.5 sm:h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500\"></div>
-
-        <!-- Close Button -->
-        <button type=\"button\" id=\"closeModalBtn\" class=\"absolute z-10 flex items-center justify-center w-8 h-8 transition-colors rounded-full top-3 right-3 sm:top-4 sm:right-4 bg-slate-50 text-slate-400 hover:text-slate-600 hover:bg-slate-200 focus:outline-none\">
-            <i class=\"fas fa-times\"></i>
-        </button>
-
-        <div class=\"p-6 overflow-y-auto sm:p-8\">
-            <!-- Icon -->
-            <div class=\"flex items-center justify-center w-12 h-12 mb-4 rounded-full shadow-inner sm:w-16 sm:h-16 bg-gradient-to-br from-indigo-100 to-purple-100 sm:mb-6\">
-                <i class=\"text-xl text-indigo-600 fas fa-rocket sm:text-2xl\"></i>
-            </div>
-
-            <!-- Content -->
-            <h3 class=\"mb-2 text-xl font-bold sm:text-2xl text-slate-800 sm:mb-3\" id=\"modal-title\">
-                Nouvelles fonctionnalités disponibles
-            </h3>
-            <p class=\"mb-6 text-sm leading-relaxed sm:text-base text-slate-600 sm:mb-8\">
-                Vous pouvez désormais gérer et transmettre facilement les conventions avec vos entreprises partenaires ainsi que les contrats d’apprentissage de vos apprentis, directement depuis la plateforme.
-            </p>
-
-            <!-- Actions -->
-            <div class=\"flex flex-col gap-3\">
-                <a href=\"";
-            // line 463
-            yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_admis_etablissement");
-            yield "\" class=\"group relative w-full flex items-center justify-center py-2.5 sm:py-3 px-4 border border-transparent rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all shadow-md hover:shadow-lg text-sm sm:text-base text-center\">
-                    <i class=\"mr-2 text-indigo-300 transition-colors fas fa-file-signature group-hover:text-indigo-200\"></i>
-                    <span class=\"font-semibold\">Ajouter un contrat d’apprentissage</span>
-                </a>
-            
-            </div>
-
-            <!-- Footer Actions -->
-            <div class=\"flex flex-col items-center justify-between gap-4 pt-4 mt-6 border-t sm:mt-8 sm:pt-5 border-slate-100 sm:flex-row\">
-                <a href=\"";
-            // line 472
-            yield (string) $this->escaper->escape($this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("uploads/guide_conventions_contrats.docx"), "html", null, true);
-            yield "\" target=\"_blank\" class=\"w-full sm:w-auto group inline-flex justify-center items-center text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors bg-indigo-50 hover:bg-indigo-100 px-4 py-2.5 rounded-xl\">
-                    <i class=\"mr-2 text-indigo-400 transition-colors fas fa-file-word group-hover:text-indigo-600\"></i>
-                    Consulter le guide d\x27utilisation
-                </a>
-                <button id=\"dismissModalBtn\" class=\"text-sm underline transition-colors text-slate-500 hover:text-slate-700 underline-offset-2 focus:outline-none\">
-                    Ne plus afficher
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-document.addEventListener(\x27DOMContentLoaded\x27, function() {
-    const modal = document.getElementById(\x27featureModal\x27);
-    if (!modal) return;
-    
-    const backdrop = document.getElementById(\x27featureModalBackdrop\x27);
-    const panel = document.getElementById(\x27featureModalPanel\x27);
-    const closeBtn = document.getElementById(\x27closeModalBtn\x27);
-    const dismissBtn = document.getElementById(\x27dismissModalBtn\x27);
-    
-    // Vérifier si le modal a déjà été masqué
-    const modalDismissed = localStorage.getItem(\x27featureModalDismissed\x27);
-    
-    if (modalDismissed !== \x27true\x27) {
-        // Afficher le modal avec animation
-        modal.classList.remove(\x27hidden\x27);
-        
-        // Petit délai pour permettre au navigateur de rendre le display:block avant d\x27animer
-        setTimeout(() => {
-            backdrop.classList.remove(\x27opacity-0\x27);
-            panel.classList.remove(\x27opacity-0\x27, \x27translate-y-10\x27, \x27sm:scale-95\x27);
-            panel.classList.add(\x27opacity-100\x27, \x27translate-y-0\x27, \x27sm:scale-100\x27);
-        }, 50);
-    }
-    
-    function hideModal() {
-        backdrop.classList.remove(\x27opacity-100\x27);
-        backdrop.classList.add(\x27opacity-0\x27);
-        
-        panel.classList.remove(\x27opacity-100\x27, \x27translate-y-0\x27, \x27sm:scale-100\x27);
-        panel.classList.add(\x27opacity-0\x27, \x27translate-y-10\x27, \x27sm:scale-95\x27);
-        
-        setTimeout(() => {
-            modal.classList.add(\x27hidden\x27);
-        }, 300); // Correspond à la durée de transition
-    }
-    
-    function dismissModalForever() {
-        localStorage.setItem(\x27featureModalDismissed\x27, \x27true\x27);
-        hideModal();
-    }
-    
-    closeBtn.addEventListener(\x27click\x27, hideModal);
-    backdrop.addEventListener(\x27click\x27, hideModal);
-    dismissBtn.addEventListener(\x27click\x27, dismissModalForever);
-});
-</script>
-";
-        }
         
         $__internal_5a27a8ba21ca79b61932376b2fa922d2->leave($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof);
 
@@ -1003,7 +898,7 @@ document.addEventListener(\x27DOMContentLoaded\x27, function() {
      */
     public function getDebugInfo(): array
     {
-        return array (  909 => 472,  897 => 463,  862 => 430,  860 => 429,  852 => 423,  844 => 418,  836 => 414,  827 => 409,  824 => 408,  822 => 407,  814 => 402,  807 => 398,  800 => 394,  792 => 390,  785 => 380,  777 => 376,  768 => 371,  765 => 370,  763 => 369,  756 => 365,  749 => 361,  742 => 357,  735 => 353,  728 => 349,  720 => 345,  718 => 344,  705 => 333,  700 => 330,  689 => 325,  687 => 324,  677 => 319,  673 => 318,  666 => 313,  654 => 311,  651 => 310,  647 => 309,  643 => 307,  640 => 306,  637 => 299,  634 => 298,  629 => 295,  623 => 294,  615 => 288,  610 => 287,  605 => 284,  601 => 282,  595 => 280,  593 => 279,  587 => 275,  585 => 274,  578 => 269,  571 => 264,  562 => 261,  558 => 259,  549 => 254,  547 => 253,  541 => 249,  539 => 248,  532 => 246,  529 => 245,  525 => 243,  521 => 241,  519 => 240,  516 => 239,  514 => 238,  511 => 237,  509 => 236,  506 => 235,  504 => 234,  499 => 232,  495 => 231,  491 => 230,  488 => 229,  483 => 228,  461 => 208,  459 => 207,  456 => 206,  452 => 204,  443 => 198,  440 => 197,  438 => 196,  433 => 193,  420 => 186,  418 => 185,  411 => 183,  407 => 182,  401 => 181,  397 => 180,  394 => 179,  389 => 178,  374 => 165,  370 => 163,  364 => 161,  362 => 160,  356 => 156,  354 => 155,  350 => 153,  343 => 148,  330 => 141,  328 => 140,  321 => 138,  318 => 137,  314 => 135,  310 => 133,  308 => 132,  305 => 131,  303 => 130,  300 => 129,  298 => 128,  295 => 127,  293 => 126,  288 => 124,  285 => 123,  281 => 121,  276 => 119,  271 => 118,  268 => 117,  266 => 116,  261 => 114,  258 => 113,  253 => 112,  237 => 98,  233 => 96,  227 => 94,  225 => 93,  219 => 89,  217 => 88,  209 => 82,  207 => 81,  203 => 79,  201 => 67,  198 => 65,  194 => 63,  187 => 59,  180 => 55,  177 => 54,  175 => 53,  171 => 51,  164 => 47,  161 => 46,  159 => 45,  152 => 41,  145 => 37,  138 => 33,  134 => 31,  132 => 30,  125 => 25,  121 => 23,  119 => 22,  114 => 21,  112 => 20,  109 => 19,  107 => 18,  104 => 17,  102 => 16,  90 => 6,  80 => 5,  63 => 3,  46 => 1,);
+        return array (  859 => 425,  851 => 420,  843 => 416,  834 => 411,  831 => 410,  829 => 409,  821 => 404,  814 => 400,  807 => 396,  799 => 392,  792 => 382,  784 => 378,  775 => 373,  772 => 372,  769 => 371,  760 => 366,  758 => 365,  751 => 361,  744 => 357,  737 => 353,  730 => 349,  722 => 345,  720 => 344,  707 => 333,  702 => 330,  691 => 325,  689 => 324,  679 => 319,  675 => 318,  668 => 313,  656 => 311,  653 => 310,  649 => 309,  645 => 307,  642 => 306,  639 => 299,  636 => 298,  631 => 295,  625 => 294,  617 => 288,  612 => 287,  607 => 284,  603 => 282,  597 => 280,  595 => 279,  589 => 275,  587 => 274,  580 => 269,  573 => 264,  564 => 261,  560 => 259,  551 => 254,  549 => 253,  543 => 249,  541 => 248,  534 => 246,  531 => 245,  527 => 243,  523 => 241,  521 => 240,  518 => 239,  516 => 238,  513 => 237,  511 => 236,  508 => 235,  506 => 234,  501 => 232,  497 => 231,  493 => 230,  490 => 229,  485 => 228,  463 => 208,  461 => 207,  458 => 206,  454 => 204,  445 => 198,  442 => 197,  440 => 196,  435 => 193,  422 => 186,  420 => 185,  413 => 183,  409 => 182,  403 => 181,  399 => 180,  396 => 179,  391 => 178,  376 => 165,  372 => 163,  366 => 161,  364 => 160,  358 => 156,  356 => 155,  352 => 153,  345 => 148,  332 => 141,  330 => 140,  323 => 138,  320 => 137,  316 => 135,  312 => 133,  310 => 132,  307 => 131,  305 => 130,  302 => 129,  300 => 128,  297 => 127,  295 => 126,  290 => 124,  287 => 123,  283 => 121,  278 => 119,  273 => 118,  270 => 117,  268 => 116,  263 => 114,  260 => 113,  255 => 112,  239 => 98,  235 => 96,  229 => 94,  227 => 93,  221 => 89,  219 => 88,  211 => 82,  209 => 81,  205 => 79,  203 => 67,  200 => 65,  196 => 63,  189 => 59,  182 => 55,  179 => 54,  177 => 53,  173 => 51,  166 => 47,  163 => 46,  161 => 45,  154 => 41,  147 => 37,  140 => 33,  136 => 31,  134 => 30,  127 => 25,  123 => 23,  121 => 22,  116 => 21,  114 => 20,  111 => 19,  109 => 18,  104 => 17,  102 => 16,  90 => 6,  80 => 5,  63 => 3,  46 => 1,);
     }
 
     public function getSourceContext(): Source

@@ -21,6 +21,11 @@ security:
             user_checker: App\Security\UserChecker
             access_denied_handler: App\Security\AccessDeniedHandler
 
+            # Limite les essais automatiques : 20 échecs par compte et par adresse IP, puis blocage 15 minutes
+            login_throttling:
+                max_attempts: 20
+                interval: '15 minutes'
+
 
             # Authenticator personnalisé
             entry_point: App\Security\AppAuthenticator
@@ -66,10 +71,10 @@ security:
         # =====================================================
 
         # Statistiques : accès réservé
-        - { path: ^/candidature/statistiques, roles: [ROLE_ADMIN, ROLE_ENT, ROLE_JURY] }
+        - { path: ^/candidature/statistiques, roles: [ROLE_AGENT, ROLE_ENT, ROLE_JURY] }
 
         # Impressions : accès réservé
-        - { path: ^/candidature/impressions, roles: [ROLE_ADMIN, ROLE_ENT, ROLE_JURY, ROLE_COM] }
+        - { path: ^/candidature/impressions, roles: [ROLE_AGENT, ROLE_ENT, ROLE_JURY, ROLE_COM] }
 
         # Autres pages candidature
         - { path: ^/candidature, roles: ROLE_USER }

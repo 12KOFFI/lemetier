@@ -64,7 +64,7 @@
 {% endfor %}
 
 {# ===== FILTRES ADMIN ===== #}
-{% if is_granted('ROLE_ADMIN') %}
+{% if is_granted('ROLE_AGENT') %}
 <div class="p-4 mb-6 bg-white border shadow-sm rounded-xl border-slate-200">
     <form method="get" action="{{ path('app_candidature_index') }}" class="flex flex-wrap items-end gap-4">
         <div class="flex-1 min-w-[200px]">

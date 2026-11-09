@@ -272,7 +272,7 @@ class __TwigTemplate_fb15224892a3db65f14bd8156b7a0933 extends Template
 
 ";
         // line 127
-        if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+        if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
             // line 128
             yield "<div class=\"bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-6\">
     <form method=\"get\" action=\"";
@@ -506,7 +506,7 @@ class __TwigTemplate_fb15224892a3db65f14bd8156b7a0933 extends Template
                     <th class=\"px-5 py-3 text-left text-[0.7rem] font-semibold uppercase tracking-widest text-slate-400\">Métier</th>
                     ";
             // line 225
-            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 // line 226
                 yield "                    <th class=\"px-5 py-3 text-left text-[0.7rem] font-semibold uppercase tracking-widest text-slate-400\">Établissement</th>
                     ";
@@ -609,7 +609,7 @@ class __TwigTemplate_fb15224892a3db65f14bd8156b7a0933 extends Template
                     ";
                 // line 277
                 yield "                    ";
-                if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+                if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                     // line 278
                     yield "                    <td class=\"px-5 py-4 text-sm text-slate-500\">";
                     yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, $context["a"], "etablissement", [], "any", false, false, false, 278), "nom", [], "any", false, false, false, 278), "html", null, true);

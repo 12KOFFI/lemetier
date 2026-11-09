@@ -17,7 +17,7 @@
             </div>
             <div>
                 <h1 class="text-xl md:text-2xl font-bold tracking-tight">Candidats Admis Provisoires</h1>
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_AGENT') %}
                     <p class="text-white/60 text-sm mt-0.5">Tous les établissements</p>
                 {% else %}
                     <p class="text-white/60 text-sm mt-0.5">{{ etablissement.nom }}</p>
@@ -122,7 +122,7 @@
                             <th class="px-5 py-3 text-left text-[0.7rem] font-semibold uppercase tracking-widest text-slate-400">Candidat</th>
                             <th class="px-3 py-3 text-left text-[0.7rem] font-semibold uppercase tracking-widest text-slate-400">Contact</th>
                             <th class="px-5 py-3 text-left text-[0.7rem] font-semibold uppercase tracking-widest text-slate-400">Métier</th>
-                            {% if is_granted('ROLE_ADMIN') %}
+                            {% if is_granted('ROLE_AGENT') %}
                             <th class="px-5 py-3 text-left text-[0.7rem] font-semibold uppercase tracking-widest text-slate-400">Établissement</th>
                             {% endif %}
                             <th class="px-5 py-3 text-left text-[0.7rem] font-semibold uppercase tracking-widest text-slate-400">Date admission</th>
@@ -168,7 +168,7 @@
                                     {{ item.metier.nom }}
                                 </span>
                             </td>
-                            {% if is_granted('ROLE_ADMIN') %}
+                            {% if is_granted('ROLE_AGENT') %}
                             <td class="px-5 py-4">
                                 <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[0.68rem] font-semibold bg-purple-50 text-purple-700 border border-purple-400">
                                     {{ item.etablissement.nom }}
@@ -187,7 +187,7 @@
                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-50 text-red-600 border border-red-500 text-xs font-bold hover:bg-red-600 hover:text-white transition-all">
                                         <i class="fas fa-user-plus text-[10px]"></i> Inscrire définitivement
                                     </a>
-                                {% elseif is_granted('ROLE_ADMIN') %}
+                                {% elseif is_granted('ROLE_AGENT') %}
                                     <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 text-amber-600 border border-amber-500 text-xs font-bold">
                                         <i class="fas fa-clock text-[10px]"></i> Pas encore inscrit
                                     </span>

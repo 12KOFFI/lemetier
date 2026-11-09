@@ -42,7 +42,7 @@
     
     <!-- Informations du candidat -->
     {% if app.user %}
-        {% if is_granted('ROLE_ENT') and is_edit_page and candidature is defined %}
+        {% if (is_granted('ROLE_ENT') or is_granted('ROLE_AGENT')) and is_edit_page and candidature is defined %}
             <div class="grid grid-cols-1 gap-4 mt-4 lg:grid-cols-2">
                 <div class="p-4 border bg-white/10 backdrop-blur-sm rounded-xl border-white/20">
                     <p class="flex items-center mb-3 text-sm font-semibold text-white/80">
@@ -118,7 +118,7 @@
     {# Vérification d'âge #}
     {% if app.user and app.user.datenaissance %}
         {% set age = date().diff(date(app.user.datenaissance)).y %}
-        {% if age < 18 or age > 40 %}
+        {% if age < 18 or age > 45 %}
             <div class="p-4 mt-4 border bg-red-500/20 backdrop-blur-sm border-red-500/30 rounded-xl">
                 <div class="flex items-center gap-3">
                     <div class="flex items-center justify-center w-10 h-10 rounded-full bg-red-500/30">
@@ -129,8 +129,8 @@
                         <p class="text-sm text-white/80">
                             {% if age < 18 %}
                                 Vous avez {{ age }} ans. L'âge minimum requis pour candidater est de 18 ans.
-                            {% elseif age > 40 %}
-                                Vous avez {{ age }} ans. L'âge maximum autorisé pour candidater est de 40 ans.
+                            {% elseif age > 45 %}
+                                Vous avez {{ age }} ans. L'âge maximum autorisé pour candidater est de 45 ans.
                             {% endif %}
                         </p>
                     </div>
@@ -166,7 +166,7 @@
                     <input type="hidden" name="_token" value="{{ csrf_token('candidature_update_info_' ~ candidature.id) }}">
 
                     {# Identité du candidat (ADMIN/ENT/JURY/CANDIDAT) #}
-                    {% if is_granted('ROLE_ENT') or is_granted('ROLE_ADMIN') or is_granted('ROLE_JURY') or is_granted('ROLE_CANDIDAT') %}
+                    {% if is_granted('ROLE_ENT') or is_granted('ROLE_AGENT') or is_granted('ROLE_JURY') or is_granted('ROLE_CANDIDAT') %}
                         <div class="p-5 border border-orange-200 rounded-xl bg-orange-50">
                             <h3 class="flex items-center mb-4 text-base font-semibold text-orange-800">
                                 <div class="flex items-center justify-center mr-2 bg-orange-200 rounded-lg w-7 h-7">
@@ -663,7 +663,7 @@
                                 <i class="mr-2 fas fa-paper-plane"></i>
                                 Enregistrer l'évaluation
                             </button>
-                        {% elseif age >= 18 and age <= 40 %}
+                        {% elseif age >= 18 and age <= 45 %}
                             {# Candidat avec âge valide #}
                             <button type="submit" class="flex items-center px-8 py-2 font-semibold text-white transition transform rounded-lg shadow-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 hover:scale-105">
                                 <i class="mr-2 fas fa-paper-plane"></i>
@@ -832,9 +832,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             {% if app.user and app.user.datenaissance %}
                 {% set age = date().diff(date(app.user.datenaissance)).y %}
-                {% if age < 18 or age > 40 %}
+                {% if age < 18 or age > 45 %}
                     e.preventDefault();
-                    alert('Vous ne remplissez pas les conditions d\'âge pour candidater (18 à 40 ans).');
+                    alert('Vous ne remplissez pas les conditions d\'âge pour candidater (18 à 45 ans).');
                     return false;
                 {% endif %}
             {% endif %}

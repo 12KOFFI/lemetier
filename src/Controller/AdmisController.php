@@ -110,7 +110,7 @@ class AdmisController extends AbstractController
     }
 
     #[Route('/admin/admis', name: 'app_admis_admin_liste', methods: ['GET'])]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_AGENT')]
     public function listeAdmisAdmin(Request $request, \Knp\Component\Pager\PaginatorInterface $paginator): Response
     {
         $qb = $this->entityManager->getRepository(Candidature::class)
@@ -280,7 +280,7 @@ class AdmisController extends AbstractController
     }
 
     #[Route('/', name: 'app_admis_index', methods: ['GET'])]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_AGENT')]
     public function index(Request $request, \Knp\Component\Pager\PaginatorInterface $paginator): Response
     {
         $qb = $this->entityManager->getRepository(Admis::class)

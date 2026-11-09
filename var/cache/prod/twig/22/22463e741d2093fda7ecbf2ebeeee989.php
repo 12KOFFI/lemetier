@@ -176,7 +176,7 @@ $context["label"] == "success")) {
         if ((($tmp = CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "user", [], "any", false, false, false, 44)) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
             // line 45
             yield "        ";
-            if ((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp) && (($tmp = ($context["is_edit_page"] ?? null)) && $tmp instanceof Markup ? (string) $tmp : $tmp)) && array_key_exists("candidature", $context))) {
+            if (((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) && (($tmp = ($context["is_edit_page"] ?? null)) && $tmp instanceof Markup ? (string) $tmp : $tmp)) && array_key_exists("candidature", $context))) {
                 // line 46
                 yield "            <div class=\"grid grid-cols-1 gap-4 mt-4 lg:grid-cols-2\">
                 <div class=\"p-4 border bg-white/10 backdrop-blur-sm rounded-xl border-white/20\">
@@ -309,7 +309,7 @@ $context["label"] == "success")) {
             $context["age"] = CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, $this->extensions['Twig\Extension\CoreExtension']->convertDate(), "diff", [$this->extensions['Twig\Extension\CoreExtension']->convertDate(CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "user", [], "any", false, false, false, 120), "datenaissance", [], "any", false, false, false, 120))], "method", false, false, false, 120), "y", [], "any", false, false, false, 120);
             // line 121
             yield "        ";
-            if (((($context["age"] ?? null) < 18) || (($context["age"] ?? null) > 40))) {
+            if (((($context["age"] ?? null) < 18) || (($context["age"] ?? null) > 45))) {
                 // line 122
                 yield "            <div class=\"p-4 mt-4 border bg-red-500/20 backdrop-blur-sm border-red-500/30 rounded-xl\">
                 <div class=\"flex items-center gap-3\">
@@ -328,11 +328,11 @@ $context["label"] == "success")) {
                     yield " ans. L\x27âge minimum requis pour candidater est de 18 ans.
                             ";
                 } elseif ((                // line 132
-($context["age"] ?? null) > 40)) {
+($context["age"] ?? null) > 45)) {
                     // line 133
                     yield "                                Vous avez ";
                     yield (string) $this->escaper->escape(($context["age"] ?? null), "html", null, true);
-                    yield " ans. L\x27âge maximum autorisé pour candidater est de 40 ans.
+                    yield " ans. L\x27âge maximum autorisé pour candidater est de 45 ans.
                             ";
                 }
                 // line 135
@@ -395,7 +395,7 @@ $context["label"] == "success")) {
                     ";
             // line 169
             yield "                    ";
-            if (((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_CANDIDAT")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
+            if (((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_CANDIDAT")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
                 // line 170
                 yield "                        <div class=\"p-5 border border-orange-200 rounded-xl bg-orange-50\">
                             <h3 class=\"flex items-center mb-4 text-base font-semibold text-orange-800\">
@@ -1148,7 +1148,7 @@ $context["label"] == "success")) {
                             </button>
                         ";
                 } elseif (((                // line 666
-($context["age"] ?? null) >= 18) && (($context["age"] ?? null) <= 40))) {
+($context["age"] ?? null) >= 18) && (($context["age"] ?? null) <= 45))) {
                     // line 667
                     yield "                            ";
                     // line 668
@@ -1363,10 +1363,10 @@ document.addEventListener(\x27DOMContentLoaded\x27, function() {
             $context["age"] = CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, $this->extensions['Twig\Extension\CoreExtension']->convertDate(), "diff", [$this->extensions['Twig\Extension\CoreExtension']->convertDate(CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "user", [], "any", false, false, false, 834), "datenaissance", [], "any", false, false, false, 834))], "method", false, false, false, 834), "y", [], "any", false, false, false, 834);
             // line 835
             yield "                ";
-            if (((($context["age"] ?? null) < 18) || (($context["age"] ?? null) > 40))) {
+            if (((($context["age"] ?? null) < 18) || (($context["age"] ?? null) > 45))) {
                 // line 836
                 yield "                    e.preventDefault();
-                    alert(\x27Vous ne remplissez pas les conditions d\\\x27âge pour candidater (18 à 40 ans).\x27);
+                    alert(\x27Vous ne remplissez pas les conditions d\\\x27âge pour candidater (18 à 45 ans).\x27);
                     return false;
                 ";
             }

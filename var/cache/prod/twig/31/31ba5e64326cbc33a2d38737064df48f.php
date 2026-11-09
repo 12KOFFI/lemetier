@@ -181,7 +181,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
 
         ";
         // line 88
-        if (((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
+        if (((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
             // line 89
             yield "<!-- Statistiques -->
 <div class=\"bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden hover:shadow-2xl transition-all duration-300\">
@@ -276,7 +276,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
         yield "
         ";
         // line 145
-        if ((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
+        if ((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
             // line 146
             yield "        ";
             $context["selectedEtablissement"] = CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "request", [], "any", false, false, false, 146), "request", [], "any", false, false, false, 146), "get", ["etablissement_liste"], "method", false, false, false, 146);
@@ -304,7 +304,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                     <div class=\"grid grid-cols-1 gap-3 md:grid-cols-3\">
                         ";
             // line 163
-            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 // line 164
                 yield "                        <div>
                             <select id=\"export-liste-etablissement\" name=\"etablissement_liste\" required
@@ -368,7 +368,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                                 class=\"w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition bg-white\"
                                 ";
             // line 191
-            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 yield "disabled";
             }
             yield ">
@@ -382,7 +382,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                                     les métiers</option>
                                 ";
             // line 195
-            if ( !(($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ( !(($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 // line 196
                 yield "                                ";
                 $context['_parent'] = $context;
@@ -446,7 +446,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
         <!-- Exportation des candidats en attente (etustatut IS NULL) -->
         ";
         // line 233
-        if ((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
+        if ((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
             // line 234
             yield "        ";
             $context["selectedEtablissementAttente"] = CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "request", [], "any", false, false, false, 234), "request", [], "any", false, false, false, 234), "get", ["etablissement_attente"], "method", false, false, false, 234);
@@ -474,7 +474,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                     <div class=\"grid grid-cols-1 gap-3 md:grid-cols-3\">
                         ";
             // line 251
-            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 // line 252
                 yield "                        <div>
                             <select id=\"export-attente-etablissement\" name=\"etablissement_attente\" required
@@ -538,7 +538,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                                 class=\"w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition bg-white\"
                                 ";
             // line 279
-            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 yield "disabled";
             }
             yield ">
@@ -552,7 +552,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                                     les métiers</option>
                                 ";
             // line 283
-            if ( !(($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ( !(($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 // line 284
                 yield "                                ";
                 $context['_parent'] = $context;
@@ -616,7 +616,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
         <!-- Exportation des candidats éligibles aux entretiens (etustatut = 2) -->
 ";
         // line 321
-        if ((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
+        if ((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
             // line 322
             $context["selectedEtablissementEligible"] = CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "request", [], "any", false, false, false, 322), "request", [], "any", false, false, false, 322), "get", ["etablissement_eligible"], "method", false, false, false, 322);
             // line 323
@@ -641,7 +641,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
             <div class=\"grid grid-cols-1 gap-3 md:grid-cols-3\">
                 ";
             // line 338
-            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 // line 339
                 yield "                <div>
                     <select id=\"export-eligible-etablissement\" name=\"etablissement_eligible\" required
@@ -705,7 +705,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                         class=\"w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition bg-white\"
                         ";
             // line 366
-            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 yield "disabled";
             }
             yield ">
@@ -719,7 +719,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                             les métiers</option>
                         ";
             // line 370
-            if ( !(($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ( !(($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 // line 371
                 yield "                        ";
                 $context['_parent'] = $context;
@@ -782,7 +782,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
 <!-- Exportation des candidats évalués (etustatut = 2 et au moins une note saisie) -->
 ";
         // line 407
-        if ((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
+        if ((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
             // line 408
             $context["selectedEtablissementEvalue"] = CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "request", [], "any", false, false, false, 408), "request", [], "any", false, false, false, 408), "get", ["etablissement_evalue"], "method", false, false, false, 408);
             // line 409
@@ -807,7 +807,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
             <div class=\"grid grid-cols-1 gap-3 md:grid-cols-3\">
                 ";
             // line 424
-            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 // line 425
                 yield "                <div>
                     <select id=\"export-evalue-etablissement\" name=\"etablissement_evalue\" required
@@ -871,7 +871,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                         class=\"w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition bg-white\"
                         ";
             // line 452
-            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 yield "disabled";
             }
             yield ">
@@ -885,7 +885,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                             les métiers</option>
                         ";
             // line 456
-            if ( !(($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ( !(($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 // line 457
                 yield "                        ";
                 $context['_parent'] = $context;
@@ -948,7 +948,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
 <!-- Exportation des candidats admissibles pour la visite médicale (entstatut = 2) -->
 ";
         // line 493
-        if ((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
+        if ((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
             // line 494
             $context["selectedEtablissementAdmissibleVisite"] = CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "request", [], "any", false, false, false, 494), "request", [], "any", false, false, false, 494), "get", ["etablissement_admissible_visite"], "method", false, false, false, 494);
             // line 495
@@ -973,7 +973,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
             <div class=\"grid grid-cols-1 gap-3 md:grid-cols-3\">
                 ";
             // line 510
-            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 // line 511
                 yield "                <div>
                     <select id=\"export-admissible-visite-etablissement\" name=\"etablissement_admissible_visite\" required
@@ -1037,7 +1037,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                         class=\"w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition bg-white\"
                         ";
             // line 538
-            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 yield "disabled";
             }
             yield ">
@@ -1051,7 +1051,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                             Tous les métiers</option>
                         ";
             // line 542
-            if ( !(($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ( !(($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 // line 543
                 yield "                        ";
                 $context['_parent'] = $context;
@@ -1114,7 +1114,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
         <!-- Exportation des candidats admis -->
         ";
         // line 579
-        if ((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
+        if ((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
             // line 580
             yield "        ";
             $context["selectedEtablissementAdmis"] = CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "request", [], "any", false, false, false, 580), "request", [], "any", false, false, false, 580), "get", ["etablissement_admis"], "method", false, false, false, 580);
@@ -1142,7 +1142,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                     <div class=\"grid grid-cols-1 gap-3 md:grid-cols-3\">
                         ";
             // line 597
-            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 // line 598
                 yield "                        <div>
                             <select id=\"export-admis-etablissement\" name=\"etablissement_admis\" required
@@ -1206,7 +1206,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                                 class=\"w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition bg-white\"
                                 ";
             // line 625
-            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 yield "disabled";
             }
             yield ">
@@ -1220,7 +1220,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                                     Tous les métiers</option>
                                 ";
             // line 629
-            if ( !(($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ( !(($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 // line 630
                 yield "                                ";
                 $context['_parent'] = $context;
@@ -1283,7 +1283,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
         <!-- Exportation des candidats admis définitifs -->
         ";
         // line 666
-        if ((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
+        if ((((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) || (($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp))) {
             // line 667
             yield "        ";
             $context["selectedEtablissementAdmisDef"] = CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "request", [], "any", false, false, false, 667), "request", [], "any", false, false, false, 667), "get", ["etablissement_admis_def"], "method", false, false, false, 667);
@@ -1311,7 +1311,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                     <div class=\"grid grid-cols-1 gap-3 md:grid-cols-3\">
                         ";
             // line 684
-            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 // line 685
                 yield "                        <div>
                             <select id=\"export-admis-def-etablissement\" name=\"etablissement_admis_def\" required
@@ -1383,7 +1383,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                                 class=\"w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-white\"
                                 ";
             // line 715
-            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 yield "disabled";
             }
             yield ">
@@ -1397,7 +1397,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
                                     Tous les métiers</option>
                                 ";
             // line 719
-            if ( !(($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            if ( !(($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 // line 720
                 yield "                                ";
                 $context['_parent'] = $context;
@@ -1485,7 +1485,7 @@ class __TwigTemplate_e7d4bb48a1acc007159720bcf7bb9a5c extends Template
         yield "
       ";
         // line 820
-        if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+        if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
             // line 821
             yield "  <script>
          document.addEventListener(\x27DOMContentLoaded\x27, function() {

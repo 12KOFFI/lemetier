@@ -87,7 +87,7 @@
 
 
             {# ==================== RECRUTEMENTS ==================== #}
-            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
+            {% if is_granted('ROLE_AGENT') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') %}
 
                 <div x-data="{ open: {{ app.current_route starts with 'app_candidature' or app.current_route starts with 'app_admis' ? 'true' : 'false' }}, tooltip: false }">
 
@@ -181,10 +181,10 @@
                         </a>
 
 
-                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ENT') %}
+                        {% if is_granted('ROLE_AGENT') or is_granted('ROLE_ENT') %}
 
                             {# Listes admis #}
-                            <a href="{{ path(is_granted('ROLE_ADMIN') ? 'app_admis_admin_liste' : 'app_admis_liste') }}"
+                            <a href="{{ path(is_granted('ROLE_AGENT') ? 'app_admis_admin_liste' : 'app_admis_liste') }}"
                                class="flex items-center gap-3 p-2 rounded-lg text-sm transition {{ app.current_route in ['app_admis_admin_liste', 'app_admis_liste'] ? nav_classes.active_link : nav_classes.inactive_link }} pl-12">
 
                                 <i class="w-4 fas fa-user-check"></i>
@@ -197,7 +197,7 @@
 
 
                             {# Admis définitifs #}
-                            <a href="{{ path(is_granted('ROLE_ADMIN') ? 'app_admis_index' : 'app_admis_etablissement') }}"
+                            <a href="{{ path(is_granted('ROLE_AGENT') ? 'app_admis_index' : 'app_admis_etablissement') }}"
                                class="flex items-center gap-3 p-2 rounded-lg text-sm transition {{ app.current_route in ['app_admis_index', 'app_admis_etablissement'] ? nav_classes.active_link : nav_classes.inactive_link }} pl-12">
 
                                 <i class="w-4 fas fa-medal"></i>

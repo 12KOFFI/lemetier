@@ -18,6 +18,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  * - Consultation : l'admin, l'ENT ou le jury de l'établissement, le candidat lui-même.
  * - Modification : l'admin, l'ENT ou le jury de l'établissement.
  * - Page de confirmation après saisie : l'admin ou l'ENT de l'établissement (ni le jury, ni le candidat).
+ * - L'agent DAIP (ROLE_AGENT) : mêmes droits que l'admin sur tous les établissements, sauf la suppression.
  * - Suppression : l'admin uniquement.
  * - Réinitialisation du mot de passe du candidat : l'admin ou l'ENT de l'établissement.
  */
@@ -55,6 +56,11 @@ class CandidatureVoter extends Voter
         }
 
         if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
+            return true;
+        }
+
+        // L'agent DAIP aide tous les établissements : mêmes droits que l'admin, sauf la suppression.
+        if ($attribute !== self::DELETE && $this->decisionManager->decide($token, ['ROLE_AGENT'])) {
             return true;
         }
 

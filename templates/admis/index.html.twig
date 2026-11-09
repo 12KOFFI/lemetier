@@ -124,7 +124,7 @@
 </div>
 
 {# ===== FILTRES ADMIN ===== #}
-{% if is_granted('ROLE_ADMIN') %}
+{% if is_granted('ROLE_AGENT') %}
 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-6">
     <form method="get" action="{{ path('app_admis_index') }}" class="flex flex-wrap gap-4 items-end">
         <div class="flex-1 min-w-[200px]">
@@ -222,7 +222,7 @@
                     <th class="px-5 py-3 text-left text-[0.7rem] font-semibold uppercase tracking-widest text-slate-400">Apprenti</th>
                     <th class="px-5 py-3 text-left text-[0.7rem] font-semibold uppercase tracking-widest text-slate-400">Contact</th>
                     <th class="px-5 py-3 text-left text-[0.7rem] font-semibold uppercase tracking-widest text-slate-400">Métier</th>
-                    {% if is_granted('ROLE_ADMIN') %}
+                    {% if is_granted('ROLE_AGENT') %}
                     <th class="px-5 py-3 text-left text-[0.7rem] font-semibold uppercase tracking-widest text-slate-400">Établissement</th>
                     {% endif %}
                     <th class="px-5 py-3 text-left text-[0.7rem] font-semibold uppercase tracking-widest text-slate-400">Date</th>
@@ -274,7 +274,7 @@
                     </td>
 
                     {# Établissement (admin) #}
-                    {% if is_granted('ROLE_ADMIN') %}
+                    {% if is_granted('ROLE_AGENT') %}
                     <td class="px-5 py-4 text-sm text-slate-500">{{ a.etablissement.nom }}</td>
                     {% endif %}
 

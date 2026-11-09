@@ -33,26 +33,31 @@ class DashboardController extends AbstractController
 
         $roles = $user->getRoles();
         $isAdmin = in_array('ROLE_ADMIN', $roles);
+        // L'agent DAIP a la même vue d'ensemble que l'admin, sans la liste des comptes.
+        $isAgent = !$isAdmin && in_array('ROLE_AGENT', $roles);
         $isCandidat = in_array('ROLE_CANDIDAT', $roles);
         $isEnt = in_array('ROLE_ENT', $roles);
         $isJury = in_array('ROLE_JURY', $roles);
 
         $data = [
-            'is_admin' => $isAdmin,
+            'is_admin' => $isAdmin || $isAgent,
+            'is_agent' => $isAgent,
             'is_candidat' => $isCandidat,
             'is_ent' => $isEnt,
             'is_jury' => $isJury,
             'etablissement' => null,
         ];
 
-        if ($isAdmin) {
+        if ($isAdmin || $isAgent) {
             $data['stats'] = $this->getAdminStats();
             $data['dernieres_candidatures'] = $this->entityManager
                 ->getRepository(Candidature::class)
                 ->findBy([], ['id' => 'DESC'], 10);
-            $data['derniers_inscrits'] = $this->entityManager
-                ->getRepository(User::class)
-                ->findBy([], ['id' => 'DESC'], 10);
+            if ($isAdmin) {
+                $data['derniers_inscrits'] = $this->entityManager
+                    ->getRepository(User::class)
+                    ->findBy([], ['id' => 'DESC'], 10);
+            }
             $qbDerniersAdmis = $this->entityManager
                 ->getRepository(Admis::class)
                 ->createQueryBuilder('a')

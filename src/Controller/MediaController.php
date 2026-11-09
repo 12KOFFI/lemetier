@@ -58,7 +58,7 @@ class MediaController extends AbstractController
             throw $this->createNotFoundException('Document introuvable.');
         }
 
-        $autorise = $this->isGranted('ROLE_ADMIN')
+        $autorise = $this->isGranted('ROLE_AGENT')
             || ($this->isGranted('ROLE_ENT') && $admis->getEtablissement()?->getUser() === $this->getUser());
         if (!$autorise) {
             throw $this->createAccessDeniedException();

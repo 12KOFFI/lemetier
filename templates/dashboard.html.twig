@@ -14,7 +14,7 @@
                 <h1 class="text-2xl font-bold">Tableau de bord</h1>
                 <p class="text-white/80">
                     {% if is_admin %}
-                        Administration générale
+                        {{ is_agent ? 'Accompagnement des établissements' : 'Administration générale' }}
                     {% elseif is_candidat %}
                         Ma candidature
                     {% elseif is_ent %}
@@ -362,10 +362,12 @@
                                  <i class="mb-1 text-xl text-purple-600 fas fa-chart-bar"></i>
                                  <span class="text-xs text-purple-700">Statistiques</span>
                             </a>
+                            {% if not is_agent %}
                             <a href="{{ path('app_metier_new') }}" class="flex flex-col items-center p-3 transition rounded-lg bg-amber-50 hover:bg-amber-100">
                                 <i class="mb-1 text-xl fas fa-briefcase text-amber-600"></i>
                                 <span class="text-xs text-amber-700">Nouveau métier</span>
                             </a>
+                            {% endif %}
                             {% elseif is_ent and not is_admin %}
                             {% if is_granted('CANDIDATURE_CREATE') %}
                             <a href="{{ path('app_candidature_saisie') }}" class="flex flex-col items-center p-3 transition rounded-lg bg-indigo-50 hover:bg-indigo-100">
@@ -426,107 +428,4 @@
         </div>
     </div>
 </div>
-{% if is_ent and not is_admin %}
-
-<!-- Modal Nouvelles Fonctionnalités -->
-<div id="featureModal" class="fixed inset-0 z-50 flex items-end justify-center hidden pb-4 sm:items-center sm:pb-0" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <!-- Backdrop -->
-    <div class="fixed inset-0 transition-opacity duration-300 opacity-0 bg-slate-900/60 backdrop-blur-sm" id="featureModalBackdrop"></div>
-
-    <!-- Modal Panel -->
-    <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-md mx-4 sm:mx-auto overflow-hidden transform opacity-0 translate-y-10 sm:translate-y-0 sm:scale-95 transition-all duration-300 flex flex-col max-h-[90vh]" id="featureModalPanel">
-        
-        <!-- Decoration Header -->
-        <div class="h-1.5 sm:h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
-
-        <!-- Close Button -->
-        <button type="button" id="closeModalBtn" class="absolute z-10 flex items-center justify-center w-8 h-8 transition-colors rounded-full top-3 right-3 sm:top-4 sm:right-4 bg-slate-50 text-slate-400 hover:text-slate-600 hover:bg-slate-200 focus:outline-none">
-            <i class="fas fa-times"></i>
-        </button>
-
-        <div class="p-6 overflow-y-auto sm:p-8">
-            <!-- Icon -->
-            <div class="flex items-center justify-center w-12 h-12 mb-4 rounded-full shadow-inner sm:w-16 sm:h-16 bg-gradient-to-br from-indigo-100 to-purple-100 sm:mb-6">
-                <i class="text-xl text-indigo-600 fas fa-rocket sm:text-2xl"></i>
-            </div>
-
-            <!-- Content -->
-            <h3 class="mb-2 text-xl font-bold sm:text-2xl text-slate-800 sm:mb-3" id="modal-title">
-                Nouvelles fonctionnalités disponibles
-            </h3>
-            <p class="mb-6 text-sm leading-relaxed sm:text-base text-slate-600 sm:mb-8">
-                Vous pouvez désormais gérer et transmettre facilement les conventions avec vos entreprises partenaires ainsi que les contrats d’apprentissage de vos apprentis, directement depuis la plateforme.
-            </p>
-
-            <!-- Actions -->
-            <div class="flex flex-col gap-3">
-                <a href="{{ path('app_admis_etablissement') }}" class="group relative w-full flex items-center justify-center py-2.5 sm:py-3 px-4 border border-transparent rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all shadow-md hover:shadow-lg text-sm sm:text-base text-center">
-                    <i class="mr-2 text-indigo-300 transition-colors fas fa-file-signature group-hover:text-indigo-200"></i>
-                    <span class="font-semibold">Ajouter un contrat d’apprentissage</span>
-                </a>
-            
-            </div>
-
-            <!-- Footer Actions -->
-            <div class="flex flex-col items-center justify-between gap-4 pt-4 mt-6 border-t sm:mt-8 sm:pt-5 border-slate-100 sm:flex-row">
-                <a href="{{ asset('uploads/guide_conventions_contrats.docx') }}" target="_blank" class="w-full sm:w-auto group inline-flex justify-center items-center text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors bg-indigo-50 hover:bg-indigo-100 px-4 py-2.5 rounded-xl">
-                    <i class="mr-2 text-indigo-400 transition-colors fas fa-file-word group-hover:text-indigo-600"></i>
-                    Consulter le guide d'utilisation
-                </a>
-                <button id="dismissModalBtn" class="text-sm underline transition-colors text-slate-500 hover:text-slate-700 underline-offset-2 focus:outline-none">
-                    Ne plus afficher
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const modal = document.getElementById('featureModal');
-    if (!modal) return;
-    
-    const backdrop = document.getElementById('featureModalBackdrop');
-    const panel = document.getElementById('featureModalPanel');
-    const closeBtn = document.getElementById('closeModalBtn');
-    const dismissBtn = document.getElementById('dismissModalBtn');
-    
-    // Vérifier si le modal a déjà été masqué
-    const modalDismissed = localStorage.getItem('featureModalDismissed');
-    
-    if (modalDismissed !== 'true') {
-        // Afficher le modal avec animation
-        modal.classList.remove('hidden');
-        
-        // Petit délai pour permettre au navigateur de rendre le display:block avant d'animer
-        setTimeout(() => {
-            backdrop.classList.remove('opacity-0');
-            panel.classList.remove('opacity-0', 'translate-y-10', 'sm:scale-95');
-            panel.classList.add('opacity-100', 'translate-y-0', 'sm:scale-100');
-        }, 50);
-    }
-    
-    function hideModal() {
-        backdrop.classList.remove('opacity-100');
-        backdrop.classList.add('opacity-0');
-        
-        panel.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
-        panel.classList.add('opacity-0', 'translate-y-10', 'sm:scale-95');
-        
-        setTimeout(() => {
-            modal.classList.add('hidden');
-        }, 300); // Correspond à la durée de transition
-    }
-    
-    function dismissModalForever() {
-        localStorage.setItem('featureModalDismissed', 'true');
-        hideModal();
-    }
-    
-    closeBtn.addEventListener('click', hideModal);
-    backdrop.addEventListener('click', hideModal);
-    dismissBtn.addEventListener('click', dismissModalForever);
-});
-</script>
-{% endif %}
 {% endblock %}

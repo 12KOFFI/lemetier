@@ -113,7 +113,7 @@ class SessionRecrutementController extends AbstractController
 
     private function accessDeniedResponse(): ?Response
     {
-        if (!$this->getUser() || !$this->isGranted('ROLE_AGENT')) {
+        if (!$this->getUser() || !$this->isGranted('ROLE_ADMIN')) {
             return $this->render('security/access_denied.html.twig', [], new Response('', Response::HTTP_FORBIDDEN));
         }
 

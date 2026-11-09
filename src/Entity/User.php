@@ -53,11 +53,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 10, nullable: true)]
     private ?string $sexe = null;
 
-    // Éligibilité « 18 à 40 ans » : 40 ans révolus acceptés jusqu'à la veille des 41 ans.
+    // Éligibilité « 18 à 45 ans » : 45 ans révolus acceptés jusqu'à la veille des 46 ans.
     #[ORM\Column(type: 'date', nullable: true)]
     #[Assert\NotNull(message: 'La date de naissance est requise', groups: ['candidat'])]
     #[Assert\LessThan('today', message: 'La date de naissance doit être dans le passé', groups: ['candidat'])]
-    #[Assert\GreaterThan('-41 years', message: 'Le candidat doit avoir au plus 40 ans', groups: ['candidat'])]
+    #[Assert\GreaterThan('-46 years', message: 'Le candidat doit avoir au plus 45 ans', groups: ['candidat'])]
     #[Assert\LessThanOrEqual('-18 years', message: 'Le candidat doit avoir au moins 18 ans', groups: ['candidat'])]
     private ?\DateTimeInterface $datenaissance = null;
 

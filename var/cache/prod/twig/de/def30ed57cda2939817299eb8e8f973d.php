@@ -157,19 +157,23 @@ class __TwigTemplate_4d7f2ffb5fff28a3d4333b6fe7f4e909 extends Template
             if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 yield "Admin
           ";
-            } elseif ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            } elseif ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 // line 75
+                yield "Agent
+          ";
+            } elseif ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+                // line 76
                 yield "ENT
           ";
             } elseif ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
-                // line 76
+                // line 77
                 yield "Jury
           ";
             } else {
-                // line 77
+                // line 78
                 yield "Candidat";
             }
-            // line 78
+            // line 79
             yield "        </span>
 
         <i class=\"fas fa-chevron-down text-[10px] text-slate-400 transition-transform duration-200\"
@@ -191,59 +195,63 @@ class __TwigTemplate_4d7f2ffb5fff28a3d4333b6fe7f4e909 extends Template
           <div class=\"flex items-center gap-3\">
             <div class=\"w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm shadow-sm shrink-0\">
               ";
-            // line 98
-            yield (string) $this->escaper->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), Twig\Extension\CoreExtension::first($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "user", [], "any", false, false, false, 98), "nom", [], "any", false, false, false, 98))), "html", null, true);
-            yield (string) $this->escaper->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), Twig\Extension\CoreExtension::first($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "user", [], "any", false, false, false, 98), "prenoms", [], "any", false, false, false, 98))), "html", null, true);
+            // line 99
+            yield (string) $this->escaper->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), Twig\Extension\CoreExtension::first($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "user", [], "any", false, false, false, 99), "nom", [], "any", false, false, false, 99))), "html", null, true);
+            yield (string) $this->escaper->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), Twig\Extension\CoreExtension::first($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "user", [], "any", false, false, false, 99), "prenoms", [], "any", false, false, false, 99))), "html", null, true);
             yield "
             </div>
             <div class=\"min-w-0\">
               <p class=\"text-sm font-bold text-slate-800 truncate\">";
-            // line 101
-            yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "user", [], "any", false, false, false, 101), "nom", [], "any", false, false, false, 101), "html", null, true);
+            // line 102
+            yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "user", [], "any", false, false, false, 102), "nom", [], "any", false, false, false, 102), "html", null, true);
             yield " ";
-            yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "user", [], "any", false, false, false, 101), "prenoms", [], "any", false, false, false, 101), "html", null, true);
+            yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "user", [], "any", false, false, false, 102), "prenoms", [], "any", false, false, false, 102), "html", null, true);
             yield "</p>
               <p class=\"text-xs text-slate-400 truncate mt-0.5\">";
-            // line 102
-            yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "user", [], "any", false, false, false, 102), "email", [], "any", false, false, false, 102), "html", null, true);
+            // line 103
+            yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "user", [], "any", false, false, false, 103), "email", [], "any", false, false, false, 103), "html", null, true);
             yield "</p>
               <span class=\"inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold mt-1.5
                 ";
-            // line 104
+            // line 105
             if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 yield "bg-red-100 text-red-700
                 ";
             } elseif ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
-                // line 105
+                // line 106
                 yield "bg-amber-100 text-amber-700
                 ";
             } elseif ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
-                // line 106
+                // line 107
                 yield "bg-blue-100 text-blue-700
                 ";
             } else {
-                // line 107
+                // line 108
                 yield "bg-emerald-100 text-emerald-700";
             }
             yield "\">
                 ";
-            // line 108
+            // line 109
             if ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ADMIN")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
                 yield "Administrateur
                 ";
+            } elseif ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_AGENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+                // line 110
+                yield "Agent DAIP
+                ";
             } elseif ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_ENT")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
-                // line 109
+                // line 111
                 yield "Établissement
                 ";
             } elseif ((($tmp = $this->extensions['Symfony\Bridge\Twig\Extension\SecurityExtension']->isGranted("ROLE_JURY")) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
-                // line 110
+                // line 112
                 yield "Jury
                 ";
             } else {
-                // line 111
+                // line 113
                 yield "Candidat";
             }
-            // line 112
+            // line 114
             yield "              </span>
             </div>
           </div>
@@ -251,8 +259,8 @@ class __TwigTemplate_4d7f2ffb5fff28a3d4333b6fe7f4e909 extends Template
 
         <div class=\"py-1\">
           <a href=\"";
-            // line 118
-            yield (string) $this->escaper->escape($this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_user_edit", ["id" => CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "user", [], "any", false, false, false, 118), "id", [], "any", false, false, false, 118)]), "html", null, true);
+            // line 120
+            yield (string) $this->escaper->escape($this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_user_edit", ["id" => CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, ($context["app"] ?? null), "user", [], "any", false, false, false, 120), "id", [], "any", false, false, false, 120)]), "html", null, true);
             yield "\"
              class=\"flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 transition group\">
             <div class=\"w-7 h-7 rounded-lg bg-slate-100 group-hover:bg-indigo-100 flex items-center justify-center transition\">
@@ -262,7 +270,7 @@ class __TwigTemplate_4d7f2ffb5fff28a3d4333b6fe7f4e909 extends Template
           </a>
 
           <a href=\"";
-            // line 126
+            // line 128
             yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_user_change_password");
             yield "\"
              class=\"flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 transition group\">
@@ -277,7 +285,7 @@ class __TwigTemplate_4d7f2ffb5fff28a3d4333b6fe7f4e909 extends Template
 
         <div class=\"py-1\">
           <a href=\"";
-            // line 138
+            // line 140
             yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_logout");
             yield "\"
              class=\"flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 hover:text-red-700 transition group\">
@@ -292,7 +300,7 @@ class __TwigTemplate_4d7f2ffb5fff28a3d4333b6fe7f4e909 extends Template
     </div>
     ";
         }
-        // line 150
+        // line 152
         yield "
   </div>
 </nav>
@@ -335,7 +343,7 @@ class __TwigTemplate_4d7f2ffb5fff28a3d4333b6fe7f4e909 extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  296 => 150,  281 => 138,  266 => 126,  255 => 118,  247 => 112,  244 => 111,  240 => 110,  236 => 109,  231 => 108,  226 => 107,  222 => 106,  218 => 105,  213 => 104,  208 => 102,  202 => 101,  195 => 98,  173 => 78,  170 => 77,  166 => 76,  162 => 75,  157 => 74,  152 => 73,  148 => 72,  144 => 71,  139 => 70,  132 => 66,  126 => 65,  118 => 61,  110 => 55,  108 => 54,  104 => 52,  98 => 49,  94 => 47,  91 => 46,  85 => 43,  81 => 42,  78 => 41,  75 => 40,  73 => 39,  70 => 38,  68 => 14,  65 => 13,  63 => 12,  50 => 1,);
+        return array (  304 => 152,  289 => 140,  274 => 128,  263 => 120,  255 => 114,  252 => 113,  248 => 112,  244 => 111,  240 => 110,  235 => 109,  230 => 108,  226 => 107,  222 => 106,  217 => 105,  212 => 103,  206 => 102,  199 => 99,  177 => 79,  174 => 78,  170 => 77,  166 => 76,  162 => 75,  157 => 74,  152 => 73,  148 => 72,  144 => 71,  139 => 70,  132 => 66,  126 => 65,  118 => 61,  110 => 55,  108 => 54,  104 => 52,  98 => 49,  94 => 47,  91 => 46,  85 => 43,  81 => 42,  78 => 41,  75 => 40,  73 => 39,  70 => 38,  68 => 14,  65 => 13,  63 => 12,  50 => 1,);
     }
 
     public function getSourceContext(): Source

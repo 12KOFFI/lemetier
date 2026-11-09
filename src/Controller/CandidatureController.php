@@ -87,7 +87,7 @@ class CandidatureController extends AbstractController
             ->leftJoin('c.metier', 'm')
             ->addSelect('e', 'm');
 
-        if ($this->isGranted('ROLE_ADMIN')) {
+        if ($this->isGranted('ROLE_AGENT')) {
             $qb->leftJoin('c.user', 'u')->addSelect('u');
             $is_admin = true;
         } elseif ($this->isGranted('ROLE_ENT') || $this->isGranted('ROLE_JURY')) {
@@ -109,7 +109,7 @@ class CandidatureController extends AbstractController
         $metiers = [];
         $sessions = [];
 
-        if ($this->isGranted('ROLE_ADMIN')) {
+        if ($this->isGranted('ROLE_AGENT')) {
             $etablissementId = $request->query->get('etablissement');
             $metierId        = $request->query->get('metier');
             $sessionId       = $request->query->get('session');
@@ -285,7 +285,7 @@ class CandidatureController extends AbstractController
     public function saisie(Request $request, CandidatureVoter $candidatureVoter): Response
     {
         $agent = $this->getUser();
-        $etablissementImpose = $this->isGranted('ROLE_ADMIN') ? null : $candidatureVoter->getEtablissementGere($agent);
+        $etablissementImpose = $this->isGranted('ROLE_AGENT') ? null : $candidatureVoter->getEtablissementGere($agent);
 
         $sessionActive = $this->entityManager->getRepository(SessionRecrutement::class)->findOneBy(['active' => true]);
         if (!$sessionActive) {
@@ -532,7 +532,9 @@ class CandidatureController extends AbstractController
     #[IsGranted(CandidatureVoter::EDIT, subject: 'candidature')]
     public function edit(Request $request, Candidature $candidature): Response
     {
-        $isStaff = $this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_ENT') || $this->isGranted('ROLE_JURY');
+        // L'agent DAIP corrige le dossier (partie 1) ; l'évaluation reste au lycée, au jury et à l'admin.
+        $peutEvaluer = $this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_ENT') || $this->isGranted('ROLE_JURY');
+        $isStaff = $peutEvaluer || $this->isGranted('ROLE_AGENT');
 
         if (!$isStaff && $candidature->getEtustatut() !== null) {
             $message = $candidature->getEtustatut() === 2
@@ -562,7 +564,7 @@ class CandidatureController extends AbstractController
             ]);
         }
 
-        if ($isStaff) {
+        if ($peutEvaluer) {
             $form->handleRequest($request);
             
             if ($form->isSubmitted() && $form->isValid()) {
@@ -720,7 +722,7 @@ class CandidatureController extends AbstractController
 
         // Le candidat ne peut modifier son dossier que tant qu'il est "en attente" (resultat non renseigné).
         // Une fois accepté (2) ou rejeté (1), il n'a plus le droit de le modifier.
-        $isStaff = $this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_ENT') || $this->isGranted('ROLE_JURY');
+        $isStaff = $this->isGranted('ROLE_AGENT') || $this->isGranted('ROLE_ENT') || $this->isGranted('ROLE_JURY');
         if (!$isStaff && $candidature->getResultat() !== null) {
             $message = $candidature->getResultat() === 2
                 ? 'Votre candidature a été acceptée, vous ne pouvez plus la modifier.'
@@ -823,7 +825,7 @@ class CandidatureController extends AbstractController
     #[IsGranted(CandidatureVoter::VIEW, subject: 'candidature')]
     public function voir(Candidature $candidature): Response
     {
-        $isStaff = $this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_ENT') || $this->isGranted('ROLE_JURY');
+        $isStaff = $this->isGranted('ROLE_AGENT') || $this->isGranted('ROLE_ENT') || $this->isGranted('ROLE_JURY');
 
         return $this->render('candidature/show.html.twig', [
             'candidature' => $candidature,
@@ -960,7 +962,7 @@ class CandidatureController extends AbstractController
     }
 
     #[Route('/print', name: 'app_candidature_print', methods: ['GET'])]
-    #[Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') or is_granted('ROLE_CANDIDAT') or is_granted('ROLE_COM')")]
+    #[Security("is_granted('ROLE_AGENT') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY') or is_granted('ROLE_CANDIDAT') or is_granted('ROLE_COM')")]
     public function print(Request $request): Response
     {
         $type = $request->query->get('type');
@@ -969,7 +971,7 @@ class CandidatureController extends AbstractController
         // Le type "stat" n'a pas de rendu PDF dédié : on redirige simplement
         // vers le tableau de bord des statistiques avec les mêmes filtres.
         if ($type === 'stat') {
-            if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_COM')) {
+            if (!$this->isGranted('ROLE_AGENT') && !$this->isGranted('ROLE_COM')) {
                 throw $this->createAccessDeniedException();
             }
             return $this->printStatistics($request);
@@ -1152,7 +1154,7 @@ class CandidatureController extends AbstractController
     }
 
     #[Route('/statistiques', name: 'app_candidature_stat', methods: ['GET'])]
-    #[Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY')")]
+    #[Security("is_granted('ROLE_AGENT') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY')")]
     public function statistiques(Request $request): Response
     {
         $etablissementId = $request->query->get('etablissement');
@@ -1162,7 +1164,7 @@ class CandidatureController extends AbstractController
 
         // Pour le filtre : Admin et COM voient tout, ENT et JURY sont restreints à leur établissement
         $user = $this->getUser();
-        if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_COM')) {
+        if ($this->isGranted('ROLE_AGENT') || $this->isGranted('ROLE_COM')) {
             $etablissements = $this->entityManager->getRepository(Etablissement::class)->findBy([], ['nom' => 'ASC']);
         } elseif ($this->isGranted('ROLE_ENT') || $this->isGranted('ROLE_JURY')) {
             // L'utilisateur est restreint à ses propres établissements
@@ -1210,7 +1212,7 @@ class CandidatureController extends AbstractController
     }
 
     #[Route('/export/stats', name: 'app_candidature_export_stats', methods: ['GET'])]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_AGENT')]
     public function exportStats(Request $request): Response
     {
         $etablissementId = $request->query->get('etablissement');
@@ -1456,7 +1458,7 @@ class CandidatureController extends AbstractController
     }
 
     #[Route('/impressions', name: 'app_candidature_impressions', methods: ['GET', 'POST'])]
-    #[Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY')")]
+    #[Security("is_granted('ROLE_AGENT') or is_granted('ROLE_ENT') or is_granted('ROLE_JURY')")]
     public function impressions(Request $request): Response
     {
         $user = $this->getUser();
@@ -1466,7 +1468,7 @@ class CandidatureController extends AbstractController
         $metier = $metierId ? $this->entityManager->getRepository(Metier::class)->find($metierId) : null;
 
         // Gestion des accès aux établissements selon le rôle
-        if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_COM')) {
+        if ($this->isGranted('ROLE_AGENT') || $this->isGranted('ROLE_COM')) {
             $etablissements = $this->entityManager->getRepository(Etablissement::class)->findBy([], ['nom' => 'ASC']);
         } else {
             // ENT / JURY : Restreint à leurs établissements
@@ -1556,7 +1558,7 @@ class CandidatureController extends AbstractController
     /** Un export d'établissement n'est permis qu'à l'admin, au COM et au responsable de cet établissement. */
     private function verifierAccesExport(Etablissement $etablissement): void
     {
-        if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_COM')) {
+        if ($this->isGranted('ROLE_AGENT') || $this->isGranted('ROLE_COM')) {
             return;
         }
 
@@ -2075,7 +2077,7 @@ class CandidatureController extends AbstractController
     {
         $etablissement = null;
 
-        if ($this->isGranted('ROLE_ADMIN')) {
+        if ($this->isGranted('ROLE_AGENT')) {
             if (!$etablissementId) {
                 $this->addFlash('error', 'Veuillez sélectionner un établissement.');
                 return $this->redirectToRoute('app_candidature_impressions');
@@ -2186,7 +2188,7 @@ class CandidatureController extends AbstractController
         $etablissement = null;
         $qbContrats = $this->entityManager->getRepository(Admis::class)->createQueryBuilder('a');
 
-        if ($this->isGranted('ROLE_ADMIN')) {
+        if ($this->isGranted('ROLE_AGENT')) {
             if (!$etablissementId) {
                 $this->addFlash('error', 'Veuillez sélectionner un établissement.');
                 return $this->redirectToRoute('app_candidature_impressions');
