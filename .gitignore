@@ -38,3 +38,6 @@
 !/var/cache/prod/
 /var/cache/prod/profiler/
 /var/cache/prod/*Debug*
+
+# Archives locales
+/*.zip
